@@ -2,6 +2,8 @@ package abc.sound;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 
@@ -13,49 +15,49 @@ import org.junit.Test;
  */
 
 public class SequencePlayerTest {
-
+    //highlight a test method name to play each piece one at a time
     @Test
     public void testPiece1() throws MidiUnavailableException, InvalidMidiDataException {
-        SequencePlayer player = new SequencePlayer(140, 48);
+        SequencePlayer player = new SequencePlayer(140, 12);
         //bar1
         player.addNote(new Pitch('C').toMidiNote(), 0, 12);
-        player.addNote(new Pitch('C').toMidiNote(), 12, 24);
-        player.addNote(new Pitch('C').toMidiNote(), 24, 33);
-        player.addNote(new Pitch('D').toMidiNote(), 33, 36);
-        player.addNote(new Pitch('E').toMidiNote(), 36, 48);
+        player.addNote(new Pitch('C').toMidiNote(), 12, 12);
+        player.addNote(new Pitch('C').toMidiNote(), 24, 9);
+        player.addNote(new Pitch('D').toMidiNote(), 33, 3);
+        player.addNote(new Pitch('E').toMidiNote(), 36, 12);
         //bar 2
-        player.addNote(new Pitch('E').toMidiNote(), 48, 57);
-        player.addNote(new Pitch('D').toMidiNote(), 57, 60);
-        player.addNote(new Pitch('E').toMidiNote(), 60, 23);
-        player.addNote(new Pitch('F').toMidiNote(), 23, 24);
-        player.addNote(new Pitch('G').toMidiNote(), 24, 32);
+        player.addNote(new Pitch('E').toMidiNote(), 48, 9);
+        player.addNote(new Pitch('D').toMidiNote(), 57, 3);
+        player.addNote(new Pitch('E').toMidiNote(), 60, 9);
+        player.addNote(new Pitch('F').toMidiNote(), 69, 3);
+        player.addNote(new Pitch('G').toMidiNote(), 72, 24);
         //bar 3
-        player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 32, 11);
-        player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 8, 11);
-        player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 8, 11);
-        player.addNote(new Pitch('G').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('G').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('G').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('E').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('E').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('E').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('C').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('C').toMidiNote(), 8, 11);
-        player.addNote(new Pitch('C').toMidiNote(), 8, 11);
+        player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 96, 4);
+        player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 100, 4);
+        player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 104, 4);
+        player.addNote(new Pitch('G').toMidiNote(), 108, 4);
+        player.addNote(new Pitch('G').toMidiNote(), 112, 4);
+        player.addNote(new Pitch('G').toMidiNote(), 116, 4);
+        player.addNote(new Pitch('E').toMidiNote(), 120, 4);
+        player.addNote(new Pitch('E').toMidiNote(), 124, 4);
+        player.addNote(new Pitch('E').toMidiNote(), 128, 4);
+        player.addNote(new Pitch('C').toMidiNote(), 132, 4);
+        player.addNote(new Pitch('C').toMidiNote(), 136, 4);
+        player.addNote(new Pitch('C').toMidiNote(), 140, 4);
         //bar 4
-        player.addNote(new Pitch('G'), startTick, numTicks);
-        player.addNote(new Pitch('F'), startTick, numTicks);
-        player.addNote(new Pitch('E'), startTick, numTicks);
-        player.addNote(new Pitch('D'), startTick, numTicks);
-        player.addNote(new Pitch('C'), startTick, numTicks);
+        player.addNote(new Pitch('G').toMidiNote(), 144, 9);
+        player.addNote(new Pitch('F').toMidiNote(), 153, 3);
+        player.addNote(new Pitch('E').toMidiNote(), 156, 9);
+        player.addNote(new Pitch('D').toMidiNote(), 165, 3);
+        player.addNote(new Pitch('C').toMidiNote(), 168, 24);
+                
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        
-
-    }
-    
-    @Test
-    public void test() {
-        fail("Not yet implemented");
     }
     
     @Test
