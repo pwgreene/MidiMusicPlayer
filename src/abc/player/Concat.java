@@ -1,11 +1,10 @@
 package abc.player;
 
 /**
- * Represents a rest in the music that extends for a period of time
- * @author Parker
+ * The joining of two pieces of music
  *
  */
-public class Rest implements Music {
+public class Concat implements Music {
 
     //Abstraction Function:
     //TODO
@@ -14,16 +13,18 @@ public class Rest implements Music {
     //Safety from Rep Exposure:
     //TODO
     
-    private final double duration;
+    private final Music m1;
+    private final Music m2;
     
     /**
-     * Create a new Rest 
-     * @param duration the length for which to rest in beats
+     * Create a new Concat object that joins two pieces of music together
+     * @param m1 the first piece to be played
+     * @param m2 the second piece to be played
      */
-    public Rest(double duration) {
-        this.duration = duration;
+    public Concat(Music m1, Music m2) {
+        this.m1 = m1;
+        this.m2 = m2;
     }
-    
     @Override
     public Music transpose(int semitonesUp) {
         // TODO implement this
@@ -35,5 +36,5 @@ public class Rest implements Music {
         // TODO implement this
         return null;
     }
-    
+
 }
