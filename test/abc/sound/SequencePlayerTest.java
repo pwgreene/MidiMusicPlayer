@@ -61,7 +61,7 @@ public class SequencePlayerTest {
     }
     
     @Test
-    public void piece2() throws MidiUnavailableException, InvalidMidiDataException{
+    public void testPiece2() throws MidiUnavailableException, InvalidMidiDataException{
         SequencePlayer player = new SequencePlayer(200, 12);
         
         // [F# e] 1/8
@@ -134,8 +134,6 @@ public class SequencePlayerTest {
         player.addNote(new Pitch('B').transpose(Pitch.OCTAVE).toMidiNote(), 270, 9);
         //rest till 288
         //Done
-
-        System.out.println(player);
 
         // play!
         player.play();
