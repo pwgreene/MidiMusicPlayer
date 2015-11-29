@@ -7,7 +7,7 @@ package abc.player;
 public interface Music {
     
     //Recursive Data Type Definition:
-    //Music = SingleNote(duration:double, pitch:Pitch) + Rest(double:duration) 
+    //Music = SingleNote(duration:double, pitch:Pitch) + Rest(double:duration)
     //        + Concat(m1:Music, m2: Music) + Layer(m1:Music, m2: Music)
     
     //Abstraction Function:
@@ -16,6 +16,11 @@ public interface Music {
     //TODO
     //Safety from Rep Exposure:
     //TODO
+    
+    /**
+     * Play this piece of music
+     */
+    public void play();
     
     /**
      * Transpose this music piece by a given number of semitones
@@ -31,6 +36,9 @@ public interface Music {
      * @return a new piece of music transposed into the specified key
      */
     public Music inKey(Key key);
+    
+    @Override
+    public String toString();
 }
 
 enum Key {
