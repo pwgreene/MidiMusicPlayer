@@ -44,7 +44,7 @@ public class Rest implements Music {
     @Override
     public String toString() {
         //TODO implement this
-        return null;
+        return "";
     }
     
 }

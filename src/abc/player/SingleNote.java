@@ -50,7 +50,7 @@ public class SingleNote implements Music{
     @Override
     public String toString() {
         //TODO
-        return null;
+        return "";
     }
 
 }
