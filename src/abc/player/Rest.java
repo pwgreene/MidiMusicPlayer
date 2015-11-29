@@ -35,5 +35,16 @@ public class Rest implements Music {
         // TODO implement this
         return null;
     }
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public String toString() {
+        //TODO implement this
+        return null;
+    }
     
 }

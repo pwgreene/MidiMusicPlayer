@@ -3,6 +3,7 @@ package abc.player;
 import java.util.ArrayList;
 
 public class Chord implements Music{
+    
     //Abstraction Function:
     //TODO
     //Rep Invariant:
@@ -32,6 +33,18 @@ public class Chord implements Music{
     public Music inKey(Key key) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+
+    @Override
+    public void play() {
+        // TODO Auto-generated method stub
+    }
+    
+    @Override
+    public String toString() {
+        // TODO implement this
+        return "";
     }
 
 }
