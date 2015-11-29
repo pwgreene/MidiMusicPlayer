@@ -7,8 +7,8 @@ package abc.player;
 public interface Music {
     
     //Recursive Data Type Definition:
-    //Music = SingleNote(duration:double, pitch:Pitch) + Rest(double:duration)
-    //        + Concat(m1:Music, m2: Music) + Layer(m1:Music, m2: Music)
+    //Music = SingleNote(duration:double, pitch:Pitch) + Rest(double:duration) 
+    //        + Concat(m1:Music, m2: Music) + Layer(m1:Music, m2: Music) + Chord(notes:ArrayList<SingleNote>)
     
     //Abstraction Function:
     //TODO
