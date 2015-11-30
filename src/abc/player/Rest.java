@@ -37,7 +37,7 @@ public class Rest implements Music {
     }
 
     @Override
-    public void play() {
+    public void play(int atTick) {
         // TODO Auto-generated method stub
         
     }
@@ -45,6 +45,12 @@ public class Rest implements Music {
     public String toString() {
         //TODO implement this
         return "";
+    }
+
+    @Override
+    public int getDuration() {
+        // TODO Auto-generated method stub
+        return 0;
     }
     
 }

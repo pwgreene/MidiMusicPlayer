@@ -4,7 +4,6 @@ import java.io.File;
 
 /**
  * A piece of music played by one or more instruments
- *
  */
 public interface Music {
     
@@ -31,8 +30,9 @@ public interface Music {
     
     /**
      * Play this piece of music
+     * @param atBeat the beat at which to begin playing the music
      */
-    public void play();
+    public void play(int atBeat);
     
     /**
      * Transpose this music piece by a given number of semitones
@@ -51,6 +51,12 @@ public interface Music {
     
     @Override
     public String toString();
+    
+    /**
+     * Gets the length (duration) of this music piece in ticks
+     * @return the length of this music piece in ticks
+     */
+    public int getDuration();
 }
 
 enum Key {

@@ -6,5 +6,13 @@
 grammar Abc;
 import Configuration;
 
-line: PLUS EOF;
-PLUS: '+';
+line: (meter | default | key | name | tempo | title)* EOF;
+meter:
+default:
+key:
+name:
+tempo:
+title:
+index:
+notes:
+

@@ -37,7 +37,7 @@ public class Chord implements Music{
 
 
     @Override
-    public void play() {
+    public void play(int atTick) {
         // TODO Auto-generated method stub
     }
     

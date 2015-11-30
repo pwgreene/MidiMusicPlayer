@@ -133,7 +133,7 @@ public class SequencePlayerTest {
         player.addNote(new Pitch('D').transpose(Pitch.OCTAVE).toMidiNote(), 264, 6);
         player.addNote(new Pitch('B').transpose(Pitch.OCTAVE).toMidiNote(), 270, 9);
         //rest till 288
-        //Done
+        //Doneg
 
         // play!
         player.play();

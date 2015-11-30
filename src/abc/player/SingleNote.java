@@ -41,16 +41,23 @@ public class SingleNote implements Music{
         return null;
     }
 
-    @Override
-    public void play() {
-        // TODO Auto-generated method stub
-        
-    }
     
     @Override
     public String toString() {
         //TODO
         return "";
+    }
+
+    @Override
+    public void play(int atBeat) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public int getDuration() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }
