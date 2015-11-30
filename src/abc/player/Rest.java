@@ -14,13 +14,13 @@ public class Rest implements Music {
     //Safety from Rep Exposure:
     //TODO
     
-    private final double duration;
+    private final int duration;
     
     /**
      * Create a new Rest 
-     * @param duration the length for which to rest in beats
+     * @param duration the length for which to rest in ticks
      */
-    public Rest(double duration) {
+    public Rest(int duration) {
         this.duration = duration;
     }
     
@@ -49,8 +49,7 @@ public class Rest implements Music {
 
     @Override
     public int getDuration() {
-        // TODO Auto-generated method stub
-        return 0;
+        return duration;
     }
     
 }

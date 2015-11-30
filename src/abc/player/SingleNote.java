@@ -15,7 +15,7 @@ public class SingleNote implements Music{
     //Safety from Rep Exposure:
     //TODO
     
-    private final double duration;
+    private final int duration;
     private final Pitch pitch;
     
     /**
@@ -24,7 +24,7 @@ public class SingleNote implements Music{
      * @param pitch the pitch at which to play this note
      * Must be sharp: '^', flat: '_', or natural: '='
      */
-    public SingleNote(double duration, Pitch pitch) {
+    public SingleNote(int duration, Pitch pitch) {
         this.duration = duration;
         this.pitch = pitch;
     }
@@ -49,15 +49,14 @@ public class SingleNote implements Music{
     }
 
     @Override
-    public void play(int atBeat) {
+    public void play(int atTick) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
     public int getDuration() {
-        // TODO Auto-generated method stub
-        return 0;
+        return duration;
     }
 
 }

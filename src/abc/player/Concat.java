@@ -37,7 +37,7 @@ public class Concat implements Music {
         return null;
     }
     @Override
-    public void play() {
+    public void play(int atTick) {
         // TODO Auto-generated method stub
     }
     
@@ -46,5 +46,9 @@ public class Concat implements Music {
         //TODO implement this
         return "";
     }
-
+    @Override
+    public int getDuration() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

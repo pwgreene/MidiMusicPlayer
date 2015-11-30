@@ -20,6 +20,12 @@ public class Layer implements Music {
         this.m1 = m1;
         this.m2 = m2;
     }
+    
+    @Override
+    public int getDuration() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
      
     @Override
     public Music transpose(int semitonesUp) {
@@ -34,7 +40,7 @@ public class Layer implements Music {
     }
 
     @Override
-    public void play() {
+    public void play(int atTick) {
         // TODO Auto-generated method stub
     }
     
@@ -43,5 +49,6 @@ public class Layer implements Music {
         //TODO implement this
         return "";
     }
+
 
 }
