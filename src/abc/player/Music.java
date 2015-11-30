@@ -1,5 +1,7 @@
 package abc.player;
 
+import java.io.File;
+
 /**
  * A piece of music played by one or more instruments
  *
@@ -16,6 +18,16 @@ public interface Music {
     //TODO
     //Safety from Rep Exposure:
     //TODO
+    
+    /**
+     * Parse an abc file. The file must be in abc format as specified by the project handout.
+     * @param musicFile an abc music file
+     * @return the file parsed into a Music object that can then be played.
+     */
+    public static Music parse(File musicFile) {
+        //TODO implement this
+        return null;
+    }
     
     /**
      * Play this piece of music
