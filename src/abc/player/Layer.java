@@ -1,5 +1,9 @@
 package abc.player;
 
+import abc.sound.SequencePlayer;
+
+// The joining of two pieces of music to be played at the same time
+
 public class Layer implements Music {
     //Abstraction Function:
     //TODO
@@ -34,14 +38,21 @@ public class Layer implements Music {
     }
 
     @Override
-    public void play() {
-        // TODO Auto-generated method stub
-    }
-    
-    @Override
     public String toString() {
         //TODO implement this
         return "";
+    }
+
+    @Override
+    public int getDuration() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public void play(SequencePlayer seqPlayer, int atBeat) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

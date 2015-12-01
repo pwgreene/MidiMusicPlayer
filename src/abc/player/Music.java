@@ -2,6 +2,8 @@ package abc.player;
 
 import java.io.File;
 
+import abc.sound.SequencePlayer;
+
 /**
  * A piece of music played by one or more instruments
  */
@@ -32,7 +34,7 @@ public interface Music {
      * Play this piece of music
      * @param atBeat the beat at which to begin playing the music
      */
-    public void play(int atBeat);
+    public void play(SequencePlayer seqPlayer, int atBeat);
     
     /**
      * Transpose this music piece by a given number of semitones

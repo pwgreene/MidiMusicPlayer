@@ -1,7 +1,9 @@
 package abc.player;
 
+import abc.sound.SequencePlayer;
+
 /**
- * The joining of two pieces of music
+ * The joining of two pieces of music to be played one after another
  *
  */
 public class Concat implements Music {
@@ -36,15 +38,22 @@ public class Concat implements Music {
         // TODO implement this
         return null;
     }
-    @Override
-    public void play() {
-        // TODO Auto-generated method stub
-    }
-    
+
     @Override
     public String toString() {
         //TODO implement this
         return "";
+    }
+
+    @Override
+    public int getDuration() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    @Override
+    public void play(SequencePlayer seqPlayer, int atBeat) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

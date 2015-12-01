@@ -1,5 +1,7 @@
 package abc.player;
 
+import abc.sound.SequencePlayer;
+
 /**
  * Represents a rest in the music that extends for a period of time
  * @author Parker
@@ -37,11 +39,6 @@ public class Rest implements Music {
     }
 
     @Override
-    public void play(int atTick) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
     public String toString() {
         //TODO implement this
         return "";
@@ -51,6 +48,12 @@ public class Rest implements Music {
     public int getDuration() {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    @Override
+    public void play(SequencePlayer seqPlayer, int atBeat) {
+        // TODO Auto-generated method stub
+        
     }
     
 }

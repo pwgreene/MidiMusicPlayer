@@ -1,6 +1,7 @@
 package abc.player;
 
 import abc.sound.Pitch;
+import abc.sound.SequencePlayer;
 
 /**
  * A single note to be played by an instrument
@@ -24,7 +25,7 @@ public class SingleNote implements Music{
      * @param pitch the pitch at which to play this note
      * Must be sharp: '^', flat: '_', or natural: '='
      */
-    public SingleNote(double duration, Pitch pitch) {
+    public SingleNote(double duration, Pitch pitch, Key key) {
         this.duration = duration;
         this.pitch = pitch;
     }
@@ -40,7 +41,6 @@ public class SingleNote implements Music{
         // TODO implement this
         return null;
     }
-
     
     @Override
     public String toString() {
@@ -49,15 +49,15 @@ public class SingleNote implements Music{
     }
 
     @Override
-    public void play(int atBeat) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
     public int getDuration() {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    @Override
+    public void play(SequencePlayer seqPlayer, int atBeat) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

@@ -6,13 +6,9 @@
 grammar Abc;
 import Configuration;
 
-line: (meter | default | key | name | tempo | title)* EOF;
-meter:
-default:
-key:
-name:
-tempo:
-title:
-index:
-notes:
+line: index EOF;
+INDEX: X\: [0-9]+
 
+chord: '[' SINGLENOTE* ']'
+TUPLET: '(3' SINGLENOTE SINGLENOTE SINGLENOTE
+SINGLENOTE: (('^'?'^'?) | ('_'?'_'?)) ([a-g]|[A-G])

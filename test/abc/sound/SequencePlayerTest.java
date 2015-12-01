@@ -131,12 +131,17 @@ public class SequencePlayerTest {
         player.addNote(new Pitch('E').transpose(Pitch.OCTAVE).toMidiNote(), 246, 12);
         player.addNote(new Pitch('C').transpose(Pitch.OCTAVE).toMidiNote(), 258, 6);
         player.addNote(new Pitch('D').transpose(Pitch.OCTAVE).toMidiNote(), 264, 6);
-        player.addNote(new Pitch('B').transpose(Pitch.OCTAVE).toMidiNote(), 270, 9);
+        player.addNote(new Pitch('B').toMidiNote(), 270, 9);
         //rest till 288
         //Doneg
 
         // play!
         player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
 
