@@ -32,9 +32,13 @@ public interface Music {
     
     /**
      * Play this piece of music
-     * @param atBeat the beat at which to begin playing the music
+     * @param atTick the beat at which to begin playing the music
      */
+<<<<<<< HEAD
     public void play(SequencePlayer seqPlayer, int atBeat);
+=======
+    public void play(int atTick);
+>>>>>>> 518e829dbd740a86192712a266159c61273b0302
     
     /**
      * Transpose this music piece by a given number of semitones

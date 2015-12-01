@@ -26,6 +26,11 @@ public class Chord implements Music{
         this.notes = notes;
     }
     
+    @Override
+    public int getDuration() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
     
     @Override
     public Music transpose(int semitonesUp) {
@@ -51,12 +56,19 @@ public class Chord implements Music{
         // TODO Auto-generated method stub
         return 0;
     }
+<<<<<<< HEAD
 
 
+=======
+    
+    
+>>>>>>> 518e829dbd740a86192712a266159c61273b0302
     @Override
     public void play(SequencePlayer seqPlayer, int atBeat) {
         // TODO Auto-generated method stub
         
     }
+
+
 
 }

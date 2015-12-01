@@ -38,22 +38,36 @@ public class Concat implements Music {
         // TODO implement this
         return null;
     }
+<<<<<<< HEAD
 
+=======
+    @Override
+    public void play(int atTick) {
+        // TODO Auto-generated method stub
+    }
+    
+>>>>>>> 518e829dbd740a86192712a266159c61273b0302
     @Override
     public String toString() {
         //TODO implement this
         return "";
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 518e829dbd740a86192712a266159c61273b0302
     @Override
     public int getDuration() {
         // TODO Auto-generated method stub
         return 0;
     }
+<<<<<<< HEAD
     @Override
     public void play(SequencePlayer seqPlayer, int atBeat) {
         // TODO Auto-generated method stub
         
     }
 
+=======
+>>>>>>> 518e829dbd740a86192712a266159c61273b0302
 }
