@@ -20,7 +20,7 @@ public class Rest implements Music {
     
     /**
      * Create a new Rest 
-     * @param duration the length for which to rest in ticks
+     * @param duration the length for which to rest in ticks, must be nonnegative
      */
     public Rest(int duration) {
         this.duration = duration;
@@ -39,12 +39,6 @@ public class Rest implements Music {
     }
 
     @Override
-    public String toString() {
-        //TODO implement this
-        return "";
-    }
-
-    @Override
     public int getDuration() {
         return duration;
     }
@@ -54,5 +48,21 @@ public class Rest implements Music {
         // TODO Auto-generated method stub
         
     }
-    
+
+    @Override
+    public String toString() {
+        //TODO implement this
+        return "";
+    }
+    @Override
+    public boolean equals(Object thatObject) {
+        if ( ! (thatObject instanceof Rest)) { return false; }
+        Rest that = (Rest)thatObject;
+        
+        return this.duration == that.getDuration();
+    }
+    @Override
+    public int hashCode() {
+        return this.duration;
+    }
 }
