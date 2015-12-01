@@ -62,7 +62,3 @@ public interface Music {
     public int getDuration();
 }
 
-enum Key {
-    C_MAJOR, G_MAJOR, D_MAJOR, A_MAJOR, E_MAJOR, B_MAJOR, Fsharp_MAJOR, Csharp_MAJOR,
-    A_MINOR, E_MINOR, B_MINOR, Fsharp_MINOR, Csharp_MINOR, Gsharp_MINOR, Dsharp_MINOR, Asharp_MINOR
-}
