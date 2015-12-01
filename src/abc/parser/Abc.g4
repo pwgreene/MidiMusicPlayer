@@ -6,14 +6,6 @@
 grammar Abc;
 import Configuration;
 
-<<<<<<< HEAD
-line: index EOF;
-INDEX: X\: [0-9]+
-
-chord: '[' SINGLENOTE* ']'
-TUPLET: '(3' SINGLENOTE SINGLENOTE SINGLENOTE
-SINGLENOTE: (('^'?'^'?) | ('_'?'_'?)) ([a-g]|[A-G])
-=======
 abc: x t (l | q | m | c | comment | v)* k body EOF;
 /*HEADER*/
 x: HEADERX INDEX eol;
@@ -57,7 +49,6 @@ body: eol;
 
 BASENOTE: 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b';
 
-
 /*GENERAL:*/
 eol: comment | NEWLINE;
 comment: '%' text NEWLINE;
@@ -66,4 +57,3 @@ NEWLINE: '\n' | '\r' '\n'?;
 
 /* tell Antlr to ignore spaces around tokens. */
 SPACES : [ ]+ -> skip;
->>>>>>> 518e829dbd740a86192712a266159c61273b0302

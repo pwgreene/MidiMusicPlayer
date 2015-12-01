@@ -43,25 +43,11 @@ public class Layer implements Music {
         return null;
     }
 
-    @Override
-<<<<<<< HEAD
-=======
-    public void play(int atTick) {
-        // TODO Auto-generated method stub
-    }
     
     @Override
->>>>>>> 518e829dbd740a86192712a266159c61273b0302
     public String toString() {
         //TODO implement this
         return "";
-    }
-
-<<<<<<< HEAD
-    @Override
-    public int getDuration() {
-        // TODO Auto-generated method stub
-        return 0;
     }
 
     @Override
@@ -69,7 +55,6 @@ public class Layer implements Music {
         // TODO Auto-generated method stub
         
     }
-=======
->>>>>>> 518e829dbd740a86192712a266159c61273b0302
+
 
 }

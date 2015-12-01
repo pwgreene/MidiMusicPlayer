@@ -25,11 +25,8 @@ public class SingleNote implements Music{
      * @param pitch the pitch at which to play this note
      * Must be sharp: '^', flat: '_', or natural: '='
      */
-<<<<<<< HEAD
-    public SingleNote(double duration, Pitch pitch, Key key) {
-=======
-    public SingleNote(int duration, Pitch pitch) {
->>>>>>> 518e829dbd740a86192712a266159c61273b0302
+
+    public SingleNote(int duration, Pitch pitch, Key key) {
         this.duration = duration;
         this.pitch = pitch;
     }
@@ -51,26 +48,14 @@ public class SingleNote implements Music{
         //TODO
         return "";
     }
-
+    
     @Override
-<<<<<<< HEAD
-    public int getDuration() {
-=======
-    public void play(int atTick) {
->>>>>>> 518e829dbd740a86192712a266159c61273b0302
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    @Override
-<<<<<<< HEAD
     public void play(SequencePlayer seqPlayer, int atBeat) {
         // TODO Auto-generated method stub
         
-=======
+    }
     public int getDuration() {
         return duration;
->>>>>>> 518e829dbd740a86192712a266159c61273b0302
     }
 
 }
