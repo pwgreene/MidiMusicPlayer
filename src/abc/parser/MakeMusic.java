@@ -32,29 +32,6 @@ public class MakeMusic implements AbcListener {
         
     }
 
-    @Override
-    public void enterLine(LineContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitLine(LineContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void enterAbc(AbcContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitAbc(AbcContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
     public void enterX(XContext ctx) {
@@ -220,6 +197,18 @@ public class MakeMusic implements AbcListener {
 
     @Override
     public void exitText(TextContext ctx) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void enterRoot(RootContext ctx) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void exitRoot(RootContext ctx) {
         // TODO Auto-generated method stub
         
     }

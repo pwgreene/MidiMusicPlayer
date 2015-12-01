@@ -25,11 +25,11 @@ public class AbcParser extends Parser {
     COMPOSER=16, HEADERV=17, VOICE=18, HEADERK=19, KEYACCIDENTAL=20, MODEMINOR=21, 
     BASENOTE=22, NEWLINE=23, SPACES=24;
   public static final int
-    RULE_abc = 0, RULE_x = 1, RULE_t = 2, RULE_l = 3, RULE_q = 4, RULE_m = 5, 
+    RULE_root = 0, RULE_x = 1, RULE_t = 2, RULE_l = 3, RULE_q = 4, RULE_m = 5, 
     RULE_c = 6, RULE_v = 7, RULE_k = 8, RULE_key = 9, RULE_keynote = 10, 
     RULE_body = 11, RULE_eol = 12, RULE_comment = 13, RULE_text = 14;
   public static final String[] ruleNames = {
-    "abc", "x", "t", "l", "q", "m", "c", "v", "k", "key", "keynote", "body", 
+    "root", "x", "t", "l", "q", "m", "c", "v", "k", "key", "keynote", "body", 
     "eol", "comment", "text"
   };
 
@@ -110,7 +110,7 @@ public class AbcParser extends Parser {
     super(input);
     _interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
   }
-  public static class AbcContext extends ParserRuleContext {
+  public static class RootContext extends ParserRuleContext {
     public XContext x() {
       return getRuleContext(XContext.class,0);
     }
@@ -160,23 +160,23 @@ public class AbcParser extends Parser {
     public VContext v(int i) {
       return getRuleContext(VContext.class,i);
     }
-    public AbcContext(ParserRuleContext parent, int invokingState) {
+    public RootContext(ParserRuleContext parent, int invokingState) {
       super(parent, invokingState);
     }
-    @Override public int getRuleIndex() { return RULE_abc; }
+    @Override public int getRuleIndex() { return RULE_root; }
     @Override
     public void enterRule(ParseTreeListener listener) {
-      if ( listener instanceof AbcListener ) ((AbcListener)listener).enterAbc(this);
+      if ( listener instanceof AbcListener ) ((AbcListener)listener).enterRoot(this);
     }
     @Override
     public void exitRule(ParseTreeListener listener) {
-      if ( listener instanceof AbcListener ) ((AbcListener)listener).exitAbc(this);
+      if ( listener instanceof AbcListener ) ((AbcListener)listener).exitRoot(this);
     }
   }
 
-  public final AbcContext abc() throws RecognitionException {
-    AbcContext _localctx = new AbcContext(_ctx, getState());
-    enterRule(_localctx, 0, RULE_abc);
+  public final RootContext root() throws RecognitionException {
+    RootContext _localctx = new RootContext(_ctx, getState());
+    enterRule(_localctx, 0, RULE_root);
     int _la;
     try {
       enterOuterAlt(_localctx, 1);

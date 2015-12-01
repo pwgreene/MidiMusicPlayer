@@ -19,13 +19,13 @@ public class AbcBaseListener implements AbcListener {
    *
    * <p>The default implementation does nothing.</p>
    */
-  @Override public void enterAbc(AbcParser.AbcContext ctx) { }
+  @Override public void enterRoot(AbcParser.RootContext ctx) { }
   /**
    * {@inheritDoc}
    *
    * <p>The default implementation does nothing.</p>
    */
-  @Override public void exitAbc(AbcParser.AbcContext ctx) { }
+  @Override public void exitRoot(AbcParser.RootContext ctx) { }
   /**
    * {@inheritDoc}
    *

@@ -11,15 +11,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface AbcListener extends ParseTreeListener {
   /**
-   * Enter a parse tree produced by {@link AbcParser#abc}.
+   * Enter a parse tree produced by {@link AbcParser#root}.
    * @param ctx the parse tree
    */
-  void enterAbc(AbcParser.AbcContext ctx);
+  void enterRoot(AbcParser.RootContext ctx);
   /**
-   * Exit a parse tree produced by {@link AbcParser#abc}.
+   * Exit a parse tree produced by {@link AbcParser#root}.
    * @param ctx the parse tree
    */
-  void exitAbc(AbcParser.AbcContext ctx);
+  void exitRoot(AbcParser.RootContext ctx);
   /**
    * Enter a parse tree produced by {@link AbcParser#x}.
    * @param ctx the parse tree

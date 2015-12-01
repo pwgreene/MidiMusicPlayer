@@ -6,7 +6,7 @@
 grammar Abc;
 import Configuration;
 
-abc: x t (l | q | m | c | comment | v)* k body EOF;
+root: x t (l | q | m | c | comment | v)* k body EOF;
 /*HEADER*/
 x: HEADERX INDEX eol;
 HEADERX: 'X:';
