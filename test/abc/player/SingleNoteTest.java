@@ -20,9 +20,6 @@ public class SingleNoteTest {
     //duration is 0, 1, >1
     //Pitch = lower octave, middle octave, high octave
     
-    //transpose():
-    //semitonesUp = negative, 0, positive
-    
     //toString():
     //duration is 1, >1
     //Pitch = lower octave, middle octave, high octave
