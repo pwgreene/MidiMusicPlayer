@@ -36,7 +36,6 @@ public class Chord implements Music{
         return chord;
     }
 
-
     @Override
     public int getDuration() {
         int maxDuration = 0;
@@ -52,7 +51,7 @@ public class Chord implements Music{
     @Override
     public void play(SequencePlayer seqPlayer, int atTick) {
         for(SingleNote note: notes){
-            seqPlayer.addNote(note.getPitch().toMidiNote(), atTick, note.getDuration());
+            note.play(seqPlayer, atTick);
         }
     }
 
