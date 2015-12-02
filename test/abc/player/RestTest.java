@@ -4,7 +4,12 @@ package abc.player;
 
 import static org.junit.Assert.*;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+
 import org.junit.Test;
+
+import abc.sound.SequencePlayer;
 
 public class RestTest {
 
@@ -20,13 +25,6 @@ public class RestTest {
     //rest duration is 0, 1, >1
     
     @Test
-    public void testRestDurationZero() {
-        Music rest = new Rest(0);
-        assertEquals("", rest.toString());
-        assertEquals(0, rest.getDuration());
-    }
-    
-    @Test
     public void testRestDurationOne() {
         Music rest = new Rest(1);
         assertEquals("z1", rest.toString());
@@ -40,28 +38,15 @@ public class RestTest {
         assertEquals(5, rest.getDuration());
     }
     
-    //transpose():
-    //transpose by semitonesUp = <0, 0, >0
-    
-    @Test
-    public void testDurationTransposeNegative() {
-        Music rest = new Rest(5);
-        Music rest2 = rest.transpose(-1);
-        assertEquals("z", rest2.toString());
-    }
-    @Test
-    public void testDurationTransposeZero() {
-        Music rest = new Rest(5);
-        Music rest2 = rest.transpose(0);
-        assertEquals("z", rest2.toString());
-    }
-    @Test
-    public void testDurationTransposePositive() {
-        Music rest = new Rest(5);
-        Music rest2 = rest.transpose(3);
-        assertEquals("-", rest2.toString());
-    }
-    
     //play():
-    //No way to test this?
+    //duration = 1, >1
+    //atTick = 0, >0
+    @Test
+    public void testRestPlayDurationOne() throws MidiUnavailableException, InvalidMidiDataException {
+        Music rest = new Rest(1);
+        SequencePlayer player = new SequencePlayer(100, 4);
+        System.out.println(player.toString());
+        rest.play(player, 0);
+        assertEquals("", player.toString());
+    }
 }

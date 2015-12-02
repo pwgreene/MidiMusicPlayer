@@ -32,16 +32,13 @@ public class Rest implements Music {
     }
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
+    public void play(SequencePlayer seqPlayer, int atTick) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
     public String toString() {
-        if (duration == 0) {
-            return "";
-        }
         return "z"+duration;
     }
     @Override

@@ -1,5 +1,7 @@
 package abc.player;
 
+import org.junit.Test;
+
 //This class tests the SingleNote class in abc.player
 
 public class SingleNoteTest {
@@ -22,7 +24,28 @@ public class SingleNoteTest {
     //semitonesUp = negative, 0, positive
     
     //toString():
-    //rest duration is 0, 1, >1
+    //duration is 1, >1
     //Pitch = lower octave, middle octave, high octave
     //TODO tests depend on toString() specification
+    
+    @Test
+    public void testToStringDurationOne() {
+        
+    }
+    @Test
+    public void testToStringDurationGreaterThanOne() {
+        
+    }
+    @Test
+    public void testToStringLowerOctave() {
+        
+    }
+    @Test
+    public void testToStringMiddleOctave() {
+        
+    }
+    @Test
+    public void testToStringHigherOctave() {
+        
+    }
 }
