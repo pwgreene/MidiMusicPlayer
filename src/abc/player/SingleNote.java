@@ -48,16 +48,20 @@ public class SingleNote implements Music{
     
     @Override
     public String toString() {
-        //TODO
-        return "";
+        return this.getPitch().toString();
     }
     
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
-        // TODO Auto-generated method stub      
+    public void play(SequencePlayer seqPlayer, int atTick) {
+        seqPlayer.addNote(this.getPitch().toMidiNote(), atTick, this.getDuration());   
     }
+    
     public int getDuration() {
         return duration;
     }
 
+    public Pitch getPitch(){
+        return this.pitch;
+    }
+    
 }

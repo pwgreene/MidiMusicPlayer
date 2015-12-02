@@ -1,5 +1,7 @@
 package abc.player;
 
+//This class tests the Rest class in abc.player
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
