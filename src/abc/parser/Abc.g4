@@ -41,11 +41,11 @@ k: 'K:' key eol;
 HEADERK: 'K:';
 key: keynote MODEMINOR?;
 keynote: BASENOTE KEYACCIDENTAL?;
-KEYACCIDENTAL: 'X' | 'b';
+KEYACCIDENTAL: '#' | 'b';
 MODEMINOR: 'm';
 
 /*BODY OF MUSIC*/
-body: eol;
+body: abcmusic eol;
 abcmusic: abcline+;
 abcline: element+ NEWLINE | midtunefield | comment;
 element: noteelement | tupletelement | BARLINE | NTHREPEAT | WHITESPACE;
