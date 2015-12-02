@@ -29,14 +29,14 @@ public class RestTest {
     @Test
     public void testRestDurationOne() {
         Music rest = new Rest(1);
-        assertEquals("-", rest.toString());
+        assertEquals("z1", rest.toString());
         assertEquals(1, rest.getDuration());
     }
     
     @Test
     public void testRestDurationGreaterThanOne() {
         Music rest = new Rest(5);
-        assertEquals("- - - - -", rest.toString());
+        assertEquals("z5", rest.toString());
         assertEquals(5, rest.getDuration());
     }
     
@@ -47,13 +47,13 @@ public class RestTest {
     public void testDurationTransposeNegative() {
         Music rest = new Rest(5);
         Music rest2 = rest.transpose(-1);
-        assertEquals("-", rest2.toString());
+        assertEquals("z", rest2.toString());
     }
     @Test
     public void testDurationTransposeZero() {
         Music rest = new Rest(5);
         Music rest2 = rest.transpose(0);
-        assertEquals("-", rest2.toString());
+        assertEquals("z", rest2.toString());
     }
     @Test
     public void testDurationTransposePositive() {
