@@ -1,5 +1,8 @@
 package abc.player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Key {
 
     C_MAJOR, G_MAJOR, D_MAJOR, A_MAJOR, E_MAJOR, B_MAJOR, Fs_MAJOR, Cs_MAJOR,
@@ -8,6 +11,7 @@ public enum Key {
     D_MINOR, G_MINOR, C_MINOR, F_MINOR, Bb_MINOR, Eb_MINOR, Ab_MINOR;
 
     private int[] accidentals;
+    public Map<Character, Integer> letterIndices = new HashMap<>();
     
     /**
      * The accidental array corresponds to the accidentals on the notes [A,B,C,D,E,F,G]

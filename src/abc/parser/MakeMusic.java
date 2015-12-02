@@ -5,9 +5,12 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import abc.parser.AbcParser.*;
+import abc.player.Key;
 
 public class MakeMusic implements AbcListener {
 
+    Key keySignature;
+    
     @Override
     public void enterEveryRule(ParserRuleContext arg0) {
         // TODO Auto-generated method stub
