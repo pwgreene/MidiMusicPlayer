@@ -23,14 +23,12 @@ public class SingleNote implements Music{
      * Create a new instance of a SingleNote
      * @param duration the duration to play this note in ticks. Must be positive.
      * @param pitch the pitch at which to play this note
-     * @param key the key in which this note is written
      * Must be sharp: '^', flat: '_', or natural: '='
      */
 
-    public SingleNote(int duration, Pitch pitch, Key key) {
+    public SingleNote(int duration, Pitch pitch) {
         this.duration = duration;
-        //TODO change pitch bsaed on key
-        this.pitch = pitch; 
+        this.pitch = pitch;
     }
     
     
