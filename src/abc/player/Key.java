@@ -61,7 +61,7 @@ public enum Key {
         Ab_MINOR.accidentals =new int[]{-1,-1,-1,-1,-1,-1,-1};
     }
     
-    public int[] accidentals(Key key) {
+    public static int[] accidentals(Key key) {
         return key.accidentals;
     }
 }

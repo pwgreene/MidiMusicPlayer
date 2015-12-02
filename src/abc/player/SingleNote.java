@@ -21,41 +21,47 @@ public class SingleNote implements Music{
     
     /**
      * Create a new instance of a SingleNote
-     * @param duration the duration to play this note in beats
+     * @param duration the duration to play this note in ticks. Must be positive.
      * @param pitch the pitch at which to play this note
      * Must be sharp: '^', flat: '_', or natural: '='
      */
 
-    public SingleNote(int duration, Pitch pitch, Key key) {
+    public SingleNote(int duration, Pitch pitch) {
         this.duration = duration;
         this.pitch = pitch;
     }
     
-    @Override
-    public Music transpose(int semitonesUp) {
-        // TODO implement this
-        return null;
-    }
-
-    @Override
-    public Music inKey(Key key) {
-        // TODO implement this
-        return null;
-    }
     
     @Override
     public String toString() {
-        //TODO
-        return "";
+        return this.getPitch().toString();
     }
     
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
-        // TODO Auto-generated method stub
-        
+    public void play(SequencePlayer seqPlayer, int atTick) {
+        seqPlayer.addNote(this.getPitch().toMidiNote(), atTick, this.getDuration());   
     }
+    
     public int getDuration() {
         return duration;
     }
 
+    public Pitch getPitch(){
+        return this.pitch;
+    }
+    
+    @Override
+    public boolean equals(Object thatObject) {
+        if ( ! (thatObject instanceof SingleNote)) { return false; }
+        SingleNote that = (SingleNote)thatObject;
+        
+        return this.duration == that.getDuration() && this.pitch.equals(that.getPitch());
+    }
+    
+    @Override
+    public int hashCode() {
+        return this.duration;
+    }
+    
+    
 }

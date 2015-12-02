@@ -27,35 +27,32 @@ public class Chord implements Music{
     }
     
     @Override
-    public Music transpose(int semitonesUp) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Music inKey(Key key) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    @Override
     public String toString() {
-        // TODO implement this
-        return "";
+        String chord = "[";
+        for(SingleNote note: notes){
+            chord = chord + note.toString();
+        }
+        chord += "]";
+        return chord;
     }
-
 
     @Override
     public int getDuration() {
-        // TODO Auto-generated method stub
-        return 0;
+        int maxDuration = 0;
+        for(SingleNote note: notes){
+            if(note.getDuration() > maxDuration){
+                maxDuration = note.getDuration(); 
+            }
+        }
+        return maxDuration;
     }
 
     
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
-        // TODO Auto-generated method stub
-        
+    public void play(SequencePlayer seqPlayer, int atTick) {
+        for(SingleNote note: notes){
+            note.play(seqPlayer, atTick);
+        }
     }
 
 }

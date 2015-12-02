@@ -25,18 +25,6 @@ public class Rest implements Music {
     public Rest(int duration) {
         this.duration = duration;
     }
-    
-    @Override
-    public Music transpose(int semitonesUp) {
-        // TODO implement this
-        return null;
-    }
-
-    @Override
-    public Music inKey(Key key) {
-        // TODO implement this
-        return null;
-    }
 
     @Override
     public int getDuration() {
@@ -44,15 +32,14 @@ public class Rest implements Music {
     }
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
+    public void play(SequencePlayer seqPlayer, int atTick) {
         // TODO Auto-generated method stub
         
     }
 
     @Override
     public String toString() {
-        //TODO implement this
-        return "";
+        return "z"+duration;
     }
     @Override
     public boolean equals(Object thatObject) {

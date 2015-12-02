@@ -27,34 +27,21 @@ public class Concat implements Music {
         this.m1 = m1;
         this.m2 = m2;
     }
-    @Override
-    public Music transpose(int semitonesUp) {
-        // TODO implement this
-        return null;
-    }
-
-    @Override
-    public Music inKey(Key key) {
-        // TODO implement this
-        return null;
-    }
 
     @Override
     public String toString() {
-        //TODO implement this
-        return "";
+        return m1.toString()+ " " +m2.toString();
     }
 
     @Override
     public int getDuration() {
-        // TODO Auto-generated method stub
-        return 0;
+        return m1.getDuration() + m2.getDuration();
     }
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
-        // TODO Auto-generated method stub
-        
+    public void play(SequencePlayer seqPlayer, int atTick) {
+       m1.play(seqPlayer, atTick);
+       m2.play(seqPlayer, atTick+m1.getDuration());
     }
 
 }
