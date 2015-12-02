@@ -55,7 +55,6 @@ public class Chord implements Music{
     @Override
     public void play(SequencePlayer seqPlayer, int atBeat) {
         // TODO Auto-generated method stub
-        
     }
 
 }

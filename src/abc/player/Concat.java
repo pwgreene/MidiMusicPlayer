@@ -41,19 +41,17 @@ public class Concat implements Music {
 
     @Override
     public String toString() {
-        //TODO implement this
-        return "";
+        return "["+m1.toString()+m2.toString()+"]";
     }
 
     @Override
     public int getDuration() {
-        // TODO Auto-generated method stub
-        return 0;
+        return m1.getDuration() + m2.getDuration();
     }
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
-        // TODO Auto-generated method stub
+    public void play(SequencePlayer seqPlayer, int atTick) {
+       //TODO
         
     }
 
