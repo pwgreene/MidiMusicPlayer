@@ -18,7 +18,6 @@ public class SingleNote implements Music{
     
     private final int duration;
     private final Pitch pitch;
-    private final Key key;
     
     /**
      * Create a new instance of a SingleNote
@@ -30,8 +29,8 @@ public class SingleNote implements Music{
 
     public SingleNote(int duration, Pitch pitch, Key key) {
         this.duration = duration;
-        this.pitch = pitch;
-        this.key = key;
+        //TODO change pitch bsaed on key
+        this.pitch = pitch; 
     }
     
     
@@ -60,6 +59,7 @@ public class SingleNote implements Music{
         
         return this.duration == that.getDuration() && this.pitch.equals(that.getPitch());
     }
+    
     @Override
     public int hashCode() {
         return this.duration;
