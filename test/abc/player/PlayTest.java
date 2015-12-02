@@ -40,4 +40,8 @@ public class PlayTest {
         rest.play(player, 5);
         assertEquals("Meta event: END_OF_TRACK Tick: 0\n", player.toString());
     }
+    
+  //Chord.play():
+    //# of notes: 2, >2
+    //Notes of the same/different durations 
 }

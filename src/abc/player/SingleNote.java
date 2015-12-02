@@ -34,7 +34,7 @@ public class SingleNote implements Music{
     
     @Override
     public String toString() {
-        return this.getPitch().toString();
+        return this.getPitch().toString()+duration;
     }
     
     @Override

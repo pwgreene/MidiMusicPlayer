@@ -1,6 +1,6 @@
 package abc.player;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import abc.sound.SequencePlayer;
 
@@ -15,14 +15,14 @@ public class Chord implements Music{
     //Safety from Rep Exposure:
     //TODO
     
-    private final ArrayList<SingleNote> notes;
+    private final List<SingleNote> notes;
     
     /**
      * Create a new Chord object that joins two or more different musics
      * @param m1 the first voice to be played
      * @param m2 the second voice to be played
      */
-    public Chord(ArrayList<SingleNote> notes) {
+    public Chord(List<SingleNote> notes) {
         this.notes = notes;
     }
     

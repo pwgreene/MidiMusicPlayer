@@ -37,9 +37,6 @@ public interface Music {
      */
     public void play(SequencePlayer seqPlayer, int atTick);
     
-    @Override
-    public String toString();
-    
     /**
      * Gets the length (duration) of this music piece in ticks
      * @return the length of this music piece in ticks

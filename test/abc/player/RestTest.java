@@ -16,13 +16,13 @@ public class RestTest {
     /*Testing Strategy*/
     
     //Constructor:
-    //duration = 0, 1, >1
+    //duration = 1, >1
     
     //toString():
-    //rest duration is 0, 1, >1
+    //rest duration is 1, >1
     
     //getDuration():
-    //rest duration is 0, 1, >1
+    //rest duration is 1, >1
     
     @Test
     public void testRestDurationOne() {
