@@ -42,23 +42,23 @@ public enum Key {
         F_MAJOR.accidentals = new int[]{ 0,-1, 0, 0, 0, 0, 0};
         D_MINOR.accidentals = new int[]{ 0,-1, 0, 0, 0, 0, 0};
         
-        Bb_MAJOR.accidentals =new int[]{ 0,-1, 0, 0, -1, 0, 0};
-        G_MINOR.accidentals = new int[]{ 0,-1, 0, 0, -1, 0, 0};
+        Bb_MAJOR.accidentals =new int[]{ 0,-1, 0, 0,-1, 0, 0};
+        G_MINOR.accidentals = new int[]{ 0,-1, 0, 0,-1, 0, 0};
         
-        Eb_MAJOR.accidentals =new int[]{-1,-1, 0, 0, -1, 0, 0};
-        C_MINOR.accidentals = new int[]{-1,-1, 0, 0, -1, 0, 0};
+        Eb_MAJOR.accidentals =new int[]{-1,-1, 0, 0,-1, 0, 0};
+        C_MINOR.accidentals = new int[]{-1,-1, 0, 0,-1, 0, 0};
         
-        Ab_MAJOR.accidentals =new int[]{-1,-1, 0, -1, -1, 0, 0};
-        F_MINOR.accidentals = new int[]{-1,-1, 0, -1, -1, 0, 0};
+        Ab_MAJOR.accidentals =new int[]{-1,-1, 0,-1,-1, 0, 0};
+        F_MINOR.accidentals = new int[]{-1,-1, 0,-1,-1, 0, 0};
         
-        Db_MAJOR.accidentals =new int[]{-1,-1, 0, -1, -1, 0,-1};
-        Bb_MINOR.accidentals =new int[]{-1,-1, 0, -1, -1, 0,-1};
+        Db_MAJOR.accidentals =new int[]{-1,-1, 0,-1,-1, 0,-1};
+        Bb_MINOR.accidentals =new int[]{-1,-1, 0,-1,-1, 0,-1};
         
-        Gb_MAJOR.accidentals =new int[]{-1,-1, -1, -1, -1, 0,-1};
-        Eb_MINOR.accidentals =new int[]{-1,-1, -1, -1, -1, 0,-1};
+        Gb_MAJOR.accidentals =new int[]{-1,-1,-1,-1,-1, 0,-1};
+        Eb_MINOR.accidentals =new int[]{-1,-1,-1,-1,-1, 0,-1};
         
-        Cb_MAJOR.accidentals =new int[]{-1,-1, -1, -1, -1, -1,-1};
-        Ab_MINOR.accidentals =new int[]{-1,-1, -1, -1, -1, -1,-1};
+        Cb_MAJOR.accidentals =new int[]{-1,-1,-1,-1,-1,-1,-1};
+        Ab_MINOR.accidentals =new int[]{-1,-1,-1,-1,-1,-1,-1};
     }
     
     public int[] accidentals(Key key) {
