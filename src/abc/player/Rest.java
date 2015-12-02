@@ -51,8 +51,10 @@ public class Rest implements Music {
 
     @Override
     public String toString() {
-        //TODO implement this
-        return "";
+        if (duration == 0) {
+            return "";
+        }
+        return "z"+duration;
     }
     @Override
     public boolean equals(Object thatObject) {
