@@ -37,21 +37,6 @@ public interface Music {
      */
     public void play(SequencePlayer seqPlayer, int atTick);
     
-    /**
-     * Transpose this music piece by a given number of semitones
-     * @param semitonesUp an integer representing the number of semitones by which to transpose
-     * this piece of music. A positive number shifts it up, a negative number shifts it down
-     * @return a new piece of music transposed by semitonesUp semitones.
-     */
-    public Music transpose(int semitonesUp);
-    
-    /**
-     * Changes all notes in the piece to the specified key
-     * @param key the key to play this piece in
-     * @return a new piece of music transposed into the specified key
-     */
-    public Music inKey(Key key);
-    
     @Override
     public String toString();
     

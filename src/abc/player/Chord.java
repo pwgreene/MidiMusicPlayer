@@ -27,18 +27,6 @@ public class Chord implements Music{
     }
     
     @Override
-    public Music transpose(int semitonesUp) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Music inKey(Key key) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
-    @Override
     public String toString() {
         String chord = "[";
         for(SingleNote note: notes){

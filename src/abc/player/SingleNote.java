@@ -34,17 +34,6 @@ public class SingleNote implements Music{
         this.key = key;
     }
     
-    @Override
-    public Music transpose(int semitonesUp) {
-        // TODO implement this
-        return null;
-    }
-
-    @Override
-    public Music inKey(Key key) {
-        // TODO implement this
-        return null;
-    }
     
     @Override
     public String toString() {
@@ -63,5 +52,18 @@ public class SingleNote implements Music{
     public Pitch getPitch(){
         return this.pitch;
     }
+    
+    @Override
+    public boolean equals(Object thatObject) {
+        if ( ! (thatObject instanceof SingleNote)) { return false; }
+        SingleNote that = (SingleNote)thatObject;
+        
+        return this.duration == that.getDuration() && this.pitch.equals(that.getPitch());
+    }
+    @Override
+    public int hashCode() {
+        return this.duration;
+    }
+    
     
 }
