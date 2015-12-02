@@ -13,56 +13,6 @@ public class MakeMusic implements AbcListener {
     
 
     //Invariant:
-    //
-    
-    @Override
-    public void enterEveryRule(ParserRuleContext arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitEveryRule(ParserRuleContext arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void visitErrorNode(ErrorNode arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void visitTerminal(TerminalNode arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public void enterX(XContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitX(XContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void enterT(TContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitT(TContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
 
     
     @Override public void enterEveryRule(ParserRuleContext arg0) {} //These are not used
