@@ -30,18 +30,7 @@ public class Layer implements Music {
         // TODO Auto-generated method stub
         return 0;
     }
-     
-    @Override
-    public Music transpose(int semitonesUp) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
-    @Override
-    public Music inKey(Key key) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     
     @Override
@@ -51,9 +40,9 @@ public class Layer implements Music {
     }
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atBeat) {
-        // TODO Auto-generated method stub
-        
+    public void play(SequencePlayer seqPlayer, int atTick) {
+        m1.play(seqPlayer, atTick);
+        m2.play(seqPlayer, atTick);
     }
 
 
