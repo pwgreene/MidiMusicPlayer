@@ -41,7 +41,7 @@ k: 'K:' key eol;
 HEADERK: 'K:';
 key: keynote MODEMINOR?;
 keynote: BASENOTE KEYACCIDENTAL?;
-KEYACCIDENTAL: 'X' | 'b';
+KEYACCIDENTAL: '#' | 'b';
 MODEMINOR: 'm';
 
 /*BODY OF MUSIC*/

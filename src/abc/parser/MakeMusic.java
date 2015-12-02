@@ -8,73 +8,42 @@ import abc.parser.AbcParser.*;
 
 public class MakeMusic implements AbcListener {
 
-    @Override
-    public void enterEveryRule(ParserRuleContext arg0) {
-        // TODO Auto-generated method stub
-        
-    }
+    //Invariant:
+    //
+    
+    @Override public void enterEveryRule(ParserRuleContext arg0) {} //These are not used
+    @Override public void exitEveryRule(ParserRuleContext arg0) {}
+    @Override public void visitErrorNode(ErrorNode arg0) {}
+    @Override public void visitTerminal(TerminalNode arg0) {}
+    @Override public void enterX(XContext ctx) {} //Do nothing with the index number
+    @Override public void exitX(XContext ctx) {} 
+    @Override public void enterT(TContext ctx) {} //Do nothing with the title
+    @Override public void exitT(TContext ctx) {} 
+    @Override public void enterC(CContext ctx) {} //Do nothing with the composer
+    @Override public void exitC(CContext ctx) {} 
+    @Override public void enterK(KContext ctx) {} //Do nothing when entering K 
+    @Override public void exitK(KContext ctx) {} 
+    @Override public void enterComment(CommentContext ctx) {} //Do nothing with comments
+    @Override public void exitComment(CommentContext ctx) {}
+    @Override public void enterText(TextContext ctx) {} //Do nothing with comment text
+    @Override public void exitText(TextContext ctx) {}
 
     @Override
-    public void exitEveryRule(ParserRuleContext arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void visitErrorNode(ErrorNode arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void visitTerminal(TerminalNode arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public void enterX(XContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitX(XContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void enterT(TContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitT(TContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
+    //Default length of note
     public void enterL(LContext ctx) {
         // TODO Auto-generated method stub
-        
     }
-
     @Override
     public void exitL(LContext ctx) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
+    //Tempo
     public void enterQ(QContext ctx) {
         // TODO Auto-generated method stub
         
     }
-
     @Override
     public void exitQ(QContext ctx) {
         // TODO Auto-generated method stub
@@ -82,11 +51,11 @@ public class MakeMusic implements AbcListener {
     }
 
     @Override
+    //Meter
     public void enterM(MContext ctx) {
         // TODO Auto-generated method stub
         
     }
-
     @Override
     public void exitM(MContext ctx) {
         // TODO Auto-generated method stub
@@ -94,40 +63,18 @@ public class MakeMusic implements AbcListener {
     }
 
     @Override
-    public void enterC(CContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitC(CContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
+    //Voice
     public void enterV(VContext ctx) {
         // TODO Auto-generated method stub
         
     }
-
     @Override
     public void exitV(VContext ctx) {
         // TODO Auto-generated method stub
         
     }
 
-    @Override
-    public void enterK(KContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitK(KContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+   
 
     @Override
     public void enterKey(KeyContext ctx) {
@@ -177,29 +124,8 @@ public class MakeMusic implements AbcListener {
         
     }
 
-    @Override
-    public void enterComment(CommentContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+ 
 
-    @Override
-    public void exitComment(CommentContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void enterText(TextContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void exitText(TextContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
 
     @Override
     public void enterRoot(RootContext ctx) {
