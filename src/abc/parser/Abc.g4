@@ -46,14 +46,42 @@ MODEMINOR: 'm';
 
 /*BODY OF MUSIC*/
 body: eol;
+abcmusic: abcline+;
+abcline: element+ NEWLINE | midtunefield | comment;
+element: noteelement | tupletelement | BARLINE | NTHREPEAT | WHITESPACE;
+
+noteelement: note | multinote;
+
+note: noteorrest notelength?;
+noteorrest: pitch | rest;
+pitch: ACCIDENTAL? BASENOTE octave?;
+octave: '\''+ | ','+;
+notelength: (DIGIT+)? ('/' (DIGIT+)?)?;
+notelengthstrict: DIGIT+ '/' DIGIT+;
+
+ACCIDENTAL: '^' | '^^' | '_' | '__' | '=';
+
+rest: 'z';
+
+tupletelement: tupletspec noteelement+;
+tupletspec: '(' DIGIT; 
+
+multinote: '[' note+ ']';
+
+BARLINE: '|' | '||' | '[|' | '|]' | ':|' | '|:';
+NTHREPEAT: '[1' | '[2';
+
+midtunefield: v;
 
 BASENOTE: 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b';
+DIGIT: [0-9];
 
 /*GENERAL:*/
 eol: comment | NEWLINE;
 comment: '%' text NEWLINE;
 text: .*;
 NEWLINE: '\n' | '\r' '\n'?;
+WHITESPACE: ' ' | '\t';
 
 /* tell Antlr to ignore spaces around tokens. */
-SPACES : [ ]+ -> skip;
+/*SPACES : [ ]+ -> skip;*/
