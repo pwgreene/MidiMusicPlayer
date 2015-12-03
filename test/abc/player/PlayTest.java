@@ -44,4 +44,10 @@ public class PlayTest {
   //Chord.play():
     //# of notes: 2, >2
     //Notes of the same/different durations 
+    
+    //SingleNote.play()
+    
+    //Concat.play()
+    
+    //Layer.play()
 }

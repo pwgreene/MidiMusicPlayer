@@ -30,6 +30,11 @@ public class Concat implements Music {
 
     @Override
     public String toString() {
+        //are m1 and m2 both rests?
+        if (this.isResting()) {
+            //yes, so combine their durations
+            return "z"+this.getDuration();
+        }
         return m1.toString()+ " " +m2.toString();
     }
 

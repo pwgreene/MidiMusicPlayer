@@ -23,6 +23,7 @@ public class Layer implements Music {
      * @param m2 the second voice to be played
      */
     public Layer(Music m1, Music m2, String voiceName1, String voiceName2) {
+        //TODO: what about the case where its m1 or m2 is also a Layer? How would you do voiceNames?
         this.m1 = m1;
         this.m2 = m2;
         this.v1Name = voiceName1;
