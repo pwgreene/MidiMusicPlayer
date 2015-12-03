@@ -55,4 +55,9 @@ public class Chord implements Music{
         }
     }
 
+    @Override
+    public boolean isResting() {
+        return false;
+    }
+
 }

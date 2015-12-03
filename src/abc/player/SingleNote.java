@@ -62,6 +62,12 @@ public class SingleNote implements Music{
     public int hashCode() {
         return this.duration;
     }
+
+
+    @Override
+    public boolean isResting() {
+        return false;
+    }
     
     
 }

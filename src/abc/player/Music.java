@@ -42,5 +42,12 @@ public interface Music {
      * @return the length of this music piece in ticks
      */
     public int getDuration();
+    
+    /**
+     * Check to see if this piece of music is going to play
+     * @return true if this piece of music isn't playing anything, false if it is.
+     */
+    public boolean isResting();
+    
 }
 

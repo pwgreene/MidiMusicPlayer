@@ -48,4 +48,9 @@ public class Layer implements Music {
         m1.play(seqPlayer, atTick);
         m2.play(seqPlayer, atTick);
     }
+
+    @Override
+    public boolean isResting() {
+        return m1.isResting() && m2.isResting();
+    }
 }

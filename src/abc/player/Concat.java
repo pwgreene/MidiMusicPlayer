@@ -44,4 +44,9 @@ public class Concat implements Music {
        m2.play(seqPlayer, atTick+m1.getDuration());
     }
 
+    @Override
+    public boolean isResting() {
+        return m1.isResting() && m2.isResting();
+    }
+
 }
