@@ -15,10 +15,8 @@ public class ConcatTest {
     /*Testing Strategy*/
     
     //Constructor and toString():
-    //2 rests, 2 SingleNotes, a rest and a SingleNote, two chords
-    //2 Concats
-    //2 Layers
-    //combinations of the above
+    //2 rests, 2 SingleNotes, 2 Chords, 2 Concats, 2 Layers
+    //combinations of the Rest/SingleNote/Chord/Layer/Concat
     
     //getDuration():
     //same partitions as above
@@ -57,12 +55,56 @@ public class ConcatTest {
         assertEquals("C'3 G4", music.toString());
         assertEquals(7, music.getDuration());
     }
-    @Test
+    @Test //Concat(Chord, Chord)
     public void testTwoChords() {
         SingleNote noteC = new SingleNote(3, new Pitch('C').transpose(12));
         SingleNote noteD = new SingleNote(4, new Pitch('D'));
         Music chord1 = new Chord(Arrays.asList(noteC, noteD));
         Music music = new Concat(chord1, chord1);
         assertEquals("[C'3D4] [C'3D4]", music.toString());
+        assertEquals(8, music.getDuration());
+    }
+    @Test //Concat(Chord, SingleNote)
+    public void testChordAndSingleNote() {
+        SingleNote noteC = new SingleNote(3, new Pitch('C').transpose(12));
+        SingleNote noteG = new SingleNote(4, new Pitch('G'));
+        Music chord1 = new Chord(Arrays.asList(noteC, noteG));
+        Music music = new Concat(chord1, noteG);
+        assertEquals("[C'3G4] G4", music.toString());
+        assertEquals(8, music.getDuration());
+    }
+    @Test //Concat(Concat, Concat)
+    public void testTwoConcat() {
+        SingleNote noteC = new SingleNote(3, new Pitch('C').transpose(12));
+        SingleNote noteG = new SingleNote(4, new Pitch('G'));
+        SingleNote noteA = new SingleNote(6, new Pitch('A'));
+        Music chord1 = new Chord(Arrays.asList(noteC, noteG));
+        Music concat1 = new Concat(chord1, noteG); //[C'3G4] G4
+        Music concat2 = new Concat(noteG, noteA); //G4 A6
+        Music music = new Concat(concat1, concat2);
+        assertEquals("[C'3G4] G4 G4 A6", music.toString());
+        assertEquals(18, music.getDuration());
+    }
+    @Test
+    public void testConcatAndSingleNote() {
+        SingleNote noteG = new SingleNote(4, new Pitch('G'));
+        SingleNote noteA = new SingleNote(6, new Pitch('A'));
+        Music concat = new Concat(noteG, noteG); //[C'3G4] G4
+        Music music = new Concat(noteA, concat); //G4 A6
+        assertEquals("A6 G4 G4", music.toString());
+        assertEquals(14, music.getDuration());
+    }
+    @Test //Concat(Layer, Layer)
+    public void testTwoLayers() {
+        SingleNote noteC = new SingleNote(2, new Pitch('C').transpose(-12));
+        SingleNote noteG = new SingleNote(4, new Pitch('G'));
+        Music concat = new Concat(noteG, noteG); //[C'3G4] G4
+        Music chord1 = new Chord(Arrays.asList(noteC, noteG)); //[C,2G4]
+        Music layer1 = new Layer(concat, chord1, "x", "y");
+        Music layer2 = new Layer(layer1, concat, "a", "b");
+        Music ConcatOfLayers = new Concat(layer1, layer2);
+        System.err.println(ConcatOfLayers.toString());
+        //TODO: test toString() based on the string representation of Layer.toString()
+        assertEquals(16, ConcatOfLayers.getDuration());
     }
 }
