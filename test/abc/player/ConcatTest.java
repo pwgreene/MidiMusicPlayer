@@ -100,8 +100,8 @@ public class ConcatTest {
         SingleNote noteG = new SingleNote(4, new Pitch('G'));
         Music concat = new Concat(noteG, noteG); //[C'3G4] G4
         Music chord1 = new Chord(Arrays.asList(noteC, noteG)); //[C,2G4]
-        Music layer1 = new Layer(concat, chord1, "x", "y");
-        Music layer2 = new Layer(layer1, concat, "a", "b");
+        Music layer1 = new Layer(concat, chord1);
+        Music layer2 = new Layer(layer1, concat);
         Music ConcatOfLayers = new Concat(layer1, layer2);
         System.err.println(ConcatOfLayers.toString());
         //TODO: test toString() based on the string representation of Layer.toString()

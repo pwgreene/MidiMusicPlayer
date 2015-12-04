@@ -3,13 +3,8 @@ package abc.player;
 //This class tests the Rest class in abc.player
 
 import static org.junit.Assert.*;
-
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MidiUnavailableException;
-
 import org.junit.Test;
 
-import abc.sound.SequencePlayer;
 
 public class RestTest {
 
