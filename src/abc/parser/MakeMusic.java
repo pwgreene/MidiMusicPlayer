@@ -1,19 +1,29 @@
 package abc.parser;
 
+import java.util.Stack;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import abc.parser.AbcParser.*;
 import abc.player.Key;
+import abc.player.Music;
 
 public class MakeMusic implements AbcListener {
     
-    Key keySignature;
-    
+    private Key keySignature;
+    private int beatsPerMinute;
+    private final Stack<Music> stack = new Stack<>();
 
     //Invariant:
-
+    
+    public Music getMusic() {
+        return stack.get(0);
+    }
+    public int getBPM() {
+        return beatsPerMinute;
+    }
     
     @Override public void enterEveryRule(ParserRuleContext arg0) {} //These are not used
     @Override public void exitEveryRule(ParserRuleContext arg0) {}
