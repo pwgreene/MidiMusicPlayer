@@ -37,7 +37,7 @@ public class Layer implements Music {
  
     @Override
     public String toString() {
-        return m1.toString()+"\n"+m2.toString()+"\n";
+        return m1.toString()+"\n"+m2.toString();
     }
 
     @Override
