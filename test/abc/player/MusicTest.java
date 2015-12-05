@@ -31,9 +31,9 @@ public class MusicTest {
     @Test //no optional headers, 1 bar, no repeat, 1 voice
     public void testParseSample1() throws MidiUnavailableException, InvalidMidiDataException, IOException {
         File sample1 = new File("sample_abc/sample1.abc");
-        Music music = Music.parse(sample1);
-        SequencePlayer player = new SequencePlayer(100, 1); //TODO what are beatsPerMinute and ticksPerBeat?
-        music.play(player, 0);
+        MusicAndBeat musicAndBeat = Music.parse(sample1);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
+        musicAndBeat.getMusic().play(player, 0);
         assertEquals("Event: NOTE_ON  Pitch: 48  Tick: 0\n" 
                 + "Event: NOTE_OFF Pitch: 48  Tick: 2\n"
                 + "Event: NOTE_ON Pitch: 60 Tick:2\n"
