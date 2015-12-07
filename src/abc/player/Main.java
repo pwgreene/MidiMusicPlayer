@@ -40,12 +40,12 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            String file = args[0];
-            play(file);
+            //String file = args[0];
+            play("sample_abc/sample2.abc");
         } catch (IOException ioe) {
             System.err.println("Invalid File");
         } catch (MidiUnavailableException | InvalidMidiDataException e) {
-            System.err.println("SequencePlayer not working");
+            System.err.println("Sequence Player not working");
         }
         
     }
