@@ -6,46 +6,30 @@
 grammar Abc;
 import Configuration;
 
-root: x t (l | q | m | c | comment | v)* k body EOF;
+root: X T (L | Q | M | C | comment | V)* K body EOF;
 /*HEADER*/
-x: HEADERX INDEX eol;
-HEADERX: 'X:';
-INDEX: [0:9]+;
+X: 'X:' [0-9]+ '\n';
 
-t: HEADERT TITLE eol;
-HEADERT: 'T:';
-TITLE: .*;
+T: 'T:' ~('\r' | '\n')+ '\n';
 
-l: HEADERL LENGTH eol;
-HEADERL: 'L:';
+L: 'L:' LENGTH '\n';
 LENGTH: ( [0-9]+ '/' [0-9]+ ) | [0-9]+;
 
-q: HEADERQ 'C' | 'C|' | (BPT = BPM) eol;
-HEADERQ: 'Q:';
+Q: 'Q:' 'C' | 'C|' | (BPT = BPM);
 BPM: [0-9]+;
 BPT: [0-9]+ '/' [0-9]+;
 
-m: HEADERM METER eol;
-HEADERM: 'M:';
+M: 'M:' METER '\n';
 METER: [0-9]+ '/' [0-9]+;
 
-c: HEADERC COMPOSER eol;
-HEADERC: 'C:';
-COMPOSER: .*;
+C: 'C:' ~('\r' | '\n')+ '\n';
 
-v: 'V:' VOICE eol;
-HEADERV: 'V:';
-VOICE: .*;
+V: 'V:' ~('\r' | '\n')+ '\n';
 
-k: 'K:' key eol;
-HEADERK: 'K:';
-key: keynote MODEMINOR?;
-keynote: BASENOTE KEYACCIDENTAL?;
-KEYACCIDENTAL: '#' | 'b';
-MODEMINOR: 'm';
+K: 'K:' BASENOTE ('#'| 'b')? 'm'? '\n';
 
 /*BODY OF MUSIC*/
-body: abcmusic eol;
+body: abcmusic;
 abcmusic: abcline+;
 abcline: element+ NEWLINE | midtunefield | comment;
 element: noteelement | tupletelement | BARLINE | NTHREPEAT | WHITESPACE;
@@ -71,7 +55,7 @@ multinote: '[' note+ ']';
 BARLINE: '|' | '||' | '[|' | '|]' | ':|' | '|:';
 NTHREPEAT: '[1' | '[2';
 
-midtunefield: v;
+midtunefield: V;
 
 BASENOTE: 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b';
 DIGIT: [0-9];
@@ -83,5 +67,5 @@ text: .*;
 NEWLINE: '\n' | '\r' '\n'?;
 WHITESPACE: ' ' | '\t';
 
-/* tell Antlr to ignore spaces around tokens. */
-/*SPACES : [ ]+ -> skip;*/
+/* tell Antlr to ignore spaces and newlines around tokens. */
+WS : [ ]+ -> skip;

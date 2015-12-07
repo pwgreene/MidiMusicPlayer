@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
+import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -35,21 +38,12 @@ public interface Music {
      */
     public static MusicAndBeat parse(File musicFile) throws IOException {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(musicFile));
-            StringBuilder input = new StringBuilder();
-            try {
-                String line = reader.readLine();
-
-                while (line != null) {
-                    input.append(line);
-                    input.append(System.lineSeparator());
-                    line = reader.readLine();
-                }
-            } finally {
-                reader.close();
+            List<String> allLines = Files.readAllLines(musicFile.toPath());
+            String input = "";
+            for (String line : allLines) {
+                input += line + "\n";
             }
-            String allLines = input.toString();
-            CharStream stream = new ANTLRInputStream(allLines);
+            CharStream stream = new ANTLRInputStream(input);
             AbcLexer lexer = new AbcLexer(stream);
             lexer.reportErrorsAsExceptions(); //throws error if one is found
 
@@ -58,6 +52,7 @@ public interface Music {
             parser.reportErrorsAsExceptions();
             ParseTree tree;
             tree = parser.root();  
+            System.err.println(tree.toStringTree(parser));
 
             //after tree is made, now walk tree and return the Music
             MakeMusic musicMaker = new MakeMusic();
