@@ -59,5 +59,4 @@ public class Chord implements Music{
     public boolean isResting() {
         return false;
     }
-
 }
