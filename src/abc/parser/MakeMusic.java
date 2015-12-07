@@ -14,6 +14,7 @@ public class MakeMusic implements AbcListener {
 
     private Key key;
     private int beatsPerMinute = 100; //100 is default
+    //private 
     private final Stack<Music> noteStack = new Stack<>();
 
     //Invariant:
@@ -63,7 +64,7 @@ public class MakeMusic implements AbcListener {
     }
 
     @Override
-    public void exitKey(KeyContext ctx) {
+    public void exitKey(KeyContext ctx) {    
         if(ctx.keynote().BASENOTE().equals("A")){
             if(ctx.keynote().KEYACCIDENTAL() != null){
                 if(ctx.keynote().KEYACCIDENTAL().equals("b")){
@@ -75,30 +76,127 @@ public class MakeMusic implements AbcListener {
                 }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
                     if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
                         key = Key.As_MINOR;
-                    }else{
-                        //key = Key.AsMajor?? TODO
                     }
                 }else{
                     if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
                         key = Key.A_MINOR;
                     }else{
-                        key = Key.A_MAJOR;
+                        key = Key.A_MAJOR;                       
+                    }
+                }
+            }
+        }else if(ctx.keynote().BASENOTE().equals("B")){
+            if(ctx.keynote().KEYACCIDENTAL() != null){
+                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.Bb_MINOR;
+                    }else{
+                        key = Key.Bb_MAJOR;
+                    }
+                }else{
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.B_MINOR;
+                    }else{
+                        key = Key.B_MAJOR;                      
                     }
                 }
             }
 
-        }else if(ctx.keynote().BASENOTE().equals("B")){
-
         }else if(ctx.keynote().BASENOTE().equals("C")){
+            if(ctx.keynote().KEYACCIDENTAL() != null){
+                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                    }else{
+                        key = Key.Cb_MAJOR;
+                    }
+                }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.Cs_MINOR;
+                    }else{
+                        key = Key.Cs_MAJOR;
+                    }
+                }else{
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.C_MINOR;
+                    }else{
+                        key = Key.C_MAJOR;
+                    }
+                }
+            }
 
         }else if(ctx.keynote().BASENOTE().equals("D")){
+            if(ctx.keynote().KEYACCIDENTAL() != null){
+                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                    }else{
+                        key = Key.Db_MAJOR;
+                    }
+                }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.Ds_MINOR;
+                    }
+                }else{
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.D_MINOR;
+                    }else{
+                        key = Key.D_MAJOR;
+                    }
+                }
+            }
 
         }else if(ctx.keynote().BASENOTE().equals("E")){
+            if(ctx.keynote().KEYACCIDENTAL() != null){
+                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.Eb_MINOR;
+                    }else{
+                        key = Key.Eb_MAJOR;
+                    }
+                }else{
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.E_MINOR;
+                    }else{
+                        key = Key.E_MAJOR;
+                    }
+                }
+            }
 
         }else if(ctx.keynote().BASENOTE().equals("F")){
+            if(ctx.keynote().KEYACCIDENTAL() != null){
+               if(ctx.keynote().KEYACCIDENTAL().equals("#")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.Fs_MINOR;
+                    }else{
+                        key = Key.Fs_MAJOR;
+                    }
+                }else{
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.F_MINOR;
+                    }else{
+                        key = Key.F_MAJOR;
+                    }
+                }
+            }
 
         }else if(ctx.keynote().BASENOTE().equals("G")){
-
+            if(ctx.keynote().KEYACCIDENTAL() != null){
+                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                    }else{
+                        key = Key.Gb_MAJOR;
+                    }
+                }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.Gs_MINOR;
+                    }
+                }else{
+                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
+                        key = Key.G_MINOR;
+                    }else{
+                        key = Key.G_MAJOR;
+                    }
+                }
+            }
         }
     }
 
@@ -254,7 +352,6 @@ public class MakeMusic implements AbcListener {
     }
 
 
-    //THESE ARE NOT USED
     @Override public void enterEveryRule(ParserRuleContext arg0) {} //These are not used
     @Override public void exitEveryRule(ParserRuleContext arg0) {}
     @Override public void visitErrorNode(ErrorNode arg0) {}
