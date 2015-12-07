@@ -64,12 +64,12 @@ public interface Music {
             new ParseTreeWalker().walk(musicMaker, tree);
             int beatsPerMinute = musicMaker.getBPM();
             Music music = musicMaker.getMusic(); 
-           return new MusicAndBeat(music, beatsPerMinute);
+            return new MusicAndBeat(music, beatsPerMinute);
         } 
         catch (RuntimeException e) {
             throw new IllegalArgumentException("Invalid Input");
         }  
-}
+    }
     
     /**
      * Play this piece of music
