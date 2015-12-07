@@ -22,13 +22,14 @@ public class MusicTest {
     //  *1, *>1 bars
     //  *repeat/*no repeat
     //  *1, *>1 voices
+    //  *extra space
     //Notes:
     //  *whole/half/quarter/eighth/etc. (like e e/2 e/4 e/8 regardless of BPM) 
-    //  a note has/ doesn't have accidental
+    //  a note has/doesn't have accidental (flat, sharp, natural)
     //  *middle octave, *lower octaves, *upper octaves
     //  with/*without *chords, *tuples
     //Key:
-    //  *Major/Minor/sharp/flat
+    //  *Major/*Minor/sharp/*flat
 
     @Test //no optional headers, 1 bar, no repeat, 1 voice, low octave, high octave, middle octave, major key, whole notes
     public void testParseSample1() throws MidiUnavailableException, InvalidMidiDataException, IOException {
@@ -74,7 +75,7 @@ public class MusicTest {
         //TODO assertEquals(    , player.toString());
     }
     
-    @Test //tuples, repeats, 1-3 optional headers
+    @Test //tuples, repeats, 1-3 optional headers, extra space, flat + minor key
     public void testParserepeatTuple() throws MidiUnavailableException, InvalidMidiDataException, IOException {
         File file = new File("sample_abc/repeatTuple.abc");
         MusicAndBeat musicAndBeat = Music.parse(file);
