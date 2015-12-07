@@ -49,11 +49,15 @@ public class MusicTest {
     
     @Test //chords
     public void testParseSample2() throws MidiUnavailableException, InvalidMidiDataException, IOException {
-        File sample2 = new File("sample_abc/sample2.abc");
+        File sample2 = new File("sample_abc/sample2.abc"); //[EC]
         MusicAndBeat musicAndBeat = Music.parse(sample2);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
         musicAndBeat.getMusic().play(player, 0);
-        //TODO assertEquals(    , player.toString());
+        assertEquals("Event: NOTE_ON  Pitch: 64  Tick: 0\n"
+                   + "Event: NOTE_ON  Pitch: 60  Tick: 0\n"
+                   + "Event: NOTE_OFF Pitch: 64 Tick:1\n"
+                   + "Event: NOTE_OFF Pitch: 60 Tick:1\n"
+                   + "Meta event: END_OF_TRACK Tick: 1\n", player.toString());
     }
     
     @Test //multiple voices
@@ -62,7 +66,13 @@ public class MusicTest {
         MusicAndBeat musicAndBeat = Music.parse(sample3);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
         musicAndBeat.getMusic().play(player, 0);
-        //TODO assertEquals(    , player.toString());
+        assertEquals("Event: NOTE_ON  Pitch: 60  Tick: 0\n"
+                   + "Event: NOTE_ON  Pitch: 64  Tick: 0\n"
+                   + "Event: NOTE_ON  Pitch: 67  Tick: 0\n"
+                   + "Event: NOTE_OFF Pitch: 60 Tick:1\n"
+                   + "Event: NOTE_OFF Pitch: 64 Tick:1\n"
+                   + "Event: NOTE_OFF Pitch: 67 Tick:1\n"
+                   + "Meta event: END_OF_TRACK Tick: 1\n", player.toString());
     }
     
     @Test //multiple bars, all 4 optional headers
