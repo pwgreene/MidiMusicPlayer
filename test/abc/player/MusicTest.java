@@ -12,6 +12,11 @@ import org.junit.Test;
 
 import abc.sound.SequencePlayer;
 
+/**
+ * Test the parsing and playing for Music files
+ * @category no_didit
+ *
+ */
 public class MusicTest {
 
     /*Testing Strategy:*/
@@ -93,5 +98,108 @@ public class MusicTest {
         musicAndBeat.getMusic().play(player, 0);
         //TODO assertEquals(    , player.toString());
     }
-    
+    @Test
+    public void testParseAbcSong() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/abc_song.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); 
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testParseFurElise() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/fur_elise.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); 
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testParseInvention() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/invention.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testParseLittleNighMusic() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/little_night_music.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testParsePaddy() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/paddy.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testParsePrelude() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/prelude.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testParsePiece1() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/piece1.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testParsePiece2() throws MidiUnavailableException, InvalidMidiDataException, IOException {
+        File abcFile = new File("sample_abc/piece2.abc");
+        MusicAndBeat musicAndBeat = Music.parse(abcFile);
+        SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
+        musicAndBeat.getMusic().play(player, 0);
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

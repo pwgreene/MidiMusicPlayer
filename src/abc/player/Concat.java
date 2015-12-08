@@ -9,11 +9,12 @@ import abc.sound.SequencePlayer;
 public class Concat implements Music {
 
     //Abstraction Function:
-    //TODO
+     //m1 and m2 represent two pieces of music played consecutively, where m1 preceeds m2
     //Rep Invariant:
-    //TODO
+     //true
     //Safety from Rep Exposure:
-    //TODO
+     //all fields are private and final
+     //class is immutable: no mutator methods, m1 and m2 are also immutable
     
     private final Music m1;
     private final Music m2;

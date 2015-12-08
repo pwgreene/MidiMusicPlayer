@@ -6,11 +6,12 @@ import abc.sound.SequencePlayer;
 
 public class Layer implements Music {
     //Abstraction Function:
-    //TODO
+     //Represents two voices of music that are played on top of one another, starting at the same time
     //Rep Invariant:
-    //TODO
+     //true
     //Safety from Rep Exposure:
-    //TODO
+     //all fields are private and final
+     //class is immutable: no mutator methods, m1 and m2 are immutable types
     
     private final Music m1;
     private final Music m2;
