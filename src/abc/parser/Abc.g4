@@ -6,66 +6,54 @@
 grammar Abc;
 import Configuration;
 
-root: X T (L | Q | M | C | comment | V)* K body EOF;
-/*HEADER*/
-X: 'X:' [0-9]+ NEWLINE;
+COMMENT : '%' (~'\n')* -> skip;
+FIELD_NUMBER : 'X:' (SPACE)* DIGIT+ ;
+FIELD_TITLE : 'T:' (SPACE)*  (~'\n')+ ; 
+FIELD_COMPOSER : 'C:' (SPACE)*  (~'\n')+ ; 
+FIELD_DEFAULT_LENGTH : 'L:' (SPACE)* (DIGIT+ '/' DIGIT+) ;
+FIELD_METER : 'M:' (SPACE)* ('C' | 'C|' | (DIGIT+ '/' DIGIT+)) ;
+FIELD_TEMPO  : 'Q:' (SPACE)* ((DIGIT+ '/' DIGIT+) '=')? DIGIT+ ;
+FIELD_VOICE : 'V:' (SPACE)*  (~'\n')+ ; 
+FIELD_KEY: 'K:' (SPACE)* ('C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b') KEYACCIDENTAL? MODEMINOR?;
 
-T: 'T:' ~('\r' | '\n')+ NEWLINE;
+LINE : ('\t' | '\r' | '\n')+ ;
+NOTE : (PITCH | REST) ( SLASH | (DIGIT+ SLASH) | (SLASH? DIGIT+) | (DIGIT+ '/' DIGIT+))?;
+PITCH : ('^' | '^^' | '_' | '__' | '=')? ('C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b') ('\''+ | ','+)?;
+KEYACCIDENTAL : '#' | 'b';
+MODEMINOR : 'm';
+SPACE : ' '+ -> skip;
+REST : 'z';
 
-L: 'L:' LENGTH NEWLINE;
-LENGTH: ( [0-9]+ '/' [0-9]+ ) | [0-9]+;
+OPEN_BRACKET : '[';
+CLOSE_BRACKET : ']';
+BARLINE : '|' | '||' | '[|' | '|]' | ':|' | '|:';
+NTH_REPEAT : '[1' | '[2';
 
-Q: 'Q:' 'C' | 'C|' | (BPT = BPM) NEWLINE;
-BPM: [0-9]+;
-BPT: [0-9]+ '/' [0-9]+;
+DUPLET : '(2';
+TRIPLET : '(3';
+QUADRUPLET : '(4';
+SLASH: '/';
+DIGIT : [0-9];
 
-M: 'M:' METER NEWLINE;
-METER: [0-9]+ '/' [0-9]+;
+root: header body EOF;
 
-C: 'C:' ~('\r' | '\n')+ NEWLINE;
+field_voice: FIELD_VOICE;
 
-V: 'V:' ~('\r' | '\n')+ NEWLINE;
+header : field_number LINE field_title LINE (other_fields LINE)* field_key LINE;
 
-K: 'K:' BASENOTE ('#'| 'b')? 'm'? NEWLINE;
+field_number : FIELD_NUMBER;
+field_title : FIELD_TITLE;
+other_fields : FIELD_COMPOSER | FIELD_DEFAULT_LENGTH | FIELD_METER | FIELD_TEMPO | FIELD_VOICE;
+field_key : FIELD_KEY ;
 
-/*BODY OF MUSIC*/
-body: abcmusic;
-abcmusic: abcline+;
-abcline: element+ NEWLINE | midtunefield | comment;
-element: noteelement | tupletelement | BARLINE | NTHREPEAT | WHITESPACE;
+body: abcline+;
+abcline: (element+ LINE) | (field_voice LINE);
+open_bracket : OPEN_BRACKET;
+close_bracket : CLOSE_BRACKET;
+multinote: l_bracket (note_element)+ r_bracket;
+note_element : NOTE | multinote;
+tuplet_element : (DUPLET element element) | (TRIPLET element element element) | (QUADRUPLET element element element element);
+barline : (BARLINE | NTH_REPEAT) SPACE*;
+element : (note_element | tuplet_element | barline ) (SPACE*) ;
 
-noteelement: note | multinote;
 
-note: noteorrest notelength;
-noteorrest: pitch | rest;
-pitch: ACCIDENTAL? BASENOTE octave?;
-octave: '\''+ | ','+;
-notelength: (DIGIT+)? ('/' (DIGIT+)?)?;
-notelengthstrict: DIGIT+ '/' DIGIT+;
-
-ACCIDENTAL: '^' | '^^' | '_' | '__' | '=';
-
-rest: 'z';
-
-tupletelement: tupletspec noteelement+;
-tupletspec: '(' DIGIT; 
-
-multinote: '[' note+ ']';
-
-BARLINE: '|' | '||' | '[|' | '|]' | ':|' | '|:';
-NTHREPEAT: '[1' | '[2';
-
-midtunefield: V;
-
-BASENOTE: 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B' | 'c' | 'd' | 'e' | 'f' | 'g' | 'a' | 'b';
-
-/*GENERAL:*/
-eol: comment | NEWLINE;
-comment: '%' NEWLINE;
-/*text: .*;*/
-NEWLINE: '\n' | '\r' '\n'?;
-WHITESPACE: ' ' | '\t';
-DIGIT: [0-9];
-
-/* tell Antlr to ignore spaces and newlines around tokens. */
-//WS : [ ]+ -> skip;
