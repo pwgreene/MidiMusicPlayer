@@ -76,11 +76,7 @@ public class MakeMusic implements AbcListener {
         // TODO Auto-generated method stub
         
     }
-    @Override
-    public void enterField_voice(Field_voiceContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+   
     @Override
     public void exitField_voice(Field_voiceContext ctx) {
         // TODO Auto-generated method stub
@@ -160,41 +156,25 @@ public class MakeMusic implements AbcListener {
         // TODO Auto-generated method stub
         
     }
-    @Override
-    public void enterL_bracket(L_bracketContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+
     @Override
     public void exitL_bracket(L_bracketContext ctx) {
         // TODO Auto-generated method stub
         
     }
-    @Override
-    public void enterR_bracket(R_bracketContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+
     @Override
     public void exitR_bracket(R_bracketContext ctx) {
         // TODO Auto-generated method stub
         
     }
-    @Override
-    public void enterMultinote(MultinoteContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+
     @Override
     public void exitMultinote(MultinoteContext ctx) {
         // TODO Auto-generated method stub
         
     }
-    @Override
-    public void enterNote_element(Note_elementContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+
     @Override
     public void exitNote_element(Note_elementContext ctx) {
         // TODO Auto-generated method stub
@@ -220,17 +200,6 @@ public class MakeMusic implements AbcListener {
         // TODO Auto-generated method stub
         
     }
-    @Override
-    public void enterElement(ElementContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void exitElement(ElementContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-
 
     //These aren't used:
     @Override public void enterEveryRule(ParserRuleContext arg0) {}
@@ -241,146 +210,11 @@ public class MakeMusic implements AbcListener {
     @Override public void enterField_title(Field_titleContext ctx) {}
     @Override public void enterOther_fields(Other_fieldsContext ctx) {}
     @Override public void enterField_key(Field_keyContext ctx) {}
-    
-    
-//
-//    @Override
-//    public void exitKey(KeyContext ctx) {    
-//        if(ctx.keynote().BASENOTE().equals("A")){
-//            if(ctx.keynote().KEYACCIDENTAL() != null){
-//                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.Ab_MINOR;
-//                    }else{
-//                        key = Key.Ab_MAJOR;
-//                    }
-//                }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.As_MINOR;
-//                    }
-//                }else{
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.A_MINOR;
-//                    }else{
-//                        key = Key.A_MAJOR;                       
-//                    }
-//                }
-//            }
-//        }else if(ctx.keynote().BASENOTE().equals("B")){
-//            if(ctx.keynote().KEYACCIDENTAL() != null){
-//                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.Bb_MINOR;
-//                    }else{
-//                        key = Key.Bb_MAJOR;
-//                    }
-//                }else{
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.B_MINOR;
-//                    }else{
-//                        key = Key.B_MAJOR;                      
-//                    }
-//                }
-//            }
-//
-//        }else if(ctx.keynote().BASENOTE().equals("C")){
-//            if(ctx.keynote().KEYACCIDENTAL() != null){
-//                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                    }else{
-//                        key = Key.Cb_MAJOR;
-//                    }
-//                }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.Cs_MINOR;
-//                    }else{
-//                        key = Key.Cs_MAJOR;
-//                    }
-//                }else{
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.C_MINOR;
-//                    }else{
-//                        key = Key.C_MAJOR;
-//                    }
-//                }
-//            }
-//
-//        }else if(ctx.keynote().BASENOTE().equals("D")){
-//            if(ctx.keynote().KEYACCIDENTAL() != null){
-//                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                    }else{
-//                        key = Key.Db_MAJOR;
-//                    }
-//                }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.Ds_MINOR;
-//                    }
-//                }else{
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.D_MINOR;
-//                    }else{
-//                        key = Key.D_MAJOR;
-//                    }
-//                }
-//            }
-//
-//        }else if(ctx.keynote().BASENOTE().equals("E")){
-//            if(ctx.keynote().KEYACCIDENTAL() != null){
-//                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.Eb_MINOR;
-//                    }else{
-//                        key = Key.Eb_MAJOR;
-//                    }
-//                }else{
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.E_MINOR;
-//                    }else{
-//                        key = Key.E_MAJOR;
-//                    }
-//                }
-//            }
-//
-//        }else if(ctx.keynote().BASENOTE().equals("F")){
-//            if(ctx.keynote().KEYACCIDENTAL() != null){
-//               if(ctx.keynote().KEYACCIDENTAL().equals("#")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.Fs_MINOR;
-//                    }else{
-//                        key = Key.Fs_MAJOR;
-//                    }
-//                }else{
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.F_MINOR;
-//                    }else{
-//                        key = Key.F_MAJOR;
-//                    }
-//                }
-//            }
-//
-//        }else if(ctx.keynote().BASENOTE().equals("G")){
-//            if(ctx.keynote().KEYACCIDENTAL() != null){
-//                if(ctx.keynote().KEYACCIDENTAL().equals("b")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                    }else{
-//                        key = Key.Gb_MAJOR;
-//                    }
-//                }else if(ctx.keynote().KEYACCIDENTAL().equals("#")){
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.Gs_MINOR;
-//                    }
-//                }else{
-//                    if(ctx.MODEMINOR() != null && ctx.MODEMINOR().equals("m")){
-//                        key = Key.G_MINOR;
-//                    }else{
-//                        key = Key.G_MAJOR;
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-
-
+    @Override public void enterR_bracket(R_bracketContext ctx) {}
+    @Override public void enterL_bracket(L_bracketContext ctx) {}
+    @Override public void enterNote_element(Note_elementContext ctx) {}
+    @Override public void enterMultinote(MultinoteContext ctx) {}
+    @Override public void exitElement(ElementContext ctx) {}
+    @Override public void enterElement(ElementContext ctx) {}
+    @Override public void enterField_voice(Field_voiceContext ctx) {}
 }
