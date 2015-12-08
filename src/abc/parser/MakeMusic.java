@@ -53,8 +53,7 @@ public class MakeMusic implements AbcListener {
     public void exitField_title(Field_titleContext ctx) {
         title = ctx.FIELD_TITLE().getText().replace("T:", "").trim();   
     }
-    
-     
+      
     
     
     /********************************************
