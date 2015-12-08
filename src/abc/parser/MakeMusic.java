@@ -28,39 +28,39 @@ import abc.player.Music;
 
 public class MakeMusic implements AbcListener {
 
-    private Key key;
-    private int beatsPerMinute = 100; //100 is default
-    //private 
-    private final Stack<Music> noteStack = new Stack<>();
+    private int index = 1;
+    private String title = "DEFAULT";
+    private String composer = "DEFAULT";
+    private Key key = null;
+   // private Fraction defaultLength = null;
+   // private Fraction meter = new Fraction(4,4);
+   // private Fraction tempoBeat = null;
+    private int bpm = -1;
+     
+    //Invariant: TODO
 
-    //Invariant:
-
-    public Music getMusic() {
-        return noteStack.get(0);
-    }
-    public int getBPM() {
-        return beatsPerMinute;
-    }
+    
+    
+    //These have been implemented:
     @Override
-    public void enterEveryRule(ParserRuleContext arg0) {
-        // TODO Auto-generated method stub
-        
+    //Get Index Number
+    public void exitField_number(Field_numberContext ctx) {
+        index = Integer.parseInt(ctx.FIELD_NUMBER().getText().replace("X:", "").trim());
     }
+    
     @Override
-    public void exitEveryRule(ParserRuleContext arg0) {
-        // TODO Auto-generated method stub
-        
+    //Get Title
+    public void exitField_title(Field_titleContext ctx) {
+        title = ctx.FIELD_TITLE().getText().replace("T:", "").trim();   
     }
-    @Override
-    public void visitErrorNode(ErrorNode arg0) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void visitTerminal(TerminalNode arg0) {
-        // TODO Auto-generated method stub
-        
-    }
+    
+     
+    
+    
+    /********************************************
+    //These NEED TO BE implemented: TODO
+    ********************************************/
+    
     @Override
     public void enterRoot(RootContext ctx) {
         // TODO Auto-generated method stub
@@ -91,26 +91,8 @@ public class MakeMusic implements AbcListener {
         // TODO Auto-generated method stub
         
     }
-    @Override
-    public void enterField_number(Field_numberContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void exitField_number(Field_numberContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void enterField_title(Field_titleContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void exitField_title(Field_titleContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+
+
     @Override
     public void enterOther_fields(Other_fieldsContext ctx) {
         // TODO Auto-generated method stub
@@ -223,6 +205,15 @@ public class MakeMusic implements AbcListener {
     }
 
 
+    //These aren't used:
+    @Override public void enterEveryRule(ParserRuleContext arg0) {}
+    @Override public void exitEveryRule(ParserRuleContext arg0) {}
+    @Override public void visitErrorNode(ErrorNode arg0) {}
+    @Override public void visitTerminal(TerminalNode arg0) {}  
+    @Override public void enterField_number(Field_numberContext ctx) {}
+    @Override public void enterField_title(Field_titleContext ctx) {}
+    
+    
 //
 //    @Override
 //    public void exitKey(KeyContext ctx) {    
