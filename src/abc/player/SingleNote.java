@@ -10,11 +10,12 @@ import abc.sound.SequencePlayer;
 public class SingleNote implements Music{
 
   //Abstraction Function:
-    //TODO
+    //represents a note of music with a pitch pitch and that lasts for duration ticks
     //Rep Invariant:
-    //TODO
+     //duration > 0
     //Safety from Rep Exposure:
-    //TODO
+     //all fields are private and final
+     //class is immutable: no mutators, no mutation of the field duration or pitch
     
     private final int duration;
     private final Pitch pitch;

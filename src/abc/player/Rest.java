@@ -10,11 +10,12 @@ import abc.sound.SequencePlayer;
 public class Rest implements Music {
 
     //Abstraction Function:
-    //TODO
+     //represents a rest in music, played for duration ticks
     //Rep Invariant:
-    //TODO
+     //duration > 0
     //Safety from Rep Exposure:
-    //TODO
+     //duration is private and final
+     //no mutator methods/duration is immutable -> class is immutable
     
     private final int duration;
     

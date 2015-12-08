@@ -4,16 +4,20 @@ import java.util.List;
 
 import abc.sound.SequencePlayer;
 
-//Chord is a list of multiple single notes to be played at the same time
+/**
+ * Multiple notes played at the same time. Immutable.
+ *
+ */
 
 public class Chord implements Music{
     
     //Abstraction Function:
-    //TODO
+     //Represents a chord of music, where each note in notes is played simultaneously
     //Rep Invariant:
-    //TODO
+     //notes.size() > 0
     //Safety from Rep Exposure:
-    //TODO
+     //notes is private and final and is never mutated
+     //Class is immutable
     
     private final List<SingleNote> notes;
     
