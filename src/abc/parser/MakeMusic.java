@@ -53,6 +53,12 @@ public class MakeMusic implements AbcListener {
     public void exitField_title(Field_titleContext ctx) {
         title = ctx.FIELD_TITLE().getText().replace("T:", "").trim();   
     }
+    
+    @Override
+    //Get Key
+    public void exitField_key(Field_keyContext ctx) {
+        key = new Key(ctx.FIELD_KEY().getText().replace("K:", "").trim());  
+    }
       
     
     
@@ -92,26 +98,48 @@ public class MakeMusic implements AbcListener {
     }
 
 
-    @Override
-    public void enterOther_fields(Other_fieldsContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+  
     @Override
     public void exitOther_fields(Other_fieldsContext ctx) {
-        // TODO Auto-generated method stub
+        if(ctx.FIELD_COMPOSER() != null) {
+            composer = ctx.FIELD_COMPOSER().getText().replace("C:", "").trim();
+        }
+        /*if(ctx.FIELD_DEFAULT_LENGTH() != null) {
+            String fracText = ctx.FIELD_DEFAULT_LENGTH().getText().replace("L:", "").trim();
+            defaultLength = new Fraction(fracText);
+        }
+        if(ctx.FIELD_METER() != null) {
+            String meterString = ctx.FIELD_METER().getText().replace("M:", "").trim();
+            if(meterString.equals("C")) {
+                meter = new Fraction(4,4);
+            } else if(meterString.equals("C|")) {
+                meter = new Fraction(2,2);
+            } else {
+                meter = new Fraction(meterString);
+            }
+        }
+        if(ctx.FIELD_TEMPO() != null) {
+            String[] tempoStrings = ctx.FIELD_TEMPO().getText().replace("Q:","").split("=");
+            tempoBeat = new Fraction(tempoStrings[0].trim());
+            bpm = Integer.parseInt(tempoStrings[1].trim());
+        }
+        if(ctx.FIELD_VOICE() != null) {
+            //initialize containers for this voice
+            voiceName = ctx.FIELD_VOICE().getText().replace("V:", "").trim();
+            if(!this.barsForVoiceName.containsKey(voiceName)) {
+                List<List<Music>> newVoice = new ArrayList<List<Music>>();
+                newVoice.add(new ArrayList<Music>());
+                this.barsForVoiceName.put(voiceName, newVoice);
+                Integer[] startRepeat = new Integer[]{0,0,0};
+                List<Integer[]> reps = new ArrayList<Integer[]>();
+                reps.add(startRepeat);
+                this.repeatsForVoiceName.put(voiceName, reps);
+            }
+        }*/
         
     }
-    @Override
-    public void enterField_key(Field_keyContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void exitField_key(Field_keyContext ctx) {
-        // TODO Auto-generated method stub
-        
-    }
+
+ 
     @Override
     public void enterBody(BodyContext ctx) {
         // TODO Auto-generated method stub
@@ -211,6 +239,8 @@ public class MakeMusic implements AbcListener {
     @Override public void visitTerminal(TerminalNode arg0) {}  
     @Override public void enterField_number(Field_numberContext ctx) {}
     @Override public void enterField_title(Field_titleContext ctx) {}
+    @Override public void enterOther_fields(Other_fieldsContext ctx) {}
+    @Override public void enterField_key(Field_keyContext ctx) {}
     
     
 //
