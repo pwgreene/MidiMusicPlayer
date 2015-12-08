@@ -101,25 +101,25 @@ public interface AbcListener extends ParseTreeListener {
    */
   void exitAbcline(AbcParser.AbclineContext ctx);
   /**
-   * Enter a parse tree produced by {@link AbcParser#l_bracket}.
+   * Enter a parse tree produced by {@link AbcParser#open_bracket}.
    * @param ctx the parse tree
    */
-  void enterL_bracket(AbcParser.L_bracketContext ctx);
+  void enterOpen_bracket(AbcParser.Open_bracketContext ctx);
   /**
-   * Exit a parse tree produced by {@link AbcParser#l_bracket}.
+   * Exit a parse tree produced by {@link AbcParser#open_bracket}.
    * @param ctx the parse tree
    */
-  void exitL_bracket(AbcParser.L_bracketContext ctx);
+  void exitOpen_bracket(AbcParser.Open_bracketContext ctx);
   /**
-   * Enter a parse tree produced by {@link AbcParser#r_bracket}.
+   * Enter a parse tree produced by {@link AbcParser#close_bracket}.
    * @param ctx the parse tree
    */
-  void enterR_bracket(AbcParser.R_bracketContext ctx);
+  void enterClose_bracket(AbcParser.Close_bracketContext ctx);
   /**
-   * Exit a parse tree produced by {@link AbcParser#r_bracket}.
+   * Exit a parse tree produced by {@link AbcParser#close_bracket}.
    * @param ctx the parse tree
    */
-  void exitR_bracket(AbcParser.R_bracketContext ctx);
+  void exitClose_bracket(AbcParser.Close_bracketContext ctx);
   /**
    * Enter a parse tree produced by {@link AbcParser#multinote}.
    * @param ctx the parse tree

@@ -22,9 +22,9 @@ public class AbcLexer extends Lexer {
   public static final int
     COMMENT=1, FIELD_NUMBER=2, FIELD_TITLE=3, FIELD_COMPOSER=4, FIELD_DEFAULT_LENGTH=5, 
     FIELD_METER=6, FIELD_TEMPO=7, FIELD_VOICE=8, FIELD_KEY=9, LINE=10, NOTE=11, 
-    PITCH=12, KEYACCIDENTAL=13, MODEMINOR=14, SPACE=15, REST=16, BARLINE=17, 
-    NTH_REPEAT=18, DUPLET=19, TRIPLET=20, QUADRUPLET=21, SLASH=22, L_BRACKET=23, 
-    R_BRACKET=24, DIGIT=25;
+    PITCH=12, KEYACCIDENTAL=13, MODEMINOR=14, SPACE=15, REST=16, OPEN_BRACKET=17, 
+    CLOSE_BRACKET=18, BARLINE=19, NTH_REPEAT=20, DUPLET=21, TRIPLET=22, 
+    QUADRUPLET=23, SLASH=24, DIGIT=25;
   public static String[] modeNames = {
     "DEFAULT_MODE"
   };
@@ -32,22 +32,22 @@ public class AbcLexer extends Lexer {
   public static final String[] ruleNames = {
     "COMMENT", "FIELD_NUMBER", "FIELD_TITLE", "FIELD_COMPOSER", "FIELD_DEFAULT_LENGTH", 
     "FIELD_METER", "FIELD_TEMPO", "FIELD_VOICE", "FIELD_KEY", "LINE", "NOTE", 
-    "PITCH", "KEYACCIDENTAL", "MODEMINOR", "SPACE", "REST", "BARLINE", "NTH_REPEAT", 
-    "DUPLET", "TRIPLET", "QUADRUPLET", "SLASH", "L_BRACKET", "R_BRACKET", 
-    "DIGIT"
+    "PITCH", "KEYACCIDENTAL", "MODEMINOR", "SPACE", "REST", "OPEN_BRACKET", 
+    "CLOSE_BRACKET", "BARLINE", "NTH_REPEAT", "DUPLET", "TRIPLET", "QUADRUPLET", 
+    "SLASH", "DIGIT"
   };
 
   private static final String[] _LITERAL_NAMES = {
     null, null, null, null, null, null, null, null, null, null, null, null, 
-    null, null, "'m'", null, "'z'", null, null, "'(2'", "'(3'", "'(4'", 
-    "'/'", "'['", "']'"
+    null, null, "'m'", null, "'z'", "'['", "']'", null, null, "'(2'", "'(3'", 
+    "'(4'", "'/'"
   };
   private static final String[] _SYMBOLIC_NAMES = {
     null, "COMMENT", "FIELD_NUMBER", "FIELD_TITLE", "FIELD_COMPOSER", "FIELD_DEFAULT_LENGTH", 
     "FIELD_METER", "FIELD_TEMPO", "FIELD_VOICE", "FIELD_KEY", "LINE", "NOTE", 
-    "PITCH", "KEYACCIDENTAL", "MODEMINOR", "SPACE", "REST", "BARLINE", "NTH_REPEAT", 
-    "DUPLET", "TRIPLET", "QUADRUPLET", "SLASH", "L_BRACKET", "R_BRACKET", 
-    "DIGIT"
+    "PITCH", "KEYACCIDENTAL", "MODEMINOR", "SPACE", "REST", "OPEN_BRACKET", 
+    "CLOSE_BRACKET", "BARLINE", "NTH_REPEAT", "DUPLET", "TRIPLET", "QUADRUPLET", 
+    "SLASH", "DIGIT"
   };
   public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -144,9 +144,9 @@ public class AbcLexer extends Lexer {
       "\5\f\u00f5\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00fe\n\r\3\r\3\r\6"+
       "\r\u0102\n\r\r\r\16\r\u0103\3\r\6\r\u0107\n\r\r\r\16\r\u0108\5\r\u010b"+
       "\n\r\3\16\3\16\3\17\3\17\3\20\6\20\u0112\n\20\r\20\16\20\u0113\3\20"+
-      "\3\20\3\21\3\21\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22"+
-      "\3\22\5\22\u0125\n\22\3\23\3\23\3\23\3\23\5\23\u012b\n\23\3\24\3\24"+
-      "\3\24\3\25\3\25\3\25\3\26\3\26\3\26\3\27\3\27\3\30\3\30\3\31\3\31"+
+      "\3\20\3\21\3\21\3\22\3\22\3\23\3\23\3\24\3\24\3\24\3\24\3\24\3\24"+
+      "\3\24\3\24\3\24\3\24\3\24\5\24\u0129\n\24\3\25\3\25\3\25\3\25\5\25"+
+      "\u012f\n\25\3\26\3\26\3\26\3\27\3\27\3\27\3\30\3\30\3\30\3\31\3\31"+
       "\3\32\3\32\2\2\33\3\3\5\4\7\5\t\6\13\7\r\b\17\t\21\n\23\13\25\f\27"+
       "\r\31\16\33\17\35\20\37\21!\22#\23%\24\'\25)\26+\27-\30/\31\61\32"+
       "\63\33\3\2\7\3\2\f\f\4\2CIci\4\2\13\f\17\17\4\2%%dd\3\2\62;\u0170"+
@@ -158,8 +158,8 @@ public class AbcLexer extends Lexer {
       "\2\2\7L\3\2\2\2\tZ\3\2\2\2\13h\3\2\2\2\r|\3\2\2\2\17\u0095\3\2\2\2"+
       "\21\u00b2\3\2\2\2\23\u00c0\3\2\2\2\25\u00d1\3\2\2\2\27\u00d7\3\2\2"+
       "\2\31\u00fd\3\2\2\2\33\u010c\3\2\2\2\35\u010e\3\2\2\2\37\u0111\3\2"+
-      "\2\2!\u0117\3\2\2\2#\u0124\3\2\2\2%\u012a\3\2\2\2\'\u012c\3\2\2\2"+
-      ")\u012f\3\2\2\2+\u0132\3\2\2\2-\u0135\3\2\2\2/\u0137\3\2\2\2\61\u0139"+
+      "\2\2!\u0117\3\2\2\2#\u0119\3\2\2\2%\u011b\3\2\2\2\'\u0128\3\2\2\2"+
+      ")\u012e\3\2\2\2+\u0130\3\2\2\2-\u0133\3\2\2\2/\u0136\3\2\2\2\61\u0139"+
       "\3\2\2\2\63\u013b\3\2\2\2\659\7\'\2\2\668\n\2\2\2\67\66\3\2\2\28;"+
       "\3\2\2\29\67\3\2\2\29:\3\2\2\2:<\3\2\2\2;9\3\2\2\2<=\b\2\2\2=\4\3"+
       "\2\2\2>?\7Z\2\2?@\7<\2\2@D\3\2\2\2AC\5\37\20\2BA\3\2\2\2CF\3\2\2\2"+
@@ -206,16 +206,16 @@ public class AbcLexer extends Lexer {
       "\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3\u00d1\3\2\2\2\u00d3\u00d4\3\2\2"+
       "\2\u00d4\26\3\2\2\2\u00d5\u00d8\5\31\r\2\u00d6\u00d8\5!\21\2\u00d7"+
       "\u00d5\3\2\2\2\u00d7\u00d6\3\2\2\2\u00d8\u00f4\3\2\2\2\u00d9\u00f5"+
-      "\5-\27\2\u00da\u00dc\5\63\32\2\u00db\u00da\3\2\2\2\u00dc\u00dd\3\2"+
-      "\2\2\u00dd\u00db\3\2\2\2\u00dd\u00de\3\2\2\2\u00de\u00df\3\2\2\2\u00df"+
-      "\u00e0\5-\27\2\u00e0\u00f5\3\2\2\2\u00e1\u00e3\5-\27\2\u00e2\u00e1"+
-      "\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3\u00e5\3\2\2\2\u00e4\u00e6\5\63"+
-      "\32\2\u00e5\u00e4\3\2\2\2\u00e6\u00e7\3\2\2\2\u00e7\u00e5\3\2\2\2"+
-      "\u00e7\u00e8\3\2\2\2\u00e8\u00f5\3\2\2\2\u00e9\u00eb\5\63\32\2\u00ea"+
-      "\u00e9\3\2\2\2\u00eb\u00ec\3\2\2\2\u00ec\u00ea\3\2\2\2\u00ec\u00ed"+
-      "\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\u00f0\7\61\2\2\u00ef\u00f1\5\63"+
-      "\32\2\u00f0\u00ef\3\2\2\2\u00f1\u00f2\3\2\2\2\u00f2\u00f0\3\2\2\2"+
-      "\u00f2\u00f3\3\2\2\2\u00f3\u00f5\3\2\2\2\u00f4\u00d9\3\2\2\2\u00f4"+
+      "\5\61\31\2\u00da\u00dc\5\63\32\2\u00db\u00da\3\2\2\2\u00dc\u00dd\3"+
+      "\2\2\2\u00dd\u00db\3\2\2\2\u00dd\u00de\3\2\2\2\u00de\u00df\3\2\2\2"+
+      "\u00df\u00e0\5\61\31\2\u00e0\u00f5\3\2\2\2\u00e1\u00e3\5\61\31\2\u00e2"+
+      "\u00e1\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3\u00e5\3\2\2\2\u00e4\u00e6"+
+      "\5\63\32\2\u00e5\u00e4\3\2\2\2\u00e6\u00e7\3\2\2\2\u00e7\u00e5\3\2"+
+      "\2\2\u00e7\u00e8\3\2\2\2\u00e8\u00f5\3\2\2\2\u00e9\u00eb\5\63\32\2"+
+      "\u00ea\u00e9\3\2\2\2\u00eb\u00ec\3\2\2\2\u00ec\u00ea\3\2\2\2\u00ec"+
+      "\u00ed\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\u00f0\7\61\2\2\u00ef\u00f1"+
+      "\5\63\32\2\u00f0\u00ef\3\2\2\2\u00f1\u00f2\3\2\2\2\u00f2\u00f0\3\2"+
+      "\2\2\u00f2\u00f3\3\2\2\2\u00f3\u00f5\3\2\2\2\u00f4\u00d9\3\2\2\2\u00f4"+
       "\u00db\3\2\2\2\u00f4\u00e2\3\2\2\2\u00f4\u00ea\3\2\2\2\u00f4\u00f5"+
       "\3\2\2\2\u00f5\30\3\2\2\2\u00f6\u00fe\7`\2\2\u00f7\u00f8\7`\2\2\u00f8"+
       "\u00fe\7`\2\2\u00f9\u00fe\7a\2\2\u00fa\u00fb\7a\2\2\u00fb\u00fe\7"+
@@ -230,21 +230,21 @@ public class AbcLexer extends Lexer {
       "\2\u010e\u010f\7o\2\2\u010f\36\3\2\2\2\u0110\u0112\7\"\2\2\u0111\u0110"+
       "\3\2\2\2\u0112\u0113\3\2\2\2\u0113\u0111\3\2\2\2\u0113\u0114\3\2\2"+
       "\2\u0114\u0115\3\2\2\2\u0115\u0116\b\20\2\2\u0116 \3\2\2\2\u0117\u0118"+
-      "\7|\2\2\u0118\"\3\2\2\2\u0119\u0125\7~\2\2\u011a\u011b\7~\2\2\u011b"+
-      "\u0125\7~\2\2\u011c\u011d\7]\2\2\u011d\u0125\7~\2\2\u011e\u011f\7"+
-      "~\2\2\u011f\u0125\7_\2\2\u0120\u0121\7<\2\2\u0121\u0125\7~\2\2\u0122"+
-      "\u0123\7~\2\2\u0123\u0125\7<\2\2\u0124\u0119\3\2\2\2\u0124\u011a\3"+
-      "\2\2\2\u0124\u011c\3\2\2\2\u0124\u011e\3\2\2\2\u0124\u0120\3\2\2\2"+
-      "\u0124\u0122\3\2\2\2\u0125$\3\2\2\2\u0126\u0127\7]\2\2\u0127\u012b"+
-      "\7\63\2\2\u0128\u0129\7]\2\2\u0129\u012b\7\64\2\2\u012a\u0126\3\2"+
-      "\2\2\u012a\u0128\3\2\2\2\u012b&\3\2\2\2\u012c\u012d\7*\2\2\u012d\u012e"+
-      "\7\64\2\2\u012e(\3\2\2\2\u012f\u0130\7*\2\2\u0130\u0131\7\65\2\2\u0131"+
-      "*\3\2\2\2\u0132\u0133\7*\2\2\u0133\u0134\7\66\2\2\u0134,\3\2\2\2\u0135"+
-      "\u0136\7\61\2\2\u0136.\3\2\2\2\u0137\u0138\7]\2\2\u0138\60\3\2\2\2"+
-      "\u0139\u013a\7_\2\2\u013a\62\3\2\2\2\u013b\u013c\t\6\2\2\u013c\64"+
+      "\7|\2\2\u0118\"\3\2\2\2\u0119\u011a\7]\2\2\u011a$\3\2\2\2\u011b\u011c"+
+      "\7_\2\2\u011c&\3\2\2\2\u011d\u0129\7~\2\2\u011e\u011f\7~\2\2\u011f"+
+      "\u0129\7~\2\2\u0120\u0121\7]\2\2\u0121\u0129\7~\2\2\u0122\u0123\7"+
+      "~\2\2\u0123\u0129\7_\2\2\u0124\u0125\7<\2\2\u0125\u0129\7~\2\2\u0126"+
+      "\u0127\7~\2\2\u0127\u0129\7<\2\2\u0128\u011d\3\2\2\2\u0128\u011e\3"+
+      "\2\2\2\u0128\u0120\3\2\2\2\u0128\u0122\3\2\2\2\u0128\u0124\3\2\2\2"+
+      "\u0128\u0126\3\2\2\2\u0129(\3\2\2\2\u012a\u012b\7]\2\2\u012b\u012f"+
+      "\7\63\2\2\u012c\u012d\7]\2\2\u012d\u012f\7\64\2\2\u012e\u012a\3\2"+
+      "\2\2\u012e\u012c\3\2\2\2\u012f*\3\2\2\2\u0130\u0131\7*\2\2\u0131\u0132"+
+      "\7\64\2\2\u0132,\3\2\2\2\u0133\u0134\7*\2\2\u0134\u0135\7\65\2\2\u0135"+
+      ".\3\2\2\2\u0136\u0137\7*\2\2\u0137\u0138\7\66\2\2\u0138\60\3\2\2\2"+
+      "\u0139\u013a\7\61\2\2\u013a\62\3\2\2\2\u013b\u013c\t\6\2\2\u013c\64"+
       "\3\2\2\2*\29DJRX`fntz\u0082\u008b\u0091\u0093\u009b\u00a1\u00a7\u00ab"+
       "\u00b0\u00b8\u00be\u00c6\u00cb\u00ce\u00d3\u00d7\u00dd\u00e2\u00e7"+
-      "\u00ec\u00f2\u00f4\u00fd\u0103\u0108\u010a\u0113\u0124\u012a\3\b\2"+
+      "\u00ec\u00f2\u00f4\u00fd\u0103\u0108\u010a\u0113\u0128\u012e\3\b\2"+
       "\2";
   public static final ATN _ATN =
     new ATNDeserializer().deserialize(_serializedATN.toCharArray());

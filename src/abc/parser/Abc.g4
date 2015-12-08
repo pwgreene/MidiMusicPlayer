@@ -47,10 +47,10 @@ other_fields : FIELD_COMPOSER | FIELD_DEFAULT_LENGTH | FIELD_METER | FIELD_TEMPO
 field_key : FIELD_KEY ;
 
 body: abcline+;
-abcline: (element+ LINE) | (field_voice LINE);
+abcline: (element+ LINE) | (field_voice LINE) | LINE;
 open_bracket : OPEN_BRACKET;
 close_bracket : CLOSE_BRACKET;
-multinote: l_bracket (note_element)+ r_bracket;
+multinote: open_bracket (note_element)+ close_bracket;
 note_element : NOTE | multinote;
 tuplet_element : (DUPLET element element) | (TRIPLET element element element) | (QUADRUPLET element element element element);
 barline : (BARLINE | NTH_REPEAT) SPACE*;

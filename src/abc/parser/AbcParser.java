@@ -22,32 +22,32 @@ public class AbcParser extends Parser {
   public static final int
     COMMENT=1, FIELD_NUMBER=2, FIELD_TITLE=3, FIELD_COMPOSER=4, FIELD_DEFAULT_LENGTH=5, 
     FIELD_METER=6, FIELD_TEMPO=7, FIELD_VOICE=8, FIELD_KEY=9, LINE=10, NOTE=11, 
-    PITCH=12, KEYACCIDENTAL=13, MODEMINOR=14, SPACE=15, REST=16, BARLINE=17, 
-    NTH_REPEAT=18, DUPLET=19, TRIPLET=20, QUADRUPLET=21, SLASH=22, L_BRACKET=23, 
-    R_BRACKET=24, DIGIT=25;
+    PITCH=12, KEYACCIDENTAL=13, MODEMINOR=14, SPACE=15, REST=16, OPEN_BRACKET=17, 
+    CLOSE_BRACKET=18, BARLINE=19, NTH_REPEAT=20, DUPLET=21, TRIPLET=22, 
+    QUADRUPLET=23, SLASH=24, DIGIT=25;
   public static final int
     RULE_root = 0, RULE_field_voice = 1, RULE_header = 2, RULE_field_number = 3, 
     RULE_field_title = 4, RULE_other_fields = 5, RULE_field_key = 6, RULE_body = 7, 
-    RULE_abcline = 8, RULE_l_bracket = 9, RULE_r_bracket = 10, RULE_multinote = 11, 
+    RULE_abcline = 8, RULE_open_bracket = 9, RULE_close_bracket = 10, RULE_multinote = 11, 
     RULE_note_element = 12, RULE_tuplet_element = 13, RULE_barline = 14, 
     RULE_element = 15;
   public static final String[] ruleNames = {
     "root", "field_voice", "header", "field_number", "field_title", "other_fields", 
-    "field_key", "body", "abcline", "l_bracket", "r_bracket", "multinote", 
+    "field_key", "body", "abcline", "open_bracket", "close_bracket", "multinote", 
     "note_element", "tuplet_element", "barline", "element"
   };
 
   private static final String[] _LITERAL_NAMES = {
     null, null, null, null, null, null, null, null, null, null, null, null, 
-    null, null, "'m'", null, "'z'", null, null, "'(2'", "'(3'", "'(4'", 
-    "'/'", "'['", "']'"
+    null, null, "'m'", null, "'z'", "'['", "']'", null, null, "'(2'", "'(3'", 
+    "'(4'", "'/'"
   };
   private static final String[] _SYMBOLIC_NAMES = {
     null, "COMMENT", "FIELD_NUMBER", "FIELD_TITLE", "FIELD_COMPOSER", "FIELD_DEFAULT_LENGTH", 
     "FIELD_METER", "FIELD_TEMPO", "FIELD_VOICE", "FIELD_KEY", "LINE", "NOTE", 
-    "PITCH", "KEYACCIDENTAL", "MODEMINOR", "SPACE", "REST", "BARLINE", "NTH_REPEAT", 
-    "DUPLET", "TRIPLET", "QUADRUPLET", "SLASH", "L_BRACKET", "R_BRACKET", 
-    "DIGIT"
+    "PITCH", "KEYACCIDENTAL", "MODEMINOR", "SPACE", "REST", "OPEN_BRACKET", 
+    "CLOSE_BRACKET", "BARLINE", "NTH_REPEAT", "DUPLET", "TRIPLET", "QUADRUPLET", 
+    "SLASH", "DIGIT"
   };
   public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -480,7 +480,7 @@ public class AbcParser extends Parser {
         setState(64); 
         _errHandler.sync(this);
         _la = _input.LA(1);
-      } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FIELD_VOICE) | (1L << NOTE) | (1L << BARLINE) | (1L << NTH_REPEAT) | (1L << DUPLET) | (1L << TRIPLET) | (1L << QUADRUPLET) | (1L << L_BRACKET))) != 0) );
+      } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FIELD_VOICE) | (1L << LINE) | (1L << NOTE) | (1L << OPEN_BRACKET) | (1L << BARLINE) | (1L << NTH_REPEAT) | (1L << DUPLET) | (1L << TRIPLET) | (1L << QUADRUPLET))) != 0) );
       }
     }
     catch (RecognitionException re) {
@@ -524,15 +524,15 @@ public class AbcParser extends Parser {
     enterRule(_localctx, 16, RULE_abcline);
     int _la;
     try {
-      setState(76);
+      setState(77);
       switch (_input.LA(1)) {
       case NOTE:
+      case OPEN_BRACKET:
       case BARLINE:
       case NTH_REPEAT:
       case DUPLET:
       case TRIPLET:
       case QUADRUPLET:
-      case L_BRACKET:
         enterOuterAlt(_localctx, 1);
         {
         {
@@ -549,7 +549,7 @@ public class AbcParser extends Parser {
           setState(69); 
           _errHandler.sync(this);
           _la = _input.LA(1);
-        } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOTE) | (1L << BARLINE) | (1L << NTH_REPEAT) | (1L << DUPLET) | (1L << TRIPLET) | (1L << QUADRUPLET) | (1L << L_BRACKET))) != 0) );
+        } while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOTE) | (1L << OPEN_BRACKET) | (1L << BARLINE) | (1L << NTH_REPEAT) | (1L << DUPLET) | (1L << TRIPLET) | (1L << QUADRUPLET))) != 0) );
         setState(71);
         match(LINE);
         }
@@ -564,6 +564,13 @@ public class AbcParser extends Parser {
         setState(74);
         match(LINE);
         }
+        }
+        break;
+      case LINE:
+        enterOuterAlt(_localctx, 3);
+        {
+        setState(76);
+        match(LINE);
         }
         break;
       default:
@@ -581,30 +588,30 @@ public class AbcParser extends Parser {
     return _localctx;
   }
 
-  public static class L_bracketContext extends ParserRuleContext {
-    public TerminalNode L_BRACKET() { return getToken(AbcParser.L_BRACKET, 0); }
-    public L_bracketContext(ParserRuleContext parent, int invokingState) {
+  public static class Open_bracketContext extends ParserRuleContext {
+    public TerminalNode OPEN_BRACKET() { return getToken(AbcParser.OPEN_BRACKET, 0); }
+    public Open_bracketContext(ParserRuleContext parent, int invokingState) {
       super(parent, invokingState);
     }
-    @Override public int getRuleIndex() { return RULE_l_bracket; }
+    @Override public int getRuleIndex() { return RULE_open_bracket; }
     @Override
     public void enterRule(ParseTreeListener listener) {
-      if ( listener instanceof AbcListener ) ((AbcListener)listener).enterL_bracket(this);
+      if ( listener instanceof AbcListener ) ((AbcListener)listener).enterOpen_bracket(this);
     }
     @Override
     public void exitRule(ParseTreeListener listener) {
-      if ( listener instanceof AbcListener ) ((AbcListener)listener).exitL_bracket(this);
+      if ( listener instanceof AbcListener ) ((AbcListener)listener).exitOpen_bracket(this);
     }
   }
 
-  public final L_bracketContext l_bracket() throws RecognitionException {
-    L_bracketContext _localctx = new L_bracketContext(_ctx, getState());
-    enterRule(_localctx, 18, RULE_l_bracket);
+  public final Open_bracketContext open_bracket() throws RecognitionException {
+    Open_bracketContext _localctx = new Open_bracketContext(_ctx, getState());
+    enterRule(_localctx, 18, RULE_open_bracket);
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(78);
-      match(L_BRACKET);
+      setState(79);
+      match(OPEN_BRACKET);
       }
     }
     catch (RecognitionException re) {
@@ -618,30 +625,30 @@ public class AbcParser extends Parser {
     return _localctx;
   }
 
-  public static class R_bracketContext extends ParserRuleContext {
-    public TerminalNode R_BRACKET() { return getToken(AbcParser.R_BRACKET, 0); }
-    public R_bracketContext(ParserRuleContext parent, int invokingState) {
+  public static class Close_bracketContext extends ParserRuleContext {
+    public TerminalNode CLOSE_BRACKET() { return getToken(AbcParser.CLOSE_BRACKET, 0); }
+    public Close_bracketContext(ParserRuleContext parent, int invokingState) {
       super(parent, invokingState);
     }
-    @Override public int getRuleIndex() { return RULE_r_bracket; }
+    @Override public int getRuleIndex() { return RULE_close_bracket; }
     @Override
     public void enterRule(ParseTreeListener listener) {
-      if ( listener instanceof AbcListener ) ((AbcListener)listener).enterR_bracket(this);
+      if ( listener instanceof AbcListener ) ((AbcListener)listener).enterClose_bracket(this);
     }
     @Override
     public void exitRule(ParseTreeListener listener) {
-      if ( listener instanceof AbcListener ) ((AbcListener)listener).exitR_bracket(this);
+      if ( listener instanceof AbcListener ) ((AbcListener)listener).exitClose_bracket(this);
     }
   }
 
-  public final R_bracketContext r_bracket() throws RecognitionException {
-    R_bracketContext _localctx = new R_bracketContext(_ctx, getState());
-    enterRule(_localctx, 20, RULE_r_bracket);
+  public final Close_bracketContext close_bracket() throws RecognitionException {
+    Close_bracketContext _localctx = new Close_bracketContext(_ctx, getState());
+    enterRule(_localctx, 20, RULE_close_bracket);
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(80);
-      match(R_BRACKET);
+      setState(81);
+      match(CLOSE_BRACKET);
       }
     }
     catch (RecognitionException re) {
@@ -656,11 +663,11 @@ public class AbcParser extends Parser {
   }
 
   public static class MultinoteContext extends ParserRuleContext {
-    public L_bracketContext l_bracket() {
-      return getRuleContext(L_bracketContext.class,0);
+    public Open_bracketContext open_bracket() {
+      return getRuleContext(Open_bracketContext.class,0);
     }
-    public R_bracketContext r_bracket() {
-      return getRuleContext(R_bracketContext.class,0);
+    public Close_bracketContext close_bracket() {
+      return getRuleContext(Close_bracketContext.class,0);
     }
     public List<Note_elementContext> note_element() {
       return getRuleContexts(Note_elementContext.class);
@@ -689,24 +696,24 @@ public class AbcParser extends Parser {
     try {
       enterOuterAlt(_localctx, 1);
       {
-      setState(82);
-      l_bracket();
-      setState(84); 
+      setState(83);
+      open_bracket();
+      setState(85); 
       _errHandler.sync(this);
       _la = _input.LA(1);
       do {
         {
         {
-        setState(83);
+        setState(84);
         note_element();
         }
         }
-        setState(86); 
+        setState(87); 
         _errHandler.sync(this);
         _la = _input.LA(1);
-      } while ( _la==NOTE || _la==L_BRACKET );
-      setState(88);
-      r_bracket();
+      } while ( _la==NOTE || _la==OPEN_BRACKET );
+      setState(89);
+      close_bracket();
       }
     }
     catch (RecognitionException re) {
@@ -743,19 +750,19 @@ public class AbcParser extends Parser {
     Note_elementContext _localctx = new Note_elementContext(_ctx, getState());
     enterRule(_localctx, 24, RULE_note_element);
     try {
-      setState(92);
+      setState(93);
       switch (_input.LA(1)) {
       case NOTE:
         enterOuterAlt(_localctx, 1);
         {
-        setState(90);
+        setState(91);
         match(NOTE);
         }
         break;
-      case L_BRACKET:
+      case OPEN_BRACKET:
         enterOuterAlt(_localctx, 2);
         {
-        setState(91);
+        setState(92);
         multinote();
         }
         break;
@@ -802,17 +809,17 @@ public class AbcParser extends Parser {
     Tuplet_elementContext _localctx = new Tuplet_elementContext(_ctx, getState());
     enterRule(_localctx, 26, RULE_tuplet_element);
     try {
-      setState(109);
+      setState(110);
       switch (_input.LA(1)) {
       case DUPLET:
         enterOuterAlt(_localctx, 1);
         {
         {
-        setState(94);
-        match(DUPLET);
         setState(95);
-        element();
+        match(DUPLET);
         setState(96);
+        element();
+        setState(97);
         element();
         }
         }
@@ -821,13 +828,13 @@ public class AbcParser extends Parser {
         enterOuterAlt(_localctx, 2);
         {
         {
-        setState(98);
-        match(TRIPLET);
         setState(99);
-        element();
+        match(TRIPLET);
         setState(100);
         element();
         setState(101);
+        element();
+        setState(102);
         element();
         }
         }
@@ -836,15 +843,15 @@ public class AbcParser extends Parser {
         enterOuterAlt(_localctx, 3);
         {
         {
-        setState(103);
-        match(QUADRUPLET);
         setState(104);
-        element();
+        match(QUADRUPLET);
         setState(105);
         element();
         setState(106);
         element();
         setState(107);
+        element();
+        setState(108);
         element();
         }
         }
@@ -893,26 +900,26 @@ public class AbcParser extends Parser {
       int _alt;
       enterOuterAlt(_localctx, 1);
       {
-      setState(111);
+      setState(112);
       _la = _input.LA(1);
       if ( !(_la==BARLINE || _la==NTH_REPEAT) ) {
       _errHandler.recoverInline(this);
       } else {
         consume();
       }
-      setState(115);
+      setState(116);
       _errHandler.sync(this);
       _alt = getInterpreter().adaptivePredict(_input,7,_ctx);
       while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
         if ( _alt==1 ) {
           {
           {
-          setState(112);
+          setState(113);
           match(SPACE);
           }
           } 
         }
-        setState(117);
+        setState(118);
         _errHandler.sync(this);
         _alt = getInterpreter().adaptivePredict(_input,7,_ctx);
       }
@@ -964,12 +971,12 @@ public class AbcParser extends Parser {
       int _alt;
       enterOuterAlt(_localctx, 1);
       {
-      setState(121);
+      setState(122);
       switch (_input.LA(1)) {
       case NOTE:
-      case L_BRACKET:
+      case OPEN_BRACKET:
         {
-        setState(118);
+        setState(119);
         note_element();
         }
         break;
@@ -977,14 +984,14 @@ public class AbcParser extends Parser {
       case TRIPLET:
       case QUADRUPLET:
         {
-        setState(119);
+        setState(120);
         tuplet_element();
         }
         break;
       case BARLINE:
       case NTH_REPEAT:
         {
-        setState(120);
+        setState(121);
         barline();
         }
         break;
@@ -992,19 +999,19 @@ public class AbcParser extends Parser {
         throw new NoViableAltException(this);
       }
       {
-      setState(126);
+      setState(127);
       _errHandler.sync(this);
       _alt = getInterpreter().adaptivePredict(_input,9,_ctx);
       while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
         if ( _alt==1 ) {
           {
           {
-          setState(123);
+          setState(124);
           match(SPACE);
           }
           } 
         }
-        setState(128);
+        setState(129);
         _errHandler.sync(this);
         _alt = getInterpreter().adaptivePredict(_input,9,_ctx);
       }
@@ -1023,39 +1030,40 @@ public class AbcParser extends Parser {
   }
 
   public static final String _serializedATN =
-    "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\33\u0084\4\2\t"+
+    "\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\33\u0085\4\2\t"+
       "\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n"+
       "\4\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21"+
       "\3\2\3\2\3\2\3\2\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4\60\n\4\f"+
       "\4\16\4\63\13\4\3\4\3\4\3\4\3\5\3\5\3\6\3\6\3\7\3\7\3\b\3\b\3\t\6"+
-      "\tA\n\t\r\t\16\tB\3\n\6\nF\n\n\r\n\16\nG\3\n\3\n\3\n\3\n\3\n\5\nO"+
-      "\n\n\3\13\3\13\3\f\3\f\3\r\3\r\6\rW\n\r\r\r\16\rX\3\r\3\r\3\16\3\16"+
-      "\5\16_\n\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
-      "\3\17\3\17\3\17\3\17\5\17p\n\17\3\20\3\20\7\20t\n\20\f\20\16\20w\13"+
-      "\20\3\21\3\21\3\21\5\21|\n\21\3\21\7\21\177\n\21\f\21\16\21\u0082"+
-      "\13\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \2\4\3\2"+
-      "\6\n\3\2\23\24\177\2\"\3\2\2\2\4&\3\2\2\2\6(\3\2\2\2\b\67\3\2\2\2"+
-      "\n9\3\2\2\2\f;\3\2\2\2\16=\3\2\2\2\20@\3\2\2\2\22N\3\2\2\2\24P\3\2"+
-      "\2\2\26R\3\2\2\2\30T\3\2\2\2\32^\3\2\2\2\34o\3\2\2\2\36q\3\2\2\2 "+
-      "{\3\2\2\2\"#\5\6\4\2#$\5\20\t\2$%\7\2\2\3%\3\3\2\2\2&\'\7\n\2\2\'"+
-      "\5\3\2\2\2()\5\b\5\2)*\7\f\2\2*+\5\n\6\2+\61\7\f\2\2,-\5\f\7\2-.\7"+
-      "\f\2\2.\60\3\2\2\2/,\3\2\2\2\60\63\3\2\2\2\61/\3\2\2\2\61\62\3\2\2"+
-      "\2\62\64\3\2\2\2\63\61\3\2\2\2\64\65\5\16\b\2\65\66\7\f\2\2\66\7\3"+
-      "\2\2\2\678\7\4\2\28\t\3\2\2\29:\7\5\2\2:\13\3\2\2\2;<\t\2\2\2<\r\3"+
-      "\2\2\2=>\7\13\2\2>\17\3\2\2\2?A\5\22\n\2@?\3\2\2\2AB\3\2\2\2B@\3\2"+
-      "\2\2BC\3\2\2\2C\21\3\2\2\2DF\5 \21\2ED\3\2\2\2FG\3\2\2\2GE\3\2\2\2"+
-      "GH\3\2\2\2HI\3\2\2\2IJ\7\f\2\2JO\3\2\2\2KL\5\4\3\2LM\7\f\2\2MO\3\2"+
-      "\2\2NE\3\2\2\2NK\3\2\2\2O\23\3\2\2\2PQ\7\31\2\2Q\25\3\2\2\2RS\7\32"+
-      "\2\2S\27\3\2\2\2TV\5\24\13\2UW\5\32\16\2VU\3\2\2\2WX\3\2\2\2XV\3\2"+
-      "\2\2XY\3\2\2\2YZ\3\2\2\2Z[\5\26\f\2[\31\3\2\2\2\\_\7\r\2\2]_\5\30"+
-      "\r\2^\\\3\2\2\2^]\3\2\2\2_\33\3\2\2\2`a\7\25\2\2ab\5 \21\2bc\5 \21"+
-      "\2cp\3\2\2\2de\7\26\2\2ef\5 \21\2fg\5 \21\2gh\5 \21\2hp\3\2\2\2ij"+
-      "\7\27\2\2jk\5 \21\2kl\5 \21\2lm\5 \21\2mn\5 \21\2np\3\2\2\2o`\3\2"+
-      "\2\2od\3\2\2\2oi\3\2\2\2p\35\3\2\2\2qu\t\3\2\2rt\7\21\2\2sr\3\2\2"+
-      "\2tw\3\2\2\2us\3\2\2\2uv\3\2\2\2v\37\3\2\2\2wu\3\2\2\2x|\5\32\16\2"+
-      "y|\5\34\17\2z|\5\36\20\2{x\3\2\2\2{y\3\2\2\2{z\3\2\2\2|\u0080\3\2"+
-      "\2\2}\177\7\21\2\2~}\3\2\2\2\177\u0082\3\2\2\2\u0080~\3\2\2\2\u0080"+
-      "\u0081\3\2\2\2\u0081!\3\2\2\2\u0082\u0080\3\2\2\2\f\61BGNX^ou{\u0080";
+      "\tA\n\t\r\t\16\tB\3\n\6\nF\n\n\r\n\16\nG\3\n\3\n\3\n\3\n\3\n\3\n\5"+
+      "\nP\n\n\3\13\3\13\3\f\3\f\3\r\3\r\6\rX\n\r\r\r\16\rY\3\r\3\r\3\16"+
+      "\3\16\5\16`\n\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+      "\3\17\3\17\3\17\3\17\3\17\5\17q\n\17\3\20\3\20\7\20u\n\20\f\20\16"+
+      "\20x\13\20\3\21\3\21\3\21\5\21}\n\21\3\21\7\21\u0080\n\21\f\21\16"+
+      "\21\u0083\13\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36"+
+      " \2\4\3\2\6\n\3\2\25\26\u0081\2\"\3\2\2\2\4&\3\2\2\2\6(\3\2\2\2\b"+
+      "\67\3\2\2\2\n9\3\2\2\2\f;\3\2\2\2\16=\3\2\2\2\20@\3\2\2\2\22O\3\2"+
+      "\2\2\24Q\3\2\2\2\26S\3\2\2\2\30U\3\2\2\2\32_\3\2\2\2\34p\3\2\2\2\36"+
+      "r\3\2\2\2 |\3\2\2\2\"#\5\6\4\2#$\5\20\t\2$%\7\2\2\3%\3\3\2\2\2&\'"+
+      "\7\n\2\2\'\5\3\2\2\2()\5\b\5\2)*\7\f\2\2*+\5\n\6\2+\61\7\f\2\2,-\5"+
+      "\f\7\2-.\7\f\2\2.\60\3\2\2\2/,\3\2\2\2\60\63\3\2\2\2\61/\3\2\2\2\61"+
+      "\62\3\2\2\2\62\64\3\2\2\2\63\61\3\2\2\2\64\65\5\16\b\2\65\66\7\f\2"+
+      "\2\66\7\3\2\2\2\678\7\4\2\28\t\3\2\2\29:\7\5\2\2:\13\3\2\2\2;<\t\2"+
+      "\2\2<\r\3\2\2\2=>\7\13\2\2>\17\3\2\2\2?A\5\22\n\2@?\3\2\2\2AB\3\2"+
+      "\2\2B@\3\2\2\2BC\3\2\2\2C\21\3\2\2\2DF\5 \21\2ED\3\2\2\2FG\3\2\2\2"+
+      "GE\3\2\2\2GH\3\2\2\2HI\3\2\2\2IJ\7\f\2\2JP\3\2\2\2KL\5\4\3\2LM\7\f"+
+      "\2\2MP\3\2\2\2NP\7\f\2\2OE\3\2\2\2OK\3\2\2\2ON\3\2\2\2P\23\3\2\2\2"+
+      "QR\7\23\2\2R\25\3\2\2\2ST\7\24\2\2T\27\3\2\2\2UW\5\24\13\2VX\5\32"+
+      "\16\2WV\3\2\2\2XY\3\2\2\2YW\3\2\2\2YZ\3\2\2\2Z[\3\2\2\2[\\\5\26\f"+
+      "\2\\\31\3\2\2\2]`\7\r\2\2^`\5\30\r\2_]\3\2\2\2_^\3\2\2\2`\33\3\2\2"+
+      "\2ab\7\27\2\2bc\5 \21\2cd\5 \21\2dq\3\2\2\2ef\7\30\2\2fg\5 \21\2g"+
+      "h\5 \21\2hi\5 \21\2iq\3\2\2\2jk\7\31\2\2kl\5 \21\2lm\5 \21\2mn\5 "+
+      "\21\2no\5 \21\2oq\3\2\2\2pa\3\2\2\2pe\3\2\2\2pj\3\2\2\2q\35\3\2\2"+
+      "\2rv\t\3\2\2su\7\21\2\2ts\3\2\2\2ux\3\2\2\2vt\3\2\2\2vw\3\2\2\2w\37"+
+      "\3\2\2\2xv\3\2\2\2y}\5\32\16\2z}\5\34\17\2{}\5\36\20\2|y\3\2\2\2|"+
+      "z\3\2\2\2|{\3\2\2\2}\u0081\3\2\2\2~\u0080\7\21\2\2\177~\3\2\2\2\u0080"+
+      "\u0083\3\2\2\2\u0081\177\3\2\2\2\u0081\u0082\3\2\2\2\u0082!\3\2\2"+
+      "\2\u0083\u0081\3\2\2\2\f\61BGOY_pv|\u0081";
   public static final ATN _ATN =
     new ATNDeserializer().deserialize(_serializedATN.toCharArray());
   static {
