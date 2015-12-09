@@ -308,6 +308,27 @@ public class MakeMusic implements AbcListener {
                 String baseNoteString;
                 if (splitPitch.length == 1) {
                     baseNoteString = splitPitch[0];
+                    if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -1) {
+                        changeInPitch = -1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -1;
+                        hasAccidental = true;
+                    }
+                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -2) {
+                        changeInPitch = -2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -2;
+                        hasAccidental = true;
+                    }
+                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 1) {
+                        changeInPitch = 1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 1;
+                        hasAccidental = true;
+                    }
+                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 2) {
+                        changeInPitch = 2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 2;
+                        hasAccidental = true;
+                    }                
+                    
                 } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) { //matches "^C"
                     String accidental = splitPitch[0];
                     hasAccidental = true;
@@ -334,6 +355,22 @@ public class MakeMusic implements AbcListener {
                 } else if (splitPitch.length == 2) { //matches "C ,"
                     String octaveMarker = splitPitch[1];
                     baseNoteString = splitPitch[0];
+                    if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -1) {
+                        changeInPitch = -1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -1;
+                    }
+                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -2) {
+                        changeInPitch = -2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -2;
+                    }
+                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 1) {
+                        changeInPitch = 1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 1;
+                    }
+                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 2) {
+                        changeInPitch = 2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 2;
+                    }                
                     //check what octave the note is
                     if (octaveMarker.charAt(0) == ',') {
                         octave -= octaveMarker.length();
