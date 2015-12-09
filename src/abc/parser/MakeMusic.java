@@ -358,19 +358,19 @@ public class MakeMusic implements AbcListener {
                 } else  { //no accidental, use key signature
                     pitch = new Pitch(noteChar);
                     if (baseNoteString.toUpperCase().equals("A")) {
-                        pitch.transpose(key.getAccidentals()[0]);
+                        pitch = pitch.transpose(key.getAccidentals()[0]);
                     } else if (baseNoteString.toUpperCase().equals("B")) {
-                        pitch.transpose(key.getAccidentals()[1]);
+                        pitch =pitch.transpose(key.getAccidentals()[1]);
                     } else if (baseNoteString.toUpperCase().equals("C")) {
-                        pitch.transpose(key.getAccidentals()[2]);
+                        pitch =pitch.transpose(key.getAccidentals()[2]);
                     } else if (baseNoteString.toUpperCase().equals("D")) {
-                        pitch.transpose(key.getAccidentals()[3]);
+                        pitch =pitch.transpose(key.getAccidentals()[3]);
                     } else if (baseNoteString.toUpperCase().equals("E")) {
-                        pitch.transpose(key.getAccidentals()[4]);
+                        pitch =pitch.transpose(key.getAccidentals()[4]);
                     } else if (baseNoteString.toUpperCase().equals("F")) {
-                        pitch.transpose(key.getAccidentals()[5]);
+                        pitch =pitch.transpose(key.getAccidentals()[5]);
                     } else if (baseNoteString.toUpperCase().equals("G")) {
-                        pitch.transpose(key.getAccidentals()[6]);
+                        pitch = pitch.transpose(key.getAccidentals()[6]);
                     }
                 }
                 //transpose pitch by the octave
