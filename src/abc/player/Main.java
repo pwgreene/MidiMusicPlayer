@@ -30,12 +30,8 @@ public class Main {
      */
     public static void play(String file) throws IOException, MidiUnavailableException, InvalidMidiDataException {
         File musicFile = new File(file);
-        SequencePlayer musicAndBeat = Music.parse(musicFile);
-        //Music music = musicAndBeat.getMusic();
-        //int beat = musicAndBeat.getBeatsPerMinute();
-        //SequencePlayer player = new SequencePlayer(beat, 1);
-        //music.play(player, 0);
-        //player.play();
+        SequencePlayer player = Music.parse(musicFile);
+        player.play();
     }
 
     public static void main(String[] args) {
