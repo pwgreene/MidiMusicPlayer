@@ -237,110 +237,110 @@ public class MakeMusic implements AbcListener {
 
     @Override
     public void exitNote_element(Note_elementContext ctx) {
-         if(ctx.NOTE() != null) {
-             System.out.println(ctx.NOTE().getText());
+        if(ctx.NOTE() != null) {
+
             //Split the string into a note and a note_duration part
-//            String noteString = ctx.NOTE().getText();
-//            String[] splitNote = noteString.split("(?=[\\d+/])",2);
-//            String pitchString = splitNote[0];
-//            RationalNum duration = new RationalNum(1,1);
-//            if(splitNote.length == 2) {
-//                String durationString = splitNote[1];
-//                String[] splitRationalNum = durationString.split("(?=/)|(?<=/)");
-//                if(splitRationalNum.length == 3) {
-//                    int num = 1;
-//                    int den = 2;
-//                    if(splitRationalNum[0].equals("")) {
-//                        den = Integer.parseInt(splitRationalNum[2]);
-//                    } else if(splitRationalNum[2].equals("")) {
-//                        //this case should never happen..right?
-//                    } else {
-//                        num = Integer.parseInt(splitRationalNum[0]);
-//                        den = Integer.parseInt(splitRationalNum[2]);
-//                    }
-//                    duration = new RationalNum(num, den);
-//                } else if(splitRationalNum.length == 1) {
-//                    int num = Integer.parseInt(splitRationalNum[0]);
-//                    int den = 1;
-//                    duration = new RationalNum(num, den);
-//                } else if (splitRationalNum.length == 2){
-//                    int num = 1;
-//                    int den = 2;
-//                    duration = new RationalNum(num, den);
-//                }
-//            }
-//
-//            int octave = 0; 
-//            Pitch thePitch = null;
-//
-//            //split the pitch into accidental, basenote, octave
-//            String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
-//
-//            //parse for basenote
-//            String basenoteString = splitPitch[1];
-//            if(basenoteString.toLowerCase().equals("a")) {
-//                baseNote = NoteEnum.A;
-//            } else if(basenoteString.toLowerCase().equals("b")) {
-//                baseNote = NoteEnum.B;
-//            } else if(basenoteString.toLowerCase().equals("c")) {
-//                baseNote = NoteEnum.C;
-//            } else if(basenoteString.toLowerCase().equals("d")) {
-//                baseNote = NoteEnum.D;
-//            } else if(basenoteString.toLowerCase().equals("e")) {
-//                baseNote = NoteEnum.E;
-//            } else if(basenoteString.toLowerCase().equals("f")) {
-//                baseNote = NoteEnum.F;
-//            } else if(basenoteString.toLowerCase().equals("g")) {
-//                baseNote = NoteEnum.G;
-//            }            
-//
-//            //Apply key signature
-//            accidental = setKeySigAccidental(baseNote);         
-//
-//            //Apply any inline accidentals
-//            String accidentalString = splitPitch[0];
-//            if(accidentalString.equals("_")) {
-//                accidental = AccidentalEnum.FLAT;
-//            } else if(accidentalString.equals("__")) {
-//                accidental = AccidentalEnum.DOUBLE_FLAT;
-//            } else if(accidentalString.equals("^")) {
-//                accidental = AccidentalEnum.SHARP;
-//            } else if(accidentalString.equals("^^")) {
-//                accidental = AccidentalEnum.DOUBLE_SHARP;
-//            } else if(accidentalString.equals("=")) {
-//                accidental = AccidentalEnum.NATURAL;
-//            }
-//
-//            //parse for octave
-//            if(basenoteString.equals(basenoteString.toLowerCase()))
-//                octave++;
-//            if(splitPitch.length == 3) {
-//                //if octave is specified
-//                String octaveString = splitPitch[2];
-//                String octaveType = octaveString.substring(0, 1); 
-//                for(int i=0; i<octaveString.length(); i++) {
-//                    if(octaveType.equals("'"))
-//                        octave++;
-//                    else if(octaveType.equals(","))
-//                        octave--;
-//                }
-//            }       
-//
-//            //add a rest or a note
-//            if(basenoteString.equals("z")) {
-//                for(int i = 0; i < 20; i++)
-//                    noteContainer.add(new Rest(duration));
-//                if(!this.inMulti) {
-//                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
-//                    bars.get(bars.size()-1).add(new Rest(duration));
-//                }
-//            } else {
-//                noteContainer.add(new Note(baseNote, accidental, octave, duration));
-//                if(!this.inMulti) {
-//                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
-//                    bars.get(bars.size()-1).add(new Note(baseNote, accidental, octave, duration));
-//                }
-//            }
+            String noteString = ctx.NOTE().getText();
+            String[] splitNote = noteString.split("(?=[\\d+/])",2);
+            String pitchString = splitNote[0];
+            RationalNum duration = new RationalNum(1,1);
+            if(splitNote.length == 2) {
+                String durationString = splitNote[1];
+                String[] splitRationalNum = durationString.split("(?=/)|(?<=/)");
+                if(splitRationalNum.length == 3) {
+                    int num = 1;
+                    int den = 2;
+                    if(splitRationalNum[0].equals("")) {
+                        den = Integer.parseInt(splitRationalNum[2]);
+                    } else if(splitRationalNum[2].equals("")) {
+                        //this case should never happen..right?
+                    } else {
+                        num = Integer.parseInt(splitRationalNum[0]);
+                        den = Integer.parseInt(splitRationalNum[2]);
+                    }
+                    duration = new RationalNum(num, den);
+                } else if(splitRationalNum.length == 1) {
+                    int num = Integer.parseInt(splitRationalNum[0]);
+                    int den = 1;
+                    duration = new RationalNum(num, den);
+                } else if (splitRationalNum.length == 2){
+                    int num = 1;
+                    int den = 2;
+                    duration = new RationalNum(num, den);
+                }
+            }
+
+            String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
+            System.out.println(splitPitch[0] + " " + splitPitch[1]);
+
+            //split the pitch into accidental, basenote, octave
+            //            
+            //
+            //            //parse for basenote
+            //            String basenoteString = splitPitch[1];
+            //            if(basenoteString.toLowerCase().equals("a")) {
+            //                baseNote = NoteEnum.A;
+            //            } else if(basenoteString.toLowerCase().equals("b")) {
+            //                baseNote = NoteEnum.B;
+            //            } else if(basenoteString.toLowerCase().equals("c")) {
+            //                baseNote = NoteEnum.C;
+            //            } else if(basenoteString.toLowerCase().equals("d")) {
+            //                baseNote = NoteEnum.D;
+            //            } else if(basenoteString.toLowerCase().equals("e")) {
+            //                baseNote = NoteEnum.E;
+            //            } else if(basenoteString.toLowerCase().equals("f")) {
+            //                baseNote = NoteEnum.F;
+            //            } else if(basenoteString.toLowerCase().equals("g")) {
+            //                baseNote = NoteEnum.G;
+            //            }            
+            //
+            //            //Apply key signature
+            //            accidental = setKeySigAccidental(baseNote);         
+            //
+            //            //Apply any inline accidentals
+            //            String accidentalString = splitPitch[0];
+            //            if(accidentalString.equals("_")) {
+            //                accidental = AccidentalEnum.FLAT;
+            //            } else if(accidentalString.equals("__")) {
+            //                accidental = AccidentalEnum.DOUBLE_FLAT;
+            //            } else if(accidentalString.equals("^")) {
+            //                accidental = AccidentalEnum.SHARP;
+            //            } else if(accidentalString.equals("^^")) {
+            //                accidental = AccidentalEnum.DOUBLE_SHARP;
+            //            } else if(accidentalString.equals("=")) {
+            //                accidental = AccidentalEnum.NATURAL;
+            //            }
+            //
+            //            //parse for octave
+            //            if(basenoteString.equals(basenoteString.toLowerCase()))
+            //                octave++;
+            //            if(splitPitch.length == 3) {
+            //                //if octave is specified
+            //                String octaveString = splitPitch[2];
+            //                String octaveType = octaveString.substring(0, 1); 
+            //                for(int i=0; i<octaveString.length(); i++) {
+            //                    if(octaveType.equals("'"))
+            //                        octave++;
+            //                    else if(octaveType.equals(","))
+            //                        octave--;
+            //                }
+            //            }       
+            //
+            //            //add a rest or a note
+            //            if(basenoteString.equals("z")) {
+            //                for(int i = 0; i < 20; i++)
+            //                    noteContainer.add(new Rest(duration));
+            //                if(!this.inMulti) {
+            //                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
+            //                    bars.get(bars.size()-1).add(new Rest(duration));
+            //                }
+            //            } else {
+            //                noteContainer.add(new Note(baseNote, accidental, octave, duration));
+            //                if(!this.inMulti) {
+            //                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
+            //                    bars.get(bars.size()-1).add(new Note(baseNote, accidental, octave, duration));
+            //                }
+            //            }
         }
     }
 
