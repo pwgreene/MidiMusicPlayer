@@ -25,6 +25,7 @@ public class Rest implements Music {
      */
     public Rest(int duration) {
         this.duration = duration;
+        checkRep();
     }
 
     @Override

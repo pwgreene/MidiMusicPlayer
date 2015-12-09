@@ -9,16 +9,15 @@ public class SingleNoteTest {
     /*Testing Strategy*/
     
     //Constructor:
-    //duration = 0, 1, >1
+    //duration =  1, >1
     //Pitch = lower octave, middle octave, high octave
     
     //toString():
-    //duration is 0, 1, >1
+    //duration is  1, >1
     //Pitch = lower octave, middle octave, high octave
     
     //getDuration():
-    //duration is 0, 1, >1
-    //Pitch = lower octave, middle octave, high octave
+    //duration is  1, >1
     
     //toString():
     //duration is 1, >1
