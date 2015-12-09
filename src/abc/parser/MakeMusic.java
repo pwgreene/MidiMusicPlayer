@@ -272,7 +272,6 @@ public class MakeMusic implements AbcListener {
             }
 
             String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
-            System.out.println(splitPitch[0] + " " + splitPitch[1]);
 
             int changeInPitch = 0;
             boolean hasAccidental = false;
@@ -298,7 +297,7 @@ public class MakeMusic implements AbcListener {
                 baseNoteString = splitPitch[1];
             } else if (splitPitch.length == 2) { //matches "C ,"
                 String octaveMarker = splitPitch[1];
-                baseNoteString = splitPitch[1];
+                baseNoteString = splitPitch[0];
               //check what octave the note is
                 if (octaveMarker.charAt(0) == ',') {
                     octave -= octaveMarker.length();
@@ -337,7 +336,7 @@ public class MakeMusic implements AbcListener {
                 octave++;
             }
             Pitch pitch; //create pitch and change for accidental
-            char noteChar = baseNoteString.charAt(0);
+            char noteChar = baseNoteString.toUpperCase().charAt(0);
             if (hasAccidental) {
                 pitch = new Pitch(noteChar).transpose(changeInPitch);
             } else { //no accidental, use key signature

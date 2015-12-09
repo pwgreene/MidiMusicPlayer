@@ -59,7 +59,7 @@ public interface Music {
             parser.reportErrorsAsExceptions();
             ParseTree tree;
             tree = parser.root();  
-            Trees.inspect(tree, parser);
+            //Trees.inspect(tree, parser);
 
             //after tree is made, now walk tree and return the Music
             MakeMusic musicMaker = new MakeMusic();
