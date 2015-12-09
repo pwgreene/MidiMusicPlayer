@@ -220,8 +220,8 @@ public class MakeMusic implements AbcListener {
         if(barlineString.equals("|:")) {
             currentRepeat[0] = new Integer(bars.size());
         } else if(barlineString.equals(":|")) {
-//            if(currentRepeat[1] == null)
-//                System.out.println("here");
+            //            if(currentRepeat[1] == null)
+            //                System.out.println("here");
             currentRepeat[1] = new Integer(bars.size());
             currentRepeat[2] = new Integer(bars.size());
         } else if(barlineString.equals("[1")) {
@@ -269,8 +269,15 @@ public class MakeMusic implements AbcListener {
                     }
                     duration = new RationalNum(num, den);
                 } else if(splitRationalNum.length == 1) {
-                    int num = Integer.parseInt(splitRationalNum[0]);
+                    int num = 1;
                     int den = 1;
+                    if(splitRationalNum[0].equals("/")){
+                        num = 1;
+                        den = 2;
+                    }else{
+                        num = Integer.parseInt(splitRationalNum[0]);
+                        den = 1;
+                    }
                     duration = new RationalNum(num, den);
                 } else if (splitRationalNum.length == 2){
                     int num = 1;
