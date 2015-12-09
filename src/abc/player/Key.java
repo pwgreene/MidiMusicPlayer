@@ -8,8 +8,7 @@ public class Key {
     private int[] accidentals = new int[7];
     private Map<String, int[]> keyMap;
     private final String theKey;
-    
-    
+      
     /**
      * Initializes a new KeySignature object.
      * @param key is inputed as a string (ex "C", "D#m", "Gb")
