@@ -2,6 +2,8 @@ package abc.player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
@@ -33,12 +35,15 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            //String file = args[0];
-            play("sample_abc/fur_elise.abc");
+            List<Object> arguments = Arrays.asList(args);
+            String file = (String) arguments.get(0);
+            play(file);
         } catch (IOException ioe) {
             System.err.println("Invalid File");
         } catch (MidiUnavailableException | InvalidMidiDataException e) {
             System.err.println("Sequence Player not working");
+        } catch (IndexOutOfBoundsException e) {
+            throw new Error("Must have an file argument --*filename*");
         }
         
     }
