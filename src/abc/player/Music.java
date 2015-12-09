@@ -25,9 +25,9 @@ import abc.sound.SequencePlayer;
  */
 public interface Music {
     
-    //Recursive Data Type Definition:
+    //Data Type Definition:
     //Music = SingleNote(duration:double, pitch:Pitch) + Rest(double:duration) 
-    //        + Concat(m1:Music, m2: Music) + Layer(m1:Music, m2: Music) + Chord(notes:ArrayList<SingleNote>)
+    //        Tuplet(notes:List<SingleNotes>) + Chord(notes:List<SingleNote>)
     
     
     /**

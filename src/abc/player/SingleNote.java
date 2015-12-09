@@ -32,6 +32,7 @@ public class SingleNote implements Music{
     public SingleNote(int duration, Pitch pitch, int accidental) {
         this.duration = duration;
         this.pitch = pitch.transpose(accidental);
+        checkRep();
     }
     
     
@@ -70,6 +71,10 @@ public class SingleNote implements Music{
     @Override
     public boolean isResting() {
         return false;
+    }
+    
+    private void checkRep() {
+        assert duration > 0;
     }
     
     

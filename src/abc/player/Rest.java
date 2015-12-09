@@ -58,4 +58,8 @@ public class Rest implements Music {
     public boolean isResting() {
         return true;
     }
+    
+    private void checkRep() {
+        assert duration > 0;
+    }
 }
