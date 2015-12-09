@@ -1,5 +1,7 @@
 package abc.player;
 
+import java.util.List;
+
 public class RationalNum implements Comparable<Object> {
 
      private final int num;
@@ -86,6 +88,19 @@ public class RationalNum implements Comparable<Object> {
          int lcm =  (a / GCD(a, b)) * b;
          return lcm;
       }
+     
+     /**
+      * Calculate the least-common multiple in a list of integers
+      * @param values a non-empty list of integers
+      * @return the least-common multiple of all integers in values
+      */
+     public static int LCM(List<Integer> values) {
+         int lcm = values.get(0);
+         for (int n : values) {
+             lcm = LCM(lcm, n);
+         }
+         return lcm;
+     }
 
      /**
       * Determines whether two RationalNumbers

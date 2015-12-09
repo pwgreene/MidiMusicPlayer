@@ -19,19 +19,19 @@ public class SingleNote implements Music{
     
     private final int duration;
     private final Pitch pitch;
-    private int accidental = 0;
+    //private int accidental;
     
     /**
      * Create a new instance of a SingleNote
      * @param duration the duration to play this note in ticks. Must be positive.
      * @param pitch the pitch at which to play this note
-     * Must be sharp: '^', flat: '_', or natural: '='
+     * @param accidental the number of semitones up or down to play this note. 1 is sharp, 0 is natural, -1 is flat.
+     * Must be -2(double flat), -1, 0, 1, or 2 (double sharp)
      */
 
     public SingleNote(int duration, Pitch pitch, int accidental) {
         this.duration = duration;
-        this.pitch = pitch;
-        this.accidental = accidental;
+        this.pitch = pitch.transpose(accidental);
     }
     
     
