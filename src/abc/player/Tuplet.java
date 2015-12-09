@@ -82,13 +82,15 @@ public class Tuplet implements Music {
      */
     public RationalNum getDuration() {
         if (type == 2) {
-            return new RationalNum(3, 1);
+            return new RationalNum(6, 2);
         } else if (type == 3) {
             return new RationalNum(6, 3);
         } else {
-            return new RationalNum(3, 1);
+            return new RationalNum(12, 4);
         }
     }
+    
+    
 
     @Override
     public void play(SequencePlayer seqPlayer, int atTick, int atSpeed) {
