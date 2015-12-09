@@ -271,7 +271,7 @@ public class MakeMusic implements AbcListener {
             }
 
             String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
-            System.out.println(splitPitch[0] + " " + splitPitch[1]);
+            System.out.println(splitPitch[0]);
 
             //split the pitch into accidental, basenote, octave
             //            

@@ -1,5 +1,6 @@
 package abc.player;
 
+import java.util.Collections;
 import java.util.List;
 
 import abc.sound.SequencePlayer;
@@ -16,14 +17,14 @@ public class Chord implements Music{
     //notes.size() > 0
     //Safety from Rep Exposure:
     //notes is private and final and is never mutated
+    //getNotes returns unmodfiable list of notes
     //Class is immutable
 
     private final List<SingleNote> notes;
 
     /**
      * Create a new Chord object that joins two or more different musics
-     * @param m1 the first voice to be played
-     * @param m2 the second voice to be played
+     * @param notes a list of SingleNotes that compose the chord
      */
     public Chord(List<SingleNote> notes) {
         this.notes = notes;
@@ -63,6 +64,34 @@ public class Chord implements Music{
         return false;
     }
     
-    //Equals TODO
-    //Hashcode TODO
+    @Override
+    /**
+     * Two chords are equal if they contain the same SingleNotes
+     */
+    public boolean equals(Object other) {
+        if(!(other instanceof Chord))
+            return false;
+        Chord chord = (Chord)other;
+        if(chord.getNotes().size() != this.getNotes().size()){
+            return false;
+        }
+        for (SingleNote aNote: chord.getNotes()) {
+            if(!this.getNotes().contains(aNote)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * @return a unmodifiable list of the notes in the chord
+     */
+    public List<SingleNote> getNotes(){
+        return Collections.unmodifiableList(this.notes);
+    }
+    
+    @Override
+    public int hashCode(){
+        return notes.size();
+    }
 }

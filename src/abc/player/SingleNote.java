@@ -5,7 +5,6 @@ import abc.sound.SequencePlayer;
 
 /**
  * A single note to be played by an instrument
- *
  */
 public class SingleNote implements Music{
 
