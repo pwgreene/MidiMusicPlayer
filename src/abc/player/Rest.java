@@ -59,10 +59,8 @@ public class Rest implements Music {
         return true;
     }
 
-    /**
-     * Ensures that duration numerator and denominator are >0
-     */
     private void checkRep() {
+        //Ensures that duration numerator and denominator are >0
         assert getDuration().getNum() > 0;
         assert getDuration().getDenom() > 0;
     }

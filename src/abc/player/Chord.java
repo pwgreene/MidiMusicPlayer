@@ -31,10 +31,8 @@ public class Chord implements Music{
         checkRep();
     }
     
-    /**
-     * Ensures that there' more than one note in the chord (as all chords should)
-     */
     public void checkRep(){
+        //Ensures that there' more than one note in the chord (as all chords should)
         assert notes.size()>1;
     }
 
@@ -73,10 +71,8 @@ public class Chord implements Music{
     }
     
     @Override
-    /**
-     * Two chords are equal if they contain the same SingleNotes
-     */
     public boolean equals(Object other) {
+        //Two chords are equal if they contain the same SingleNotes
         if(!(other instanceof Chord))
             return false;
         Chord chord = (Chord)other;
