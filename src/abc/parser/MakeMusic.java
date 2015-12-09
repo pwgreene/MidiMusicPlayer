@@ -14,6 +14,7 @@ import abc.player.Chord;
 import abc.player.Key;
 import abc.player.Music;
 import abc.player.RationalNum;
+import abc.player.Rest;
 import abc.player.SingleNote;
 import abc.player.Tuplet;
 import abc.sound.Pitch;
@@ -272,7 +273,7 @@ public class MakeMusic implements AbcListener {
 
             String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
             System.out.println(splitPitch[0] + " " + splitPitch[1]);
-            
+
             int changeInPitch = 0;
             boolean hasAccidental = false;
             int octave = 0;
@@ -319,7 +320,7 @@ public class MakeMusic implements AbcListener {
                 } else if (octaveMarker.charAt(0) == '\'') {
                     octave += octaveMarker.length();
                 }
-                
+
             }
             //change pitch based on octave
             if (baseNoteString.toLowerCase().equals(baseNoteString)) {
@@ -349,73 +350,21 @@ public class MakeMusic implements AbcListener {
             }
             //transpose pitch by the octave
             pitch = pitch.transpose(octave*Pitch.OCTAVE);
-            //            
-            //
-            //            //parse for basenote
-            //            String basenoteString = splitPitch[1];
-            //            if(basenoteString.toLowerCase().equals("a")) {
-            //                baseNote = NoteEnum.A;
-            //            } else if(basenoteString.toLowerCase().equals("b")) {
-            //                baseNote = NoteEnum.B;
-            //            } else if(basenoteString.toLowerCase().equals("c")) {
-            //                baseNote = NoteEnum.C;
-            //            } else if(basenoteString.toLowerCase().equals("d")) {
-            //                baseNote = NoteEnum.D;
-            //            } else if(basenoteString.toLowerCase().equals("e")) {
-            //                baseNote = NoteEnum.E;
-            //            } else if(basenoteString.toLowerCase().equals("f")) {
-            //                baseNote = NoteEnum.F;
-            //            } else if(basenoteString.toLowerCase().equals("g")) {
-            //                baseNote = NoteEnum.G;
-            //            }            
-            //
-            //            //Apply key signature
-            //            accidental = setKeySigAccidental(baseNote);         
-            //
-            //            //Apply any inline accidentals
-            //            String accidentalString = splitPitch[0];
-            //            if(accidentalString.equals("_")) {
-            //                accidental = AccidentalEnum.FLAT;
-            //            } else if(accidentalString.equals("__")) {
-            //                accidental = AccidentalEnum.DOUBLE_FLAT;
-            //            } else if(accidentalString.equals("^")) {
-            //                accidental = AccidentalEnum.SHARP;
-            //            } else if(accidentalString.equals("^^")) {
-            //                accidental = AccidentalEnum.DOUBLE_SHARP;
-            //            } else if(accidentalString.equals("=")) {
-            //                accidental = AccidentalEnum.NATURAL;
-            //            }
-            //
-            //            //parse for octave
-            //            if(basenoteString.equals(basenoteString.toLowerCase()))
-            //                octave++;
-            //            if(splitPitch.length == 3) {
-            //                //if octave is specified
-            //                String octaveString = splitPitch[2];
-            //                String octaveType = octaveString.substring(0, 1); 
-            //                for(int i=0; i<octaveString.length(); i++) {
-            //                    if(octaveType.equals("'"))
-            //                        octave++;
-            //                    else if(octaveType.equals(","))
-            //                        octave--;
-            //                }
-            //            }       
-            //
-            //            //add a rest or a note
-            //            if(basenoteString.equals("z")) {
-            //                for(int i = 0; i < 20; i++)
-            //                    noteContainer.add(new Rest(duration));
-            //                if(!this.inMulti) {
-            //                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
-            //                    bars.get(bars.size()-1).add(new Rest(duration));
-            //                }
-            //            } else {
-            //                noteContainer.add(new Note(baseNote, accidental, octave, duration));
-            //                if(!this.inMulti) {
-            //                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
-            //                    bars.get(bars.size()-1).add(new Note(baseNote, accidental, octave, duration));
-            //                }
-            //            }
+
+            //add a rest or a note
+            if(baseNoteString.equals("z")) {
+                List<List<Music>> bars = this.barsForVoice.get(voiceName);
+                bars.get(bars.size()-1).add(new Rest(duration));
+            } else {
+                if(this.inChord){
+                    chordNotes.add(new SingleNote(duration, pitch));
+                }else if(this.inTuple){
+                    tupleNotes.add(new SingleNote(duration, pitch));
+                }else{
+                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
+                    bars.get(bars.size()-1).add(new SingleNote(duration, pitch));
+                }             
+            }
         }
     }
 
