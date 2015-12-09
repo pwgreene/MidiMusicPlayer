@@ -52,8 +52,8 @@ public class PlayTest {
     @Test //notes have duration 1 at tick 0, middle octave, natural
     public void testChordPlayDurationOne() 
             throws MidiUnavailableException, InvalidMidiDataException {
-        SingleNote noteA = new SingleNote(new RationalNum(1,1), new Pitch('A'), 0);
-        SingleNote noteB = new SingleNote(new RationalNum(1,1), new Pitch('B'), 0);
+        SingleNote noteA = new SingleNote(new RationalNum(1,1), new Pitch('A'));
+        SingleNote noteB = new SingleNote(new RationalNum(1,1), new Pitch('B'));
         Music chord = new Chord(Arrays.asList(noteA, noteB));
         SequencePlayer player = new SequencePlayer(100, 5);
         chord.play(player, 0, 1);
@@ -66,8 +66,8 @@ public class PlayTest {
     @Test //notes have same of durations >1, plays atTick >0
     public void testChordPlayDurationGreaterThanOne() 
             throws MidiUnavailableException, InvalidMidiDataException {
-        SingleNote noteA = new SingleNote(new RationalNum(10,1), new Pitch('A'), 0);
-        SingleNote noteC = new SingleNote(new RationalNum(10,1), new Pitch('C'), 0);
+        SingleNote noteA = new SingleNote(new RationalNum(10,1), new Pitch('A'));
+        SingleNote noteC = new SingleNote(new RationalNum(10,1), new Pitch('C'));
         Music chord = new Chord(Arrays.asList(noteA, noteC));
         SequencePlayer player = new SequencePlayer(100, 5);
         chord.play(player, 5, 1);
@@ -80,8 +80,8 @@ public class PlayTest {
     @Test //notes have different durations >1
     public void testChordDifferentNoteDurations()  
             throws MidiUnavailableException, InvalidMidiDataException {
-        SingleNote noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A'), 0);
-        SingleNote noteC = new SingleNote(new RationalNum(5, 1), new Pitch('C'), 0);
+        SingleNote noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A'));
+        SingleNote noteC = new SingleNote(new RationalNum(5, 1), new Pitch('C'));
         Music chord = new Chord(Arrays.asList(noteA, noteC));
         SequencePlayer player = new SequencePlayer(100, 5);
         chord.play(player, 5, 1);
@@ -94,8 +94,8 @@ public class PlayTest {
     @Test //both notes are lower octave, natural (A,)
     public void testChordPlayLowerOctave() 
             throws MidiUnavailableException, InvalidMidiDataException {
-        SingleNote noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A').transpose(-12), 0);
-        SingleNote noteB = new SingleNote(new RationalNum(10, 1), new Pitch('B').transpose(-12), 0);
+        SingleNote noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A').transpose(-12));
+        SingleNote noteB = new SingleNote(new RationalNum(10, 1), new Pitch('B').transpose(-12));
         Music chord = new Chord(Arrays.asList(noteA, noteB));
         SequencePlayer player = new SequencePlayer(100, 5);
         chord.play(player, 0, 1);
@@ -107,8 +107,8 @@ public class PlayTest {
     }
     @Test //both notes are higher octave, natural (B' and D')
     public void testChordPlayHigherOctave() throws MidiUnavailableException, InvalidMidiDataException {
-        SingleNote noteB = new SingleNote(new RationalNum(10, 1), new Pitch('B').transpose(12), 0);
-        SingleNote noteD = new SingleNote(new RationalNum(10, 1), new Pitch('D').transpose(12), 0);
+        SingleNote noteB = new SingleNote(new RationalNum(10, 1), new Pitch('B').transpose(12));
+        SingleNote noteD = new SingleNote(new RationalNum(10, 1), new Pitch('D').transpose(12));
         Music chord = new Chord(Arrays.asList(noteB, noteD));
         SequencePlayer player = new SequencePlayer(100, 5);
         chord.play(player, 0, 1);
@@ -120,8 +120,8 @@ public class PlayTest {
     }
     @Test //notes are sharp
     public void testChordPlayFlatAndSharp() throws MidiUnavailableException, InvalidMidiDataException {
-        SingleNote noteC = new SingleNote(new RationalNum(10, 1), new Pitch('C'), 1);
-        SingleNote noteF = new SingleNote(new RationalNum(10, 1), new Pitch('F'), 1);
+        SingleNote noteC = new SingleNote(new RationalNum(10, 1), new Pitch('C').transpose(1));
+        SingleNote noteF = new SingleNote(new RationalNum(10, 1), new Pitch('F').transpose(1));
         Music chord = new Chord(Arrays.asList(noteC, noteF));
         SequencePlayer player = new SequencePlayer(100, 5);
         chord.play(player, 0, 1);
@@ -133,9 +133,9 @@ public class PlayTest {
     }
     @Test //# of notes >2
     public void testChordPlayThreeNotes() throws MidiUnavailableException, InvalidMidiDataException {
-        SingleNote noteC = new SingleNote(new RationalNum(30, 1), new Pitch('C'), -1);
-        SingleNote noteA = new SingleNote(new RationalNum(20, 1), new Pitch('A'), 0);
-        SingleNote noteE = new SingleNote(new RationalNum(15, 1), new Pitch('E'), 0);
+        SingleNote noteC = new SingleNote(new RationalNum(30, 1), new Pitch('C').transpose(-1));
+        SingleNote noteA = new SingleNote(new RationalNum(20, 1), new Pitch('A'));
+        SingleNote noteE = new SingleNote(new RationalNum(15, 1), new Pitch('E'));
         Music chord = new Chord(Arrays.asList(noteC, noteA, noteE));
         SequencePlayer player = new SequencePlayer(100, 5);
         chord.play(player, 0, 1);
@@ -157,7 +157,7 @@ public class PlayTest {
     
     @Test //note of duration 1 at tick 0, middle octave, natural
     public void testSingleNotePlayDurationOne() throws MidiUnavailableException, InvalidMidiDataException {
-        Music noteA = new SingleNote(new RationalNum(1, 1), new Pitch('A'), 0);
+        Music noteA = new SingleNote(new RationalNum(1, 1), new Pitch('A'));
         SequencePlayer player = new SequencePlayer(100, 5);
         noteA.play(player, 0, 1);
         assertEquals("Event: NOTE_ON  Pitch: 69  Tick: 0\n" 
@@ -166,7 +166,7 @@ public class PlayTest {
     }
     @Test //note of duration >1, plays atTick >0
     public void testSingleNotePlayDurationGreaterThanOne() throws MidiUnavailableException, InvalidMidiDataException {
-        Music noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A'), 0);
+        Music noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A'));
         SequencePlayer player = new SequencePlayer(100, 5);
         noteA.play(player, 5, 1);
         assertEquals("Event: NOTE_ON  Pitch: 69  Tick: 5\n" 
@@ -175,7 +175,7 @@ public class PlayTest {
     }
     @Test //note is lower octave, natural (A,)
     public void testSingleNotePlayLowerOctave() throws MidiUnavailableException, InvalidMidiDataException {
-        Music noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A').transpose(-12), 0);
+        Music noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A').transpose(-12));
         SequencePlayer player = new SequencePlayer(100, 5);
         noteA.play(player, 5, 1);
         assertEquals("Event: NOTE_ON  Pitch: 57  Tick: 5\n" 
@@ -184,7 +184,7 @@ public class PlayTest {
     }
     @Test //note is higher octave, natural (B')
     public void testSingleNotePlayHigherOctave() throws MidiUnavailableException, InvalidMidiDataException {
-        Music noteA = new SingleNote(new RationalNum(10, 1), new Pitch('B').transpose(12), 0);
+        Music noteA = new SingleNote(new RationalNum(10, 1), new Pitch('B').transpose(12));
         SequencePlayer player = new SequencePlayer(100, 5);
         noteA.play(player, 0, 1);
         assertEquals("Event: NOTE_ON  Pitch: 83  Tick: 0\n" 
@@ -193,7 +193,7 @@ public class PlayTest {
     }
     @Test //note is sharp
     public void testSingleNotePlaySharp() throws MidiUnavailableException, InvalidMidiDataException {
-        Music noteC = new SingleNote(new RationalNum(10,1), new Pitch('C'), 1);
+        Music noteC = new SingleNote(new RationalNum(10,1), new Pitch('C').transpose(1));
         SequencePlayer player = new SequencePlayer(100, 5);
         noteC.play(player, 0, 1);
         assertEquals("Event: NOTE_ON  Pitch: 61  Tick: 0\n" 
@@ -202,7 +202,7 @@ public class PlayTest {
     }
     @Test //note is flat
     public void testSingleNotePlayFlat() throws MidiUnavailableException, InvalidMidiDataException {
-        Music noteC = new SingleNote(new RationalNum(30, 1), new Pitch('C'), -2);
+        Music noteC = new SingleNote(new RationalNum(30, 1), new Pitch('C').transpose(-2));
         SequencePlayer player = new SequencePlayer(100, 5);
         noteC.play(player, 0, 1);
         assertEquals("Event: NOTE_ON  Pitch: 58  Tick: 0\n" 
@@ -220,7 +220,7 @@ public class PlayTest {
     
     @Test //notes.size() = 2, all lower octave
     public void testTupletLowerOctave() throws MidiUnavailableException, InvalidMidiDataException {
-        Music noteC = new SingleNote(new RationalNum(1, 1), new Pitch('C').transpose(-12), 0);
+        Music noteC = new SingleNote(new RationalNum(1, 1), new Pitch('C').transpose(-12));
         List<Music> notes = Arrays.asList(noteC, noteC);
         Music tuplet = new Tuplet(notes);
         SequencePlayer player = new SequencePlayer(100, 1);
@@ -228,32 +228,32 @@ public class PlayTest {
     }
     @Test //notes.size() = 3, all middle octave
     public void testTupletMiddleOctave() {
-        Music noteD = new SingleNote(new RationalNum(1, 1), new Pitch('D'), 0);
+        Music noteD = new SingleNote(new RationalNum(1, 1), new Pitch('D'));
         List<Music> notes = Arrays.asList(noteD, noteD, noteD);
         Music tuplet = new Tuplet(notes);
         assertEquals("(3D1D1D1", tuplet.toString());
     }
     @Test //notes.size() = 3, all middle octave, all different
     public void testTuplettDifferentNotes() {
-        Music noteD = new SingleNote(new RationalNum(1, 1), new Pitch('D'), 0);
-        Music noteE = new SingleNote(new RationalNum(1, 1), new Pitch('E'), 0);
-        Music noteF = new SingleNote(new RationalNum(1, 1), new Pitch('F'), 0);
+        Music noteD = new SingleNote(new RationalNum(1, 1), new Pitch('D'));
+        Music noteE = new SingleNote(new RationalNum(1, 1), new Pitch('E'));
+        Music noteF = new SingleNote(new RationalNum(1, 1), new Pitch('F'));
         List<Music> notes = Arrays.asList(noteD, noteE, noteF);
         Music tuplet = new Tuplet(notes);
         assertEquals("(3D1E1F1", tuplet.toString());
     }
     @Test //notes.size() = 4, all higher octave
     public void testTupletHigherOctave() {
-        Music noteC = new SingleNote(new RationalNum(1, 1), new Pitch('C').transpose(12), 1);
+        Music noteC = new SingleNote(new RationalNum(1, 1), new Pitch('C').transpose(13));
         List<Music> notes = Arrays.asList(noteC, noteC, noteC, noteC);
         Music tuplet = new Tuplet(notes);
         assertEquals("(4^C'1^C'1^C'1^C'1", tuplet.toString());
     }
     @Test //notes.size() = 3, all different octaves, some flat
     public void testTupletPlayDifferentOctaves() {
-        Music lowA = new SingleNote(new RationalNum(1, 1), new Pitch('A').transpose(-12), -1);
-        Music midA = new SingleNote(new RationalNum(1, 1), new Pitch('A'), -2);
-        Music highB = new SingleNote(new RationalNum(1, 1), new Pitch('B'), 0);
+        Music lowA = new SingleNote(new RationalNum(1, 1), new Pitch('A').transpose(-13));
+        Music midA = new SingleNote(new RationalNum(1, 1), new Pitch('A').transpose(-2));
+        Music highB = new SingleNote(new RationalNum(1, 1), new Pitch('B'));
         List<Music> notes = Arrays.asList(lowA, midA, highB);
         Music tuplet = new Tuplet(notes);
         assertEquals("(3^G,1G1B1", tuplet.toString());
