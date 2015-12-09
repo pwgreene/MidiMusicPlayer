@@ -52,6 +52,8 @@ public class MakeMusic implements AbcListener {
      */
     private HashMap<String, List<Integer[]>> repeatsForVoiceName = new HashMap<String, List<Integer[]>>();
 
+    private int[] carryOverAccidental = {0,0,0,0,0,0,0};
+
     /**
      * Container for things in voice
      */
@@ -241,6 +243,10 @@ public class MakeMusic implements AbcListener {
         }
         if(addNewBar){
             bars.add(new ArrayList<Music>());
+            //reset accidentals
+            for(int i= 0; i<7; i++){
+                carryOverAccidental[i] = 0;
+            }
         }
     }
 
@@ -305,17 +311,24 @@ public class MakeMusic implements AbcListener {
                 } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) { //matches "^C"
                     String accidental = splitPitch[0];
                     hasAccidental = true;
-                    if (accidental.equals("_")) {
+                    if(accidental.equals("=")){
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 0;
+                    }
+                    else if (accidental.equals("_") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -1) {
                         changeInPitch = -1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -1;
                     }
-                    else if (accidental.equals("__")) {
+                    else if (accidental.equals("__")|| carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -2) {
                         changeInPitch = -2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -2;
                     }
-                    else if (accidental.equals("^")) {
+                    else if (accidental.equals("^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 1) {
                         changeInPitch = 1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 1;
                     }
-                    else if (accidental.equals("^^")) {
+                    else if (accidental.equals("^^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 2) {
                         changeInPitch = 2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 2;
                     }
                     baseNoteString = splitPitch[1];
                 } else if (splitPitch.length == 2) { //matches "C ,"
@@ -334,17 +347,24 @@ public class MakeMusic implements AbcListener {
                     baseNoteString = splitPitch[1];
                     hasAccidental = true;
                     //check what accidental is
-                    if (accidental.equals("_")) {
+                    if(accidental.equals("=")){
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 0;
+                    }
+                    else if (accidental.equals("_") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -1) {
                         changeInPitch = -1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -1;
                     }
-                    else if (accidental.equals("__")) {
+                    else if (accidental.equals("__") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -2) {
                         changeInPitch = -2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -2;
                     }
-                    else if (accidental.equals("^")) {
+                    else if (accidental.equals("^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 1) {
                         changeInPitch = 1;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 1;
                     }
-                    else if (accidental.equals("^^")) {
+                    else if (accidental.equals("^^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 2) {
                         changeInPitch = 2;
+                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 2;
                     }
                     //check what octave the note is
                     if (octaveMarker.charAt(0) == ',') {
