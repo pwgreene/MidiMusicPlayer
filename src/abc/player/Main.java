@@ -37,7 +37,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             //String file = args[0];
-            play("sample_abc/repeatTuple.abc");
+            play("sample_abc/sample1.abc");
         } catch (IOException ioe) {
             System.err.println("Invalid File");
         } catch (MidiUnavailableException | InvalidMidiDataException e) {
