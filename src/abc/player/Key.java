@@ -49,7 +49,6 @@ public class Key {
         else {
             throw new IllegalArgumentException("Invalid Key Signature");
         }
-        this.accidentals = this.keyMap.get(key);
     }
     
     /**

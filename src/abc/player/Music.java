@@ -59,12 +59,13 @@ public interface Music {
             MakeMusic musicMaker = new MakeMusic();
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(musicMaker, tree);
-            System.out.println(musicMaker.getBPM() + " " + musicMaker.getComposer() + musicMaker.getComposer());
+            //System.out.println(musicMaker.getBPM() + " " + musicMaker.getComposer() + musicMaker.getComposer());
             int beatsPerMinute = musicMaker.getBPM();
             HashMap<String,List<List<Music>>> music = musicMaker.getMusic(); 
             return new MusicAndBeat(music, beatsPerMinute);
         } 
         catch (RuntimeException e) {
+            e.printStackTrace(System.out);
             throw new IllegalArgumentException("Invalid Input");
         }  
     }
