@@ -81,8 +81,8 @@ public interface Music {
             }
             SequencePlayer player = new SequencePlayer(beatsPerMinute*speed, 1);
             //now play each note at the correct speed
-            int currentTick = 0;
             for (String voice : voices) {
+                int currentTick = 0;
                 for (List<Music> measure : music.get(voice)) {
                     for (Music note : measure) {
                         note.play(player, currentTick, speed);
