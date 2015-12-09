@@ -53,7 +53,7 @@ public class MakeMusic implements AbcListener {
      */
     private HashMap<String, List<Integer[]>> repeatsForVoiceName = new HashMap<String, List<Integer[]>>();
 
-    private HashSet<Integer> carryOverAccidental = new HashSet<Integer>();
+    private HashMap<Integer,Integer> carryOverAccidental = new HashMap<Integer,Integer>();
 
     /**
      * Container for things in voice
@@ -240,14 +240,13 @@ public class MakeMusic implements AbcListener {
         if(addNewBar){
             bars.add(new ArrayList<Music>());
             //reset accidentals
-            carryOverAccidental = new HashSet<Integer>();
+            carryOverAccidental = new HashMap<Integer,Integer>();
         }
     }
 
     @Override
     public void exitNote_element(Note_elementContext ctx) {
         if(ctx.NOTE() != null) {
-
             //Split the string into a note and a note_duration part
             String noteString = ctx.NOTE().getText();
             String[] splitNote = noteString.split("(?=[\\d+/])",2);
@@ -303,82 +302,42 @@ public class MakeMusic implements AbcListener {
                 if (splitPitch.length == 1) {
                     baseNoteString = splitPitch[0];
                     Pitch thePitch = new Pitch(baseNoteString.toUpperCase().charAt(0));
-                    if (carryOverAccidental.contains(thePitch.toMidiNote()-1)) {
-                        changeInPitch = -1;
+                    if(carryOverAccidental.containsKey(thePitch.toMidiNote())){
+                        changeInPitch = carryOverAccidental.get(thePitch.toMidiNote()) - thePitch.toMidiNote();
                         hasAccidental = true;
                     }
-                    else if (carryOverAccidental.contains(thePitch.toMidiNote()-2)) {
-                        changeInPitch = -2;
-                        hasAccidental = true;
-                    }
-                    else if (carryOverAccidental.contains(thePitch.toMidiNote()+1)) {
-                        changeInPitch = 1;
-                        hasAccidental = true;
-                    }
-                    else if (carryOverAccidental.contains(thePitch.toMidiNote()+2)) {
-                        changeInPitch = 2;
-                        hasAccidental = true;
-                    }                
-
                 } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) { //matches "^C"
                     String accidental = splitPitch[0];
                     hasAccidental = true;
                     Pitch thePitch = new Pitch(splitPitch[1].toUpperCase().charAt(0));
                     if(accidental.equals("=")){
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2);              
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote());             
                     }
-                    else if (accidental.equals("_") || carryOverAccidental.contains(thePitch.toMidiNote()-1)) {
+                    else if (accidental.equals("_")) {
                         changeInPitch = -1;
-                        carryOverAccidental.add(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2); 
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-1);                    
                     }
-                    else if (accidental.equals("__")|| carryOverAccidental.contains(thePitch.toMidiNote()-2)) {
+                    else if (accidental.equals("__")) {
                         changeInPitch = -2;
-                        carryOverAccidental.add(thePitch.toMidiNote()-2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1); 
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-2);     
                     }
-                    else if (accidental.equals("^") || carryOverAccidental.contains(thePitch.toMidiNote()+1)) {
+                    else if (accidental.equals("^")) {
                         changeInPitch = 1;
-                        carryOverAccidental.add(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2); 
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+1);     
                     }
-                    else if (accidental.equals("^^") || carryOverAccidental.contains(thePitch.toMidiNote()+2)) {
+                    else if (accidental.equals("^^")){
                         changeInPitch = 2;
-                        carryOverAccidental.add(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2); 
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+2);     
                     }
                     baseNoteString = splitPitch[1];
                 } else if (splitPitch.length == 2) { //matches "C ,"
                     String octaveMarker = splitPitch[1];
                     baseNoteString = splitPitch[0];
                     Pitch thePitch = new Pitch(splitPitch[0].toUpperCase().charAt(0));
-                    if (carryOverAccidental.contains(thePitch.toMidiNote()-1)) {
-                        changeInPitch = -1;
+                    if (carryOverAccidental.containsKey(thePitch.toMidiNote())){
+                        changeInPitch = carryOverAccidental.get(thePitch.toMidiNote()) - thePitch.toMidiNote();
                         hasAccidental = true;
-                    }
-                    else if (carryOverAccidental.contains(thePitch.toMidiNote()-2)) {
-                        changeInPitch = -2;
-                        hasAccidental = true;
-                    }
-                    else if (carryOverAccidental.contains(thePitch.toMidiNote()+1)) {
-                        changeInPitch = 1;
-                        hasAccidental = true;
-                    }
-                    else if (carryOverAccidental.contains(thePitch.toMidiNote()+2)) {
-                        changeInPitch = 2;
-                        hasAccidental = true;
-                    }           
+                    }              
                     //check what octave the note is
                     if (octaveMarker.charAt(0) == ',') {
                         octave -= octaveMarker.length();
@@ -387,46 +346,31 @@ public class MakeMusic implements AbcListener {
                     }
                 }
                 else { //matches "^ C '"
-                    String accidental = splitPitch[1];
+                    String accidental = splitPitch[0];
                     String octaveMarker = splitPitch[2];
                     baseNoteString = splitPitch[1];
                     hasAccidental = true;
                     Pitch thePitch = new Pitch(baseNoteString.toUpperCase().charAt(0));
                     //check what accidental is
                     if(accidental.equals("=")){
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2);  
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote());             
                     }
                     else if (accidental.equals("_")) {
                         changeInPitch = -1;
-                        carryOverAccidental.add(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2); 
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-1);                    
                     }
                     else if (accidental.equals("__")) {
                         changeInPitch = -2;
-                        carryOverAccidental.add(thePitch.toMidiNote()-2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1); 
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-2);     
                     }
                     else if (accidental.equals("^")) {
                         changeInPitch = 1;
-                        carryOverAccidental.add(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2); 
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+1);     
                     }
-                    else if (accidental.equals("^^")) {
+                    else if (accidental.equals("^^")){
                         changeInPitch = 2;
-                        carryOverAccidental.add(thePitch.toMidiNote()+2);
-                        carryOverAccidental.remove(thePitch.toMidiNote()+1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-1);
-                        carryOverAccidental.remove(thePitch.toMidiNote()-2); 
-                    }                  
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+2);     
+                    }
                     //check what octave the note is
                     if (octaveMarker.charAt(0) == ',') {
                         octave -= octaveMarker.length();
