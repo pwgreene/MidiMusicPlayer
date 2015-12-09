@@ -81,16 +81,24 @@ public class RationalNum implements Comparable<Object> {
 
     /**
      * Calculate the least common multiple of two integers.
-     * @param a must be positive
-     * @param b must be positive
+     * @param x must be positive
+     * @param y must be positive
      * @return Returns the LCM of a and b.
      */
-    public static int LCM(int a, int b) {
-        if (a == 0 && b == 0) {
-            return 0;
+    public static int LCM(int x, int y) {
+        int lcm;
+        if (x > y || x == y) {
+            lcm = y;
+        } else {
+            lcm = x;
         }
-        int lcm =  (a / GCD(a, b)) * b;
-        return lcm;
+        while (true) {
+            if (lcm % x != 0 || lcm % y != 0) {
+                lcm++;
+            } else {
+                return lcm;
+            }
+        }
     }
 
     @Override
