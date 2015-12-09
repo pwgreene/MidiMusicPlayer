@@ -1,8 +1,19 @@
 package abc.player;
 
-import java.util.List;
-
+/**
+ * A positive rational number
+ *
+ */
 public class RationalNum implements Comparable<Object> {
+    
+    //Abstraction Function:
+     //Represents a positive rational number, whose value is the ratio num:denom
+    //Rep Invariant:
+     //num > 0
+     //denom > 0
+    //Safety from rep exposure:
+     //all fields are private, final, and immutable
+     //no mutator methods, fields are immutable, class is immutable
 
     private final int num;
     private final int denom;
@@ -13,44 +24,38 @@ public class RationalNum implements Comparable<Object> {
      * @param denom
      */
     public RationalNum(int num, int denom) {
-        if (denom == 0) {
-            throw new IllegalArgumentException("Cannot have a denom of 0");
-        }
+        this.num = num;
+        this.denom = denom;
+        checkRep();
+    }
+    /**
+     * Parses a RationalNum from a String input
+     * @param input a string of the form "x/y". x and y must be > 0
+     */
+    public RationalNum(String input){
+        String[] numAndDenom = input.split("/");
+        int num = Integer.parseInt(numAndDenom[0]);
+        int denom = Integer.parseInt(numAndDenom[1]);
         this.num = num;
         this.denom = denom;
     }
-
+    
     /**
-     * Creates a RationalNumber from a string
-     * @param RationalNumberAsString a string of the form "x/y", where y cannot be 0
-     */
-    public RationalNum(String rationalString){
-        String[] fracArray = rationalString.split("/");
-        int num = Integer.parseInt(fracArray[0]);
-        int den = Integer.parseInt(fracArray[1]);
-        if(den == 0){
-            throw new IllegalArgumentException("Cannot have a denom of 0");
-        }
-        this.num = num;
-        this.denom = den;
-    }
-
-    /**
-     * @return the num of the RationalNumber
+     * @return the numerator of the RationalNum
      */
     public int getNum() {
         return num;
     }
 
     /**
-     * @return the denom of the RationalNumber
+     * @return the denominator of the RationalNum
      */
     public int getDenom() {
         return denom;
     }
 
     /**
-     * Returns a double representing the RationalNumber
+     * Returns a double representing the RationalNum
      */
     public double getRationalNumber() {
         return ( (double) num) / ( (double) denom);
@@ -75,11 +80,10 @@ public class RationalNum implements Comparable<Object> {
     }
 
     /**
-     * This calculates the least common multiple of two integers.
-     * Note: this method does not handle large numbers so inputs must be within a reasonable range.
-     * @param a Must be a positive integer.
-     * @param b Must be a positive integer.
-     * @return Returns the least common multiple.
+     * Calculate the least common multiple of two integers.
+     * @param a must be positive
+     * @param b must be positive
+     * @return Returns the LCM of a and b.
      */
     public static int LCM(int a, int b) {
         if (a == 0 && b == 0) {
@@ -89,42 +93,11 @@ public class RationalNum implements Comparable<Object> {
         return lcm;
     }
 
-    /**
-     * Determines whether two RationalNumbers
-     * @param other the other RationalNumber to be compared to - must be of type RationalNumber and must not be null
-     * @return 0 if the RationalNumbers are equal, positive if other is smaller, negative if other is larger
-     */
     @Override
     public int compareTo(Object other) {
-        /*
-         * Although we specify that other must be a non-null RationalNumber, we double check
-         */
-        if(!(other instanceof RationalNum))
-            throw new IllegalArgumentException("Can only compare this to a RationalNumber object");
-
-        /*
-         * If we are comparing RationalNumbers a/b and c/d, we consider the quantity:
-         * ad - bc
-         * which is:
-         * 0 if a/b = c/d
-         * >0 if a/b > c/d
-         * <0 if a/b < c/d
-         * 
-         *  We apply this rule to the case where
-         *  a/b is this
-         *  c/d is other
-         */
-
         RationalNum otherFrac = (RationalNum)other;
         return (this.getNum()*otherFrac.getDenom() - otherFrac.getNum()*this.getDenom());
     } 
-
-    /**
-     * @return the double representation of this RationalNumber
-     */
-    public double toDouble(){
-        return this.getNum()*1.0/this.getDenom();
-    }
 
     /**
      * @return a string representation of the RationalNumber (of the form num/denom)
@@ -134,16 +107,22 @@ public class RationalNum implements Comparable<Object> {
         if (getDenom() == 1) {
             return "" + getNum();
         }
-        return String.format("%d/%d", this.getNum(), this.getDenom());
+        return this.getNum() + "/" + this.getDenom();
     }
 
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof RationalNum))
+        if(!(other instanceof RationalNum)) {
             return false;
+        }
         RationalNum compareRationalNumber = (RationalNum)other;
         if (compareRationalNumber.num == this.num && compareRationalNumber.denom == this.denom ) {
             return true;
-        } else {return false;}
+        }
+        return false;
+    }
+    private void checkRep() {
+        assert denom > 0;
+        assert num > 0;
     }
 }

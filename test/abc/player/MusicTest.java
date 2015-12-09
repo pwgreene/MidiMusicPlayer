@@ -113,6 +113,7 @@ public class MusicTest {
     public void testParseFurElise() throws MidiUnavailableException, InvalidMidiDataException, IOException {
         File abcFile = new File("sample_abc/fur_elise.abc");
         SequencePlayer player = Music.parse(abcFile);
+        System.out.println(player.toString());
         player.play();
         try {
             System.in.read();
