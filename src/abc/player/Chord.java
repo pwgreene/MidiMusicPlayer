@@ -14,7 +14,7 @@ public class Chord implements Music{
     //Abstraction Function:
     //Represents a chord of music, where each note in notes is played simultaneously
     //Rep Invariant:
-    //notes.size() > 0
+    //notes.size() > 1
     //Safety from Rep Exposure:
     //notes is private and final and is never mutated
     //getNotes returns unmodfiable list of notes
@@ -28,6 +28,14 @@ public class Chord implements Music{
      */
     public Chord(List<SingleNote> notes) {
         this.notes = notes;
+        checkRep();
+    }
+    
+    /**
+     * Ensures that there' more than one note in the chord (as all chords should)
+     */
+    public void checkRep(){
+        assert notes.size()>1;
     }
 
     @Override
