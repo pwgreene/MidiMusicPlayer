@@ -71,13 +71,13 @@ public interface Music {
      * @param atTick the beat at which to begin playing the music
      * @param seqPlayer the sequence player that will actually play the music
      */
-    public void play(SequencePlayer seqPlayer, int atTick);
+    public void play(SequencePlayer seqPlayer, int atTick, int atSpeed);
     
     /**
      * Gets the length (duration) of this music piece in ticks
      * @return the length of this music piece in ticks
      */
-    public int getDuration();
+    public RationalNum getDuration();
     
     /**
      * Check to see if this piece of music is going to play

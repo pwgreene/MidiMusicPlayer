@@ -41,7 +41,7 @@ public class MusicTest {
         File sample1 = new File("sample_abc/sample1.abc");
         MusicAndBeat musicAndBeat = Music.parse(sample1);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         assertEquals("Event: NOTE_ON  Pitch: 48  Tick: 0\n" 
                 + "Event: NOTE_OFF Pitch: 48  Tick: 2\n"
                 + "Event: NOTE_ON Pitch: 60 Tick:2\n"
@@ -58,7 +58,7 @@ public class MusicTest {
         File sample2 = new File("sample_abc/sample2.abc"); //[EC]
         MusicAndBeat musicAndBeat = Music.parse(sample2);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         assertEquals("Event: NOTE_ON  Pitch: 64  Tick: 0\n"
                    + "Event: NOTE_ON  Pitch: 60  Tick: 0\n"
                    + "Event: NOTE_OFF Pitch: 64 Tick:1\n"
@@ -71,7 +71,7 @@ public class MusicTest {
         File sample3 = new File("sample_abc/sample3.abc");
         MusicAndBeat musicAndBeat = Music.parse(sample3);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         assertEquals("Event: NOTE_ON  Pitch: 60  Tick: 0\n"
                    + "Event: NOTE_ON  Pitch: 64  Tick: 0\n"
                    + "Event: NOTE_ON  Pitch: 67  Tick: 0\n"
@@ -86,7 +86,7 @@ public class MusicTest {
         File scale = new File("sample_abc/scale.abc");
         MusicAndBeat musicAndBeat = Music.parse(scale);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         //TODO assertEquals(    , player.toString());
     }
     
@@ -95,7 +95,7 @@ public class MusicTest {
         File file = new File("sample_abc/repeatTuple.abc");
         MusicAndBeat musicAndBeat = Music.parse(file);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); //TODO what are beatsPerMinute and ticksPerBeat?
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         //TODO assertEquals(    , player.toString());
     }
     @Test
@@ -103,7 +103,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/abc_song.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); 
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();
@@ -116,7 +116,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/fur_elise.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1); 
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();
@@ -129,7 +129,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/invention.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();
@@ -142,7 +142,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/little_night_music.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();
@@ -155,7 +155,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/paddy.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();
@@ -168,7 +168,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/prelude.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();
@@ -181,7 +181,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/piece1.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();
@@ -194,7 +194,7 @@ public class MusicTest {
         File abcFile = new File("sample_abc/piece2.abc");
         MusicAndBeat musicAndBeat = Music.parse(abcFile);
         SequencePlayer player = new SequencePlayer(musicAndBeat.getBeatsPerMinute(), 1);
-        musicAndBeat.getMusic().play(player, 0);
+        musicAndBeat.getMusic().play(player, 0, 1);
         player.play();
         try {
             System.in.read();

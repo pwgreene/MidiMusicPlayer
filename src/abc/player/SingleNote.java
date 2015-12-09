@@ -17,7 +17,7 @@ public class SingleNote implements Music{
      //all fields are private and final
      //class is immutable: no mutators, no mutation of the field duration or pitch
     
-    private final int duration;
+    private final RationalNum duration;
     private final Pitch pitch;
     //private int accidental;
     
@@ -29,7 +29,7 @@ public class SingleNote implements Music{
      * Must be -2(double flat), -1, 0, 1, or 2 (double sharp)
      */
 
-    public SingleNote(int duration, Pitch pitch, int accidental) {
+    public SingleNote(RationalNum duration, Pitch pitch, int accidental) {
         this.duration = duration;
         this.pitch = pitch.transpose(accidental);
         checkRep();
@@ -42,11 +42,13 @@ public class SingleNote implements Music{
     }
     
     @Override
-    public void play(SequencePlayer seqPlayer, int atTick) {
-        seqPlayer.addNote(this.getPitch().toMidiNote(), atTick, this.getDuration());   
+    public void play(SequencePlayer seqPlayer, int atTick, int atSpeed) {
+        //scales the duration to the correct speed.
+        int duration = Math.round(atSpeed * getDuration().getNum()/getDuration().getDenom());
+        seqPlayer.addNote(this.getPitch().toMidiNote(), atTick, duration);   
     }
     
-    public int getDuration() {
+    public RationalNum getDuration() {
         return duration;
     }
 
@@ -64,7 +66,7 @@ public class SingleNote implements Music{
     
     @Override
     public int hashCode() {
-        return this.duration;
+        return this.duration.hashCode();
     }
 
 
@@ -74,7 +76,8 @@ public class SingleNote implements Music{
     }
     
     private void checkRep() {
-        assert duration > 0;
+        assert getDuration().getNum() > 0;
+        assert getDuration().getDenom() > 0;
     }
     
     

@@ -17,26 +17,25 @@ public class Rest implements Music {
      //duration is private and final
      //no mutator methods/duration is immutable -> class is immutable
     
-    private final int duration;
+    private final RationalNum duration;
     
     /**
      * Create a new Rest 
      * @param duration the length for which to rest in ticks, must be nonnegative
      */
-    public Rest(int duration) {
+    public Rest(RationalNum duration) {
         this.duration = duration;
         checkRep();
     }
 
     @Override
-    public int getDuration() {
+    public RationalNum getDuration() {
         return duration;
     }
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atTick) {
-        // TODO Auto-generated method stub
-        
+    public void play(SequencePlayer seqPlayer, int atTick, int atSpeed) {
+        //do nothing
     }
 
     @Override
@@ -52,7 +51,7 @@ public class Rest implements Music {
     }
     @Override
     public int hashCode() {
-        return this.duration;
+        return this.duration.getNum();
     }
 
     @Override
@@ -61,6 +60,7 @@ public class Rest implements Music {
     }
     
     private void checkRep() {
-        assert duration > 0;
+        assert getDuration().getNum() > 0;
+        assert getDuration().getDenom() > 0;
     }
 }

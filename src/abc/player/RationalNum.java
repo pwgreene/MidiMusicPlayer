@@ -144,6 +144,9 @@ public class RationalNum implements Comparable<Object> {
       */
      @Override
      public String toString(){
+         if (getDenom() == 1) {
+             return "" + getNum();
+         }
          return String.format("%d/%d", this.getNum(), this.getDenom());
      }
      

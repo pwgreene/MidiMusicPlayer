@@ -70,19 +70,18 @@ public class Tuplet implements Music {
     /**
      * @return Computes the duration of the tuplet based on its type and its constituents
      */
-    public int getDuration() {
+    public RationalNum getDuration() {
         if (type == 2) {
-            return 3;
+            return new RationalNum(3, 1);
         } else if (type == 3) {
-            return 2;
+            return new RationalNum(2, 1);
         } else {
-            return 3;
+            return new RationalNum(3, 1);
         }
     }
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atTick) {
-        // TODO Auto-generated method stub
+    public void play(SequencePlayer seqPlayer, int atTick, int atSpeed) {
         
     }
 
