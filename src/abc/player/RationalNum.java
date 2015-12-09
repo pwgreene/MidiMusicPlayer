@@ -1,7 +1,7 @@
 package abc.player;
 
 /**
- * A positive rational number
+ * A nonnegative rational number
  *
  */
 public class RationalNum implements Comparable<Object> {
@@ -20,8 +20,8 @@ public class RationalNum implements Comparable<Object> {
 
     /**
      * Constructs the rationalNumber num/denom
-     * @param num 
-     * @param denom
+     * @param num must be nonnegative
+     * @param denom must be posititve
      */
     public RationalNum(int num, int denom) {
         this.num = num;
@@ -59,24 +59,6 @@ public class RationalNum implements Comparable<Object> {
      */
     public double getRationalNumber() {
         return ( (double) num) / ( (double) denom);
-    }
-
-    /**
-     * Using Euclid's algorithm, this calculates the greatest common denom of two integers.
-     * @param a  Must be a positive integer.
-     * @param b Must be a positive integer.
-     * @return Returns the greatest common denom.
-     */
-    public static int GCD(int a, int b) {
-        if (b == 0) {
-            return a;
-        }
-        if (b > a) {
-            int placeHolder = b;
-            b = a;
-            a = placeHolder;
-        }
-        return GCD(b, a % b);
     }
 
     /**
@@ -131,6 +113,6 @@ public class RationalNum implements Comparable<Object> {
     }
     private void checkRep() {
         assert denom > 0;
-        assert num > 0;
+        assert num >= 0;
     }
 }
