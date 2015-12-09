@@ -97,7 +97,8 @@ public interface Music {
 class MusicAndBeat {
     
     //Abstraction Function:
-     //music represents a piece of music and beatsPerMinute is an integer representing 
+     //music represents a piece of music, separated into voices (key) and measures of notes (List<List<Music>>)
+     //and beatsPerMinute is an integer representing 
      //how many beats per minute the music is supposed to be played in
     //Rep Invariant:
      //beatsPerMinute > 0
