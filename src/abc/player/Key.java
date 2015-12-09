@@ -58,4 +58,28 @@ public class Key {
     public int[] getAccidentals() {
         return accidentals;
     }
-}
+    /**
+     * Maps A to 0, B to 1, etc, up until G to 6. Case-insensitive.
+     * @param noteString must be A,B,C,D,E,F, or G
+     * @return the integer corresponding to that character. -1 if that letter isn't A,B,C,D,E,F, or G
+     */
+    public static int getNoteInteger(String noteString) {
+        if (noteString.equalsIgnoreCase("A")) {
+            return 0;
+        } else if (noteString.equalsIgnoreCase("B")) {
+            return 1;
+        } else if (noteString.equalsIgnoreCase("C")) {
+            return 2;
+        } else if (noteString.equalsIgnoreCase("D")) {
+            return 3;
+        } else if (noteString.equalsIgnoreCase("E")) {
+            return 4;
+        } else if (noteString.equalsIgnoreCase("F")) {
+            return 5;
+        } else if (noteString.equalsIgnoreCase("G")) {
+            return 6;
+        } else {
+            return -1;
+        }
+    }
+}   
