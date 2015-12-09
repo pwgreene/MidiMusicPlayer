@@ -35,8 +35,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            List<Object> arguments = Arrays.asList(args);
-            String file = (String) arguments.get(0);
+            String file = args[0];
             play(file);
         } catch (IOException ioe) {
             System.err.println("Invalid File");
