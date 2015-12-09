@@ -59,6 +59,8 @@ public class MakeMusic implements AbcListener {
      */
     private List<Music> tupleNotes = new ArrayList<Music>();
     private List<SingleNote> chordNotes = new ArrayList<SingleNote>();  
+    private List<SingleNote> tupleOfChords = new ArrayList<SingleNote>();
+    private int tupleIndex = 0;
 
     //These have been implemented:
     @Override
@@ -123,9 +125,10 @@ public class MakeMusic implements AbcListener {
             for(SingleNote m : chordNotes) {
                 notes.add(m);
             }
-            //TODO chords in a tuple
             if(inTuple!=0){
-                tupleNotes.add(new Chord(notes));
+                 tupleNotes.add(new Chord(tupleOfChords));
+                 //Reset list
+                 tupleOfChords =  new ArrayList<SingleNote>();
             }else{           
                 List<List<Music>> bars = barsForVoice.get(voiceName);
                 bars.get(bars.size()-1).add(new Chord(notes));  
@@ -221,9 +224,7 @@ public class MakeMusic implements AbcListener {
         }
         if(barlineString.equals("|:")) {
             currentRepeat[0] = new Integer(bars.size());
-        } else if(barlineString.equals(":|")) {
-            //            if(currentRepeat[1] == null)
-            //                System.out.println("here");
+        } else if(barlineString.equals(":|")) { 
             currentRepeat[1] = new Integer(bars.size());
             currentRepeat[2] = new Integer(bars.size());
         } else if(barlineString.equals("[1")) {
@@ -235,12 +236,7 @@ public class MakeMusic implements AbcListener {
             if(currentRepeat[0] == null)
                 currentRepeat[0] = new Integer(bars.size());
         }
-        if(repeats.size() > 0){
-            repeats.set(repeats.size()-1, currentRepeat);
-        }
-        else{
-            repeats.add(currentRepeat);
-        }
+        repeats.set(repeats.size()-1, currentRepeat);
         if(addNewBar){
             bars.add(new ArrayList<Music>());
             //reset accidentals
@@ -328,7 +324,7 @@ public class MakeMusic implements AbcListener {
                         carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 2;
                         hasAccidental = true;
                     }                
-                    
+
                 } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) { //matches "^C"
                     String accidental = splitPitch[0];
                     hasAccidental = true;
@@ -439,11 +435,17 @@ public class MakeMusic implements AbcListener {
                 }
                 //transpose pitch by the octave
                 pitch = pitch.transpose(octave*Pitch.OCTAVE);
-
-
                 if(this.inChord){
-                    chordNotes.add(new SingleNote(duration, pitch));
-                }else if(this.inTuple !=0){
+                    if(inTuple!= 0){
+                        if(this.inTuple == 3){
+                            tupleOfChords.add(new SingleNote(new RationalNum(2*duration.getNum(),inTuple*duration.getDenom()), pitch));
+                        }else{
+                            tupleOfChords.add(new SingleNote(new RationalNum(3*duration.getNum(),inTuple*duration.getDenom()), pitch));
+                        }
+                    }else{
+                        chordNotes.add(new SingleNote(duration, pitch));
+                    }
+                }else if(this.inTuple !=0 && !this.inChord){
                     if(this.inTuple == 3){
                         tupleNotes.add(new SingleNote(new RationalNum(2*duration.getNum(),inTuple*duration.getDenom()), pitch));
                     }else{
@@ -464,7 +466,7 @@ public class MakeMusic implements AbcListener {
             List<Integer[]> repeats = repeatsForVoiceName.get(name);
             for(int i = 0; i<repeats.size(); i++){
                 for(int j = 0; j<3; j++){
-                    System.out.println(repeats.get(i)[j]);
+                    //  System.out.println(repeats.get(i)[j]);
                 }
 
             }
