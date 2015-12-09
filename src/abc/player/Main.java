@@ -37,7 +37,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             //String file = args[0];
-            play("sample_abc/piece1.abc");
+            play("sample_abc/paddy.abc");
         } catch (IOException ioe) {
             System.err.println("Invalid File");
         } catch (MidiUnavailableException | InvalidMidiDataException e) {
