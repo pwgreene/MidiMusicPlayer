@@ -84,7 +84,7 @@ public class Tuplet implements Music {
         if (type == 2) {
             return new RationalNum(3, 1);
         } else if (type == 3) {
-            return new RationalNum(2, 1);
+            return new RationalNum(6, 3);
         } else {
             return new RationalNum(3, 1);
         }

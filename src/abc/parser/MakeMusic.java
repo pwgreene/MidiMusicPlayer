@@ -393,6 +393,9 @@ public class MakeMusic implements AbcListener {
         for(String name : barsForVoice.keySet()){
             List<List<Music>> voiceBars = barsForVoice.get(name);
             List<Integer[]> repeats = repeatsForVoiceName.get(name);
+            for (Integer[] list : repeats) {
+                System.out.println(list);
+            }
             Integer[] lastRepeat = repeats.get(repeats.size()-1);
             if(lastRepeat[0] == null || lastRepeat[1] == null || lastRepeat[2] == null)
                 repeats.remove(repeats.size()-1);
