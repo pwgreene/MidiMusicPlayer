@@ -40,10 +40,10 @@ public class Chord implements Music{
     }
 
     @Override
-    public int getDuration() {
-        int maxDuration = 0;
-        for(SingleNote note: notes){
-            if(note.getDuration() > maxDuration){
+    public RationalNum getDuration() {
+        RationalNum maxDuration = new RationalNum(0, 1);
+        for (SingleNote note: notes) {
+            if(note.getDuration().compareTo(maxDuration) > 0){
                 maxDuration = note.getDuration(); 
             }
         }
@@ -52,9 +52,9 @@ public class Chord implements Music{
 
 
     @Override
-    public void play(SequencePlayer seqPlayer, int atTick) {
+    public void play(SequencePlayer seqPlayer, int atTick, int atSpeed) {
         for(SingleNote note: notes){
-            note.play(seqPlayer, atTick);
+            note.play(seqPlayer, atTick, atSpeed);
         }
     }
 

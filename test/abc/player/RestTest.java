@@ -21,16 +21,16 @@ public class RestTest {
     
     @Test
     public void testRestDurationOne() {
-        Music rest = new Rest(1);
+        Music rest = new Rest(new RationalNum(1, 1));
         assertEquals("z1", rest.toString());
-        assertEquals(1, rest.getDuration());
+        assertEquals(new RationalNum(1, 1), rest.getDuration());
     }
     
     @Test
     public void testRestDurationGreaterThanOne() {
-        Music rest = new Rest(5);
+        Music rest = new Rest(new RationalNum(5, 1));
         assertEquals("z5", rest.toString());
-        assertEquals(5, rest.getDuration());
+        assertEquals(new RationalNum(5, 1), rest.getDuration());
     }
     
 }
