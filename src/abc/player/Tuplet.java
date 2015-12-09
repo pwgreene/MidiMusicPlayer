@@ -92,7 +92,11 @@ public class Tuplet implements Music {
 
     @Override
     public void play(SequencePlayer seqPlayer, int atTick, int atSpeed) {
-        //TODO
+        int currentTick = atTick;
+        for (Music note : notes) {
+            note.play(seqPlayer, currentTick, atSpeed);
+            currentTick += atSpeed*note.getDuration().getRationalNumber();
+        }
     }
 
     @Override
