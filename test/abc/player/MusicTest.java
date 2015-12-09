@@ -41,14 +41,14 @@ public class MusicTest {
         File sample1 = new File("sample_abc/sample1.abc");
         SequencePlayer player = Music.parse(sample1);
         assertEquals("Event: NOTE_ON  Pitch: 48  Tick: 0\n" 
-                + "Event: NOTE_OFF Pitch: 48  Tick: 2\n"
-                + "Event: NOTE_ON Pitch: 60 Tick:2\n"
-                + "Event: NOTE_OFF Pitch: 60 Tick:4\n"
-                + "Event: NOTE_ON Pitch: 72 Tick: 4"
-                + "Event: NOTE_OFF Pitch: 72 Tick: 5\n"
-                + "Event: NOTE_ON Pitch: 84 Tick: 5\n"
-                + "Event: NOTE_OFF Pitch: 84 Tick 6\n"
-                + "Meta event: END_OF_TRACK Tick: 6\n", player.toString());
+                + "Event: NOTE_OFF Pitch: 48  Tick: 16\n"
+                + "Event: NOTE_ON  Pitch: 60  Tick: 16\n"
+                + "Event: NOTE_OFF Pitch: 60  Tick: 32\n"
+                + "Event: NOTE_ON  Pitch: 84  Tick: 32\n"
+                + "Event: NOTE_OFF Pitch: 84  Tick: 40\n"
+                + "Event: NOTE_ON  Pitch: 96  Tick: 40\n"
+                + "Event: NOTE_OFF Pitch: 96  Tick: 48\n"
+                + "Meta event: END_OF_TRACK Tick: 48\n", player.toString());
     }
     
     @Test //chords
@@ -79,14 +79,24 @@ public class MusicTest {
     public void testParseScale() throws MidiUnavailableException, InvalidMidiDataException, IOException {
         File scale = new File("sample_abc/scale.abc");
         SequencePlayer player = Music.parse(scale);
-        //TODO assertEquals(    , player.toString());
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     @Test //tuples, repeats, 1-3 optional headers, extra space, flat + minor key
     public void testParserepeatTuple() throws MidiUnavailableException, InvalidMidiDataException, IOException {
         File file = new File("sample_abc/repeatTuple.abc");
         SequencePlayer player = Music.parse(file);
-        //TODO assertEquals(    , player.toString());
+        player.play();
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @Test
     public void testParseAbcSong() throws MidiUnavailableException, InvalidMidiDataException, IOException {
