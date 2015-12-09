@@ -34,42 +34,42 @@ public class ChordTest {
 
     @Test //test 2 notes, both low octave: A and B
     public void testChordTwoLowOctaveNotes() {
-        SingleNote noteA = new SingleNote(1, new Pitch('A').transpose(-12));
-        SingleNote noteB = new SingleNote(1, new Pitch('B').transpose(-12));
+        SingleNote noteA = new SingleNote(1, new Pitch('A').transpose(-12), 0);
+        SingleNote noteB = new SingleNote(1, new Pitch('B').transpose(-12), 0);
         List<SingleNote> notes = Arrays.asList(noteA, noteB);
         Music chord = new Chord(notes);
         assertEquals("[A,1B,1]", chord.toString());
     }
     @Test //test 2 notes, both middle octave: B and C
     public void testChordTwoMiddleOctaveNotes() {
-        SingleNote noteB = new SingleNote(1, new Pitch('B'));
-        SingleNote noteC = new SingleNote(1, new Pitch('C'));
+        SingleNote noteB = new SingleNote(1, new Pitch('B'), 0);
+        SingleNote noteC = new SingleNote(1, new Pitch('C'), 0);
         List<SingleNote> notes = Arrays.asList(noteB, noteC);
         Music chord = new Chord(notes);
         assertEquals("[B1C1]", chord.toString());
     }
     @Test //test 2 notes, both high octave: D and E
     public void testChordTwoHighOctaveNotes() {
-        SingleNote noteD = new SingleNote(1, new Pitch('D').transpose(12));
-        SingleNote noteE = new SingleNote(1, new Pitch('E').transpose(12));
+        SingleNote noteD = new SingleNote(1, new Pitch('D').transpose(12), 0);
+        SingleNote noteE = new SingleNote(1, new Pitch('E').transpose(12), 0);
         List<SingleNote> notes = Arrays.asList(noteD, noteE);
         Music chord = new Chord(notes);
         assertEquals("[D'1E'1]", chord.toString());
     }
     @Test //test >2 notes, one of each octave: A, Fsharp, G
     public void testChordMoreThanTwoNotes() {
-        SingleNote noteA = new SingleNote(1, new Pitch('A').transpose(-12));
-        SingleNote noteF = new SingleNote(1, new Pitch('F').transpose(1));
-        SingleNote noteG = new SingleNote(1, new Pitch('G').transpose(12));
+        SingleNote noteA = new SingleNote(1, new Pitch('A').transpose(-12), 0);
+        SingleNote noteF = new SingleNote(1, new Pitch('F'), 1);
+        SingleNote noteG = new SingleNote(1, new Pitch('G').transpose(12), 0);
         List<SingleNote> notes = Arrays.asList(noteA, noteF, noteG);
         Music chord = new Chord(notes);
         assertEquals("[A,1^F1G'1]", chord.toString());
     }
     @Test //test >2 notes, all different lengths: B, Bflat, E, durations >1
     public void testChordMultipleNotesDifferentLengths() {
-        SingleNote noteB = new SingleNote(4, new Pitch('B'));
-        SingleNote noteBflat = new SingleNote(5, new Pitch('B').transpose(-1)); //Bflat=Asharp
-        SingleNote noteE = new SingleNote(10, new Pitch('E'));
+        SingleNote noteB = new SingleNote(4, new Pitch('B'), 0);
+        SingleNote noteBflat = new SingleNote(5, new Pitch('B'), -1); //Bflat=Asharp
+        SingleNote noteE = new SingleNote(10, new Pitch('E'), 0);
         List<SingleNote> notes = Arrays.asList(noteB, noteBflat, noteE);
         Music chord = new Chord(notes);
         assertEquals("[B4^A5E10]", chord.toString());
@@ -80,25 +80,25 @@ public class ChordTest {
     //(including all partitions included in Constructor partition
     @Test //two notes, same length
     public void testGetDurationAllSameLengthTwoNotes() {
-        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12));
-        SingleNote noteB = new SingleNote(3, new Pitch('B'));
+        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12), 0);
+        SingleNote noteB = new SingleNote(3, new Pitch('B'), 0);
         List<SingleNote> notes = Arrays.asList(noteA, noteB);
         Music chord = new Chord(notes);
         assertEquals(3, chord.getDuration());
     }
     @Test //three notes, same length
     public void testGetDurationAllSameLengthThreeNotes() {
-        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12));
-        SingleNote noteB = new SingleNote(3, new Pitch('B'));
-        SingleNote noteG = new SingleNote(3, new Pitch('G'));
+        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12), 0);
+        SingleNote noteB = new SingleNote(3, new Pitch('B'), 0);
+        SingleNote noteG = new SingleNote(3, new Pitch('G'), 0);
         List<SingleNote> notes = Arrays.asList(noteA, noteB, noteG);
         Music chord = new Chord(notes);
         assertEquals(3, chord.getDuration());
     }
     @Test //two notes, different length
     public void testGetDurationDifferentLengthTwoNotes() {
-        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12));
-        SingleNote noteB = new SingleNote(5, new Pitch('B'));
+        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12), 0);
+        SingleNote noteB = new SingleNote(5, new Pitch('B'), 0);
         List<SingleNote> notes = Arrays.asList(noteA, noteB);
         Music chord = new Chord(notes);
         //should be the longer of the two
@@ -106,9 +106,9 @@ public class ChordTest {
     }
     @Test //three notes, different length
     public void testGetDurationDifferentLengthThreeNotes() {
-        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12));
-        SingleNote noteC = new SingleNote(8, new Pitch('C'));
-        SingleNote noteG = new SingleNote(12, new Pitch('G'));
+        SingleNote noteA = new SingleNote(3, new Pitch('A').transpose(12), 0);
+        SingleNote noteC = new SingleNote(8, new Pitch('C'), 0);
+        SingleNote noteG = new SingleNote(12, new Pitch('G'), 0);
         List<SingleNote> notes = Arrays.asList(noteA, noteC, noteG);
         Music chord = new Chord(notes);
         assertEquals(12, chord.getDuration());
