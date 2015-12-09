@@ -279,8 +279,8 @@ public class MakeMusic implements AbcListener {
             String baseNoteString;
             if (splitPitch.length == 1) {
                 baseNoteString = splitPitch[0];
-            } else if (splitPitch.length == 2) {
-                String accidental = splitPitch[1];
+            } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) {
+                String accidental = splitPitch[0];
                 hasAccidental = true;
                 if (accidental.equals("_")) {
                     changeInPitch = -1;

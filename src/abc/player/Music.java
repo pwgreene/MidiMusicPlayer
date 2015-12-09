@@ -81,10 +81,12 @@ public interface Music {
             }
             SequencePlayer player = new SequencePlayer(beatsPerMinute*speed, 1);
             //now play each note at the correct speed
+            int currentTick = 0;
             for (String voice : voices) {
                 for (List<Music> measure : music.get(voice)) {
                     for (Music note : measure) {
-                        note.play(player, 0, speed);
+                        note.play(player, currentTick, speed);
+                        currentTick += speed*note.getDuration().getRationalNumber();
                     }
                 }
             }
