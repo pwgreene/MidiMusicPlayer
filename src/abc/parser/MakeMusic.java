@@ -280,7 +280,7 @@ public class MakeMusic implements AbcListener {
             String baseNoteString;
             if (splitPitch.length == 1) {
                 baseNoteString = splitPitch[0];
-            } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) {
+            } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) { //matches "^C"
                 String accidental = splitPitch[0];
                 hasAccidental = true;
                 if (accidental.equals("_")) {
@@ -296,7 +296,17 @@ public class MakeMusic implements AbcListener {
                     changeInPitch = 2;
                 }
                 baseNoteString = splitPitch[1];
-            } else {
+            } else if (splitPitch.length == 2) { //matches "C ,"
+                String octaveMarker = splitPitch[1];
+                baseNoteString = splitPitch[1];
+              //check what octave the note is
+                if (octaveMarker.charAt(0) == ',') {
+                    octave -= octaveMarker.length();
+                } else if (octaveMarker.charAt(0) == '\'') {
+                    octave += octaveMarker.length();
+                }
+            }
+            else { //matches "^ C '"
                 String accidental = splitPitch[1];
                 String octaveMarker = splitPitch[2];
                 baseNoteString = splitPitch[1];
