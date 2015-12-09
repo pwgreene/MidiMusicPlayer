@@ -36,7 +36,7 @@ public class MakeMusic implements AbcListener {
     private HashMap<String, List<List<Music>>> barsForVoice = new HashMap<String, List<List<Music>>>();  
     //True if currently processing a tuplet or chord
     private boolean inChord = false;
-    private boolean inTuple = false;
+    private int inTuple = 0;
     //The current voice name being processed
     private String voiceName;
 
@@ -121,7 +121,8 @@ public class MakeMusic implements AbcListener {
             for(SingleNote m : chordNotes) {
                 notes.add(m);
             }
-            if(inTuple){
+            //TODO chords in a tuple
+            if(inTuple!=0){
                 tupleNotes.add(new Chord(notes));
             }else{           
                 List<List<Music>> bars = barsForVoice.get(voiceName);
@@ -134,7 +135,13 @@ public class MakeMusic implements AbcListener {
 
     @Override
     public void enterTuplet_element(Tuplet_elementContext ctx) {
-        this.inTuple = true;
+        if(ctx.DUPLET() != null){
+            inTuple = 2;
+        }else if(ctx.TRIPLET() != null){
+            this.inTuple = 3;
+        }else{
+            this.inTuple = 4;
+        }
     }
 
     @Override 
@@ -183,7 +190,7 @@ public class MakeMusic implements AbcListener {
 
     @Override
     public void exitTuplet_element(Tuplet_elementContext ctx) {
-        this.inTuple = false;
+        this.inTuple = 0;
         List<List<Music>> bars = barsForVoice.get(voiceName);
         bars.get(bars.size()-1).add(new Tuplet(tupleNotes));
         //Clear notes from tuple
@@ -298,7 +305,7 @@ public class MakeMusic implements AbcListener {
             } else if (splitPitch.length == 2) { //matches "C ,"
                 String octaveMarker = splitPitch[1];
                 baseNoteString = splitPitch[0];
-              //check what octave the note is
+                //check what octave the note is
                 if (octaveMarker.charAt(0) == ',') {
                     octave -= octaveMarker.length();
                 } else if (octaveMarker.charAt(0) == '\'') {
@@ -367,8 +374,12 @@ public class MakeMusic implements AbcListener {
             } else {
                 if(this.inChord){
                     chordNotes.add(new SingleNote(duration, pitch));
-                }else if(this.inTuple){
-                    tupleNotes.add(new SingleNote(duration, pitch));
+                }else if(this.inTuple !=0){
+                    if(this.inTuple == 3){
+                        tupleNotes.add(new SingleNote(new RationalNum(2*duration.getNum(),inTuple*duration.getDenom()), pitch));
+                    }else{
+                        tupleNotes.add(new SingleNote(new RationalNum(3*duration.getNum(),inTuple*duration.getDenom()), pitch));
+                    }
                 }else{
                     List<List<Music>> bars = this.barsForVoice.get(voiceName);
                     bars.get(bars.size()-1).add(new SingleNote(duration, pitch));
