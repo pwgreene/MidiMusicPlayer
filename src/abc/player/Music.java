@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 
 import org.antlr.v4.gui.Trees;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -36,8 +40,10 @@ public interface Music {
      * @param musicFile an abc music file
      * @return the file parsed into a Music object that can then be played.
      * @throws IOException 
+     * @throws InvalidMidiDataException 
+     * @throws MidiUnavailableException 
      */
-    public static MusicAndBeat parse(File musicFile) throws IOException {
+    public static SequencePlayer parse(File musicFile) throws IOException, MidiUnavailableException, InvalidMidiDataException {
         try {
             List<String> allLines = Files.readAllLines(musicFile.toPath());
             String input = "";
@@ -60,9 +66,29 @@ public interface Music {
             ParseTreeWalker walker = new ParseTreeWalker();
             walker.walk(musicMaker, tree);
             //System.out.println(musicMaker.getBPM() + " " + musicMaker.getComposer() + musicMaker.getComposer());
+            
             int beatsPerMinute = musicMaker.getBPM();
-            HashMap<String,List<List<Music>>> music = musicMaker.getMusic(); 
-            return new MusicAndBeat(music, beatsPerMinute);
+            int speed = musicMaker.getDefaultLength().getDenom();
+            SequencePlayer player = new SequencePlayer(beatsPerMinute, 1);
+            HashMap<String, List<List<Music>>> music = musicMaker.getMusic(); 
+            Set<String> voices = music.keySet();
+            //iterate and find the desired speed, based on the denominators of all the durations
+            for (String voice : voices) {
+                for (List<Music> measure : music.get(voice)) {
+                    for (Music note : measure) {
+                        speed = RationalNum.LCM(speed, note.getDuration().getDenom());
+                    }
+                }
+            }
+            //now play each note at the correct speed
+            for (String voice : voices) {
+                for (List<Music> measure : music.get(voice)) {
+                    for (Music note : measure) {
+                        note.play(player, 0, speed);
+                    }
+                }
+            }
+            return player;
         } 
         catch (RuntimeException e) {
             e.printStackTrace(System.out);
@@ -89,38 +115,5 @@ public interface Music {
      */
     public boolean isResting();
     
-}
-/**
- * A pairing of Music and an integer, where the integer is the Beats Per Minute of the 
- * Music piece
- *
- */
-class MusicAndBeat {
-    
-    //Abstraction Function:
-     //music represents a piece of music, separated into voices (key) and measures of notes (List<List<Music>>)
-     //and beatsPerMinute is an integer representing 
-     //how many beats per minute the music is supposed to be played in
-    //Rep Invariant:
-     //beatsPerMinute > 0
-    //Safety from Rep Exposure:
-     //Music is an immutable type, so returning a ref to music field is safe, int is also immutable
-     //all fields are private and final
-    
-    private final HashMap<String,List<List<Music>>> music;
-    private final int beatsPerMinute;
-    
-    public MusicAndBeat(HashMap<String,List<List<Music>>> music, int beatsPerMinute) {
-        this.music = music ;
-        this.beatsPerMinute = beatsPerMinute;
-    }
-    
-    public HashMap<String,List<List<Music>>> getMusic() {
-        return music;
-    }
-    
-    public int getBeatsPerMinute() {
-        return beatsPerMinute;
-    }
 }
 

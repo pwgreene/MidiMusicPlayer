@@ -90,19 +90,6 @@ public class RationalNum implements Comparable<Object> {
       }
      
      /**
-      * Calculate the least-common multiple in a list of integers
-      * @param values a non-empty list of integers
-      * @return the least-common multiple of all integers in values
-      */
-     public static int LCM(List<Integer> values) {
-         int lcm = values.get(0);
-         for (int n : values) {
-             lcm = LCM(lcm, n);
-         }
-         return lcm;
-     }
-
-     /**
       * Determines whether two RationalNumbers
       * @param other the other RationalNumber to be compared to - must be of type RationalNumber and must not be null
       * @return 0 if the RationalNumbers are equal, positive if other is smaller, negative if other is larger
