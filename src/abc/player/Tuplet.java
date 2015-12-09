@@ -8,7 +8,7 @@ import abc.sound.SequencePlayer;
 public class Tuplet implements Music {
     
     //Abstraction Function
-     //type is an integer, either 2, 3, or 4. 2 -> tuplet, 3 -> triplet, 4 -> quadruplet
+     //type is an integer, either 2, 3, or 4. 2 -> duplet, 3 -> triplet, 4 -> quadruplet
      //each note notes is a note in the tuplet, in order.
     //Rep invariant:
      //type must be 2, 3, or 4
@@ -70,40 +70,14 @@ public class Tuplet implements Music {
     /**
      * @return Computes the duration of the tuplet based on its type and its constituents
      */
-    public RationalNum getDuration() {
-        /*if (type == 2) {
+    public int getDuration() {
+        if (type == 2) {
             return 3;
         } else if (type == 3) {
             return 2;
         } else {
             return 3;
-        }*/
-        int durationNum = 0;
-        int durationDen = 1;
-        for(Music n : notes) {
-            int noteNum = n.getDuration().getNum();
-            int noteDen = n.getDuration().getDenom();
-            durationNum = noteNum*durationDen + durationNum*noteDen;
-            durationDen = noteDen * durationDen;
         }
-        int gcd = RationalNum.GCD(durationNum, durationDen);
-        durationNum /= gcd;
-        durationDen /= gcd;
-        switch(type) {
-        case 2:
-            durationNum *= 3;
-            durationDen *= 2;
-            break;
-        case 3:
-            durationNum *= 2;
-            durationDen *= 3;
-            break;
-        case 4:
-            durationNum *= 3;
-            durationDen *= 4;
-            break;
-        }
-        return new RationalNum(durationNum, durationDen);
     }
 
     @Override
