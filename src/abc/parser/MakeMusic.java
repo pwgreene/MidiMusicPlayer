@@ -2,6 +2,7 @@ package abc.parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 
@@ -52,13 +53,14 @@ public class MakeMusic implements AbcListener {
      */
     private HashMap<String, List<Integer[]>> repeatsForVoiceName = new HashMap<String, List<Integer[]>>();
 
-    private int[] carryOverAccidental = {0,0,0,0,0,0,0};
+    private HashMap<Integer,Integer> carryOverAccidental = new HashMap<Integer,Integer>();
 
     /**
      * Container for things in voice
      */
     private List<Music> tupleNotes = new ArrayList<Music>();
     private List<SingleNote> chordNotes = new ArrayList<SingleNote>();  
+    private List<SingleNote> tupleOfChords = new ArrayList<SingleNote>();
 
     //These have been implemented:
     @Override
@@ -123,9 +125,10 @@ public class MakeMusic implements AbcListener {
             for(SingleNote m : chordNotes) {
                 notes.add(m);
             }
-            //TODO chords in a tuple
             if(inTuple!=0){
-                tupleNotes.add(new Chord(notes));
+                 tupleNotes.add(new Chord(tupleOfChords));
+                 //Reset list
+                 tupleOfChords =  new ArrayList<SingleNote>();
             }else{           
                 List<List<Music>> bars = barsForVoice.get(voiceName);
                 bars.get(bars.size()-1).add(new Chord(notes));  
@@ -221,9 +224,7 @@ public class MakeMusic implements AbcListener {
         }
         if(barlineString.equals("|:")) {
             currentRepeat[0] = new Integer(bars.size());
-        } else if(barlineString.equals(":|")) {
-            //            if(currentRepeat[1] == null)
-            //                System.out.println("here");
+        } else if(barlineString.equals(":|")) { 
             currentRepeat[1] = new Integer(bars.size());
             currentRepeat[2] = new Integer(bars.size());
         } else if(barlineString.equals("[1")) {
@@ -235,25 +236,17 @@ public class MakeMusic implements AbcListener {
             if(currentRepeat[0] == null)
                 currentRepeat[0] = new Integer(bars.size());
         }
-        if(repeats.size() > 0){
-            repeats.set(repeats.size()-1, currentRepeat);
-        }
-        else{
-            repeats.add(currentRepeat);
-        }
+        repeats.set(repeats.size()-1, currentRepeat);
         if(addNewBar){
             bars.add(new ArrayList<Music>());
             //reset accidentals
-            for(int i= 0; i<7; i++){
-                carryOverAccidental[i] = 0;
-            }
+            carryOverAccidental = new HashMap<Integer,Integer>();
         }
     }
 
     @Override
     public void exitNote_element(Note_elementContext ctx) {
         if(ctx.NOTE() != null) {
-
             //Split the string into a note and a note_duration part
             String noteString = ctx.NOTE().getText();
             String[] splitNote = noteString.split("(?=[\\d+/])",2);
@@ -308,69 +301,43 @@ public class MakeMusic implements AbcListener {
                 String baseNoteString;
                 if (splitPitch.length == 1) {
                     baseNoteString = splitPitch[0];
-                    if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -1) {
-                        changeInPitch = -1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -1;
+                    Pitch thePitch = new Pitch(baseNoteString.toUpperCase().charAt(0));
+                    if(carryOverAccidental.containsKey(thePitch.toMidiNote())){
+                        changeInPitch = carryOverAccidental.get(thePitch.toMidiNote()) - thePitch.toMidiNote();
                         hasAccidental = true;
                     }
-                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -2) {
-                        changeInPitch = -2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -2;
-                        hasAccidental = true;
-                    }
-                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 1) {
-                        changeInPitch = 1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 1;
-                        hasAccidental = true;
-                    }
-                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 2) {
-                        changeInPitch = 2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 2;
-                        hasAccidental = true;
-                    }                
-                    
                 } else if (splitPitch.length == 2 && splitPitch[1].matches("[A-Ga-g]")) { //matches "^C"
                     String accidental = splitPitch[0];
                     hasAccidental = true;
+                    Pitch thePitch = new Pitch(splitPitch[1].toUpperCase().charAt(0));
                     if(accidental.equals("=")){
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 0;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote());             
                     }
-                    else if (accidental.equals("_") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -1) {
+                    else if (accidental.equals("_")) {
                         changeInPitch = -1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -1;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-1);                    
                     }
-                    else if (accidental.equals("__")|| carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -2) {
+                    else if (accidental.equals("__")) {
                         changeInPitch = -2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -2;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-2);     
                     }
-                    else if (accidental.equals("^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 1) {
+                    else if (accidental.equals("^")) {
                         changeInPitch = 1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 1;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+1);     
                     }
-                    else if (accidental.equals("^^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 2) {
+                    else if (accidental.equals("^^")){
                         changeInPitch = 2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 2;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+2);     
                     }
                     baseNoteString = splitPitch[1];
                 } else if (splitPitch.length == 2) { //matches "C ,"
                     String octaveMarker = splitPitch[1];
                     baseNoteString = splitPitch[0];
-                    if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -1) {
-                        changeInPitch = -1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -1;
-                    }
-                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == -2) {
-                        changeInPitch = -2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = -2;
-                    }
-                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 1) {
-                        changeInPitch = 1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 1;
-                    }
-                    else if (carryOverAccidental[Key.getNoteInteger(splitPitch[0])] == 2) {
-                        changeInPitch = 2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[0])] = 2;
-                    }                
+                    Pitch thePitch = new Pitch(splitPitch[0].toUpperCase().charAt(0));
+                    if (carryOverAccidental.containsKey(thePitch.toMidiNote())){
+                        changeInPitch = carryOverAccidental.get(thePitch.toMidiNote()) - thePitch.toMidiNote();
+                        hasAccidental = true;
+                    }              
                     //check what octave the note is
                     if (octaveMarker.charAt(0) == ',') {
                         octave -= octaveMarker.length();
@@ -379,29 +346,30 @@ public class MakeMusic implements AbcListener {
                     }
                 }
                 else { //matches "^ C '"
-                    String accidental = splitPitch[1];
+                    String accidental = splitPitch[0];
                     String octaveMarker = splitPitch[2];
                     baseNoteString = splitPitch[1];
                     hasAccidental = true;
+                    Pitch thePitch = new Pitch(baseNoteString.toUpperCase().charAt(0));
                     //check what accidental is
                     if(accidental.equals("=")){
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 0;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote());             
                     }
-                    else if (accidental.equals("_") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -1) {
+                    else if (accidental.equals("_")) {
                         changeInPitch = -1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -1;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-1);                    
                     }
-                    else if (accidental.equals("__") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == -2) {
+                    else if (accidental.equals("__")) {
                         changeInPitch = -2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = -2;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()-2);     
                     }
-                    else if (accidental.equals("^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 1) {
+                    else if (accidental.equals("^")) {
                         changeInPitch = 1;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 1;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+1);     
                     }
-                    else if (accidental.equals("^^") || carryOverAccidental[Key.getNoteInteger(splitPitch[1])] == 2) {
+                    else if (accidental.equals("^^")){
                         changeInPitch = 2;
-                        carryOverAccidental[Key.getNoteInteger(splitPitch[1])] = 2;
+                        carryOverAccidental.put(thePitch.toMidiNote(), thePitch.toMidiNote()+2);     
                     }
                     //check what octave the note is
                     if (octaveMarker.charAt(0) == ',') {
@@ -439,11 +407,17 @@ public class MakeMusic implements AbcListener {
                 }
                 //transpose pitch by the octave
                 pitch = pitch.transpose(octave*Pitch.OCTAVE);
-
-
                 if(this.inChord){
-                    chordNotes.add(new SingleNote(duration, pitch));
-                }else if(this.inTuple !=0){
+                    if(inTuple!= 0){
+                        if(this.inTuple == 3){
+                            tupleOfChords.add(new SingleNote(new RationalNum(2*duration.getNum(),inTuple*duration.getDenom()), pitch));
+                        }else{
+                            tupleOfChords.add(new SingleNote(new RationalNum(3*duration.getNum(),inTuple*duration.getDenom()), pitch));
+                        }
+                    }else{
+                        chordNotes.add(new SingleNote(duration, pitch));
+                    }
+                }else if(this.inTuple !=0 && !this.inChord){
                     if(this.inTuple == 3){
                         tupleNotes.add(new SingleNote(new RationalNum(2*duration.getNum(),inTuple*duration.getDenom()), pitch));
                     }else{
@@ -464,7 +438,7 @@ public class MakeMusic implements AbcListener {
             List<Integer[]> repeats = repeatsForVoiceName.get(name);
             for(int i = 0; i<repeats.size(); i++){
                 for(int j = 0; j<3; j++){
-                    System.out.println(repeats.get(i)[j]);
+                    //  System.out.println(repeats.get(i)[j]);
                 }
 
             }
