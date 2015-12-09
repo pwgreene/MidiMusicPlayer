@@ -55,10 +55,8 @@ public class Tuplet implements Music {
     }
 
     @Override
-    /**
-     * Two tuples are equal if they contain the same notes in the same order
-     */
     public boolean equals(Object other) {
+        //Two tuples are equal if they contain the same notes in the same order
         if(!(other instanceof Tuplet))
             return false;
         Tuplet Tuplet = (Tuplet)other;
@@ -69,9 +67,8 @@ public class Tuplet implements Music {
         return true;
     }
 
-    /**
-     * Checks that type must be 2,3, or 4, and notes.size() must be 2, 3, or 4
-     */
+    
+    //Checks that type must be 2,3, or 4, and notes.size() must be 2, 3, or 4
     private void checkRep() {
         assert notes.size() == 2 || notes.size() == 3 || notes.size() == 4;
         assert type == 2 || type == 3 || type == 4;

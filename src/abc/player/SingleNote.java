@@ -44,10 +44,15 @@ public class SingleNote implements Music{
         seqPlayer.addNote(this.getPitch().toMidiNote(), atTick, duration);   
     }
     
+    @Override
     public RationalNum getDuration() {
         return duration;
     }
-
+    
+    /**
+     * Get the pitch of this note
+     * @return the pitch of this note
+     */
     public Pitch getPitch(){
         return this.pitch;
     }

@@ -11,6 +11,7 @@ public class Key {
     /**
      * Initializes a new KeySignature object.
      * @param key is inputed as a string (ex "C", "D#m", "Gb")
+     * @throws IllegalArgumentException if the input is not a valid key signature
      */
     public Key(String key) {
         this.theKey = key;
