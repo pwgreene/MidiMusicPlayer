@@ -9,24 +9,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import abc.parser.AbcParser.AbclineContext;
-import abc.parser.AbcParser.BarlineContext;
-import abc.parser.AbcParser.BodyContext;
-import abc.parser.AbcParser.Close_bracketContext;
-import abc.parser.AbcParser.ElementContext;
-import abc.parser.AbcParser.Field_keyContext;
-import abc.parser.AbcParser.Field_numberContext;
-import abc.parser.AbcParser.Field_titleContext;
-import abc.parser.AbcParser.Field_voiceContext;
-import abc.parser.AbcParser.HeaderContext;
-import abc.parser.AbcParser.L_bracketContext;
-import abc.parser.AbcParser.MultinoteContext;
-import abc.parser.AbcParser.Note_elementContext;
-import abc.parser.AbcParser.Open_bracketContext;
-import abc.parser.AbcParser.Other_fieldsContext;
-import abc.parser.AbcParser.R_bracketContext;
-import abc.parser.AbcParser.RootContext;
-import abc.parser.AbcParser.Tuplet_elementContext;
 import abc.parser.AbcParser.*;
 import abc.player.Chord;
 import abc.player.Key;
@@ -48,8 +30,7 @@ public class MakeMusic implements AbcListener {
     private RationalNum tempoBeat = null;
     private int bpm = 100;
 
-    //List of the voices
-    private List<String> voices = new ArrayList<String>();  
+
     //The bars (List<List<Music>>) for a given voice name (Each bar is a List<Music>)
     private HashMap<String, List<List<Music>>> barsForVoice = new HashMap<String, List<List<Music>>>();  
     //True if currently processing a tuplet or chord
@@ -75,12 +56,6 @@ public class MakeMusic implements AbcListener {
      */
     private List<Music> tupleNotes = new ArrayList<Music>();
     private List<SingleNote> chordNotes = new ArrayList<SingleNote>();  
-    private List<Music> tupleContainer = new ArrayList<Music>();
-
-    //Invariant: TODO
-
-    //private HashMap<String, Integer> currentBarForVoiceName = new HashMap<String, Integer>();
-
 
     //These have been implemented:
     @Override
@@ -126,8 +101,6 @@ public class MakeMusic implements AbcListener {
         }
         if(ctx.FIELD_VOICE() != null) {
             voiceName = ctx.FIELD_VOICE().getText().replace("V:", "").trim();
-            voices.add(voiceName);
-
             if(!barsForVoice.containsKey(voiceName)) {
                 List<List<Music>> newVoice = new ArrayList<List<Music>>();
                 newVoice.add(new ArrayList<Music>());
@@ -147,11 +120,14 @@ public class MakeMusic implements AbcListener {
             for(SingleNote m : chordNotes) {
                 notes.add(m);
             }
-            //Clear notes from chord
-            chordNotes = new ArrayList<SingleNote>();
+            if(inTuple){
+                tupleNotes.add(new Chord(notes));
+            }else{           
+                List<List<Music>> bars = barsForVoice.get(voiceName);
+                bars.get(bars.size()-1).add(new Chord(notes));  
+            }
             this.inChord = false;
-            List<List<Music>> bars = barsForVoice.get(voiceName);
-            bars.get(bars.size()-1).add(new Chord(notes));  
+            chordNotes = new ArrayList<SingleNote>();
         }
     }
 
@@ -206,7 +182,7 @@ public class MakeMusic implements AbcListener {
 
     @Override
     public void exitTuplet_element(Tuplet_elementContext ctx) {
-        int type = 3;
+        /*int type = 3;
         if(ctx.DUPLET() != null)
             type = 2;
         else if (ctx.QUADRUPLET() != null)
@@ -215,7 +191,7 @@ public class MakeMusic implements AbcListener {
         //Clear notes from tuple
         tupleNotes = new ArrayList<Music>();
         List<List<Music>> bars = barsForVoice.get(voiceName);
-        bars.get(bars.size()-1).add(new Tuplet(type, tupleNotes));
+        bars.get(bars.size()-1).add(new Tuplet(type, tupleNotes));*/
     }
 
     @Override
@@ -263,10 +239,10 @@ public class MakeMusic implements AbcListener {
             bars.add(new ArrayList<Music>());
         }
     }
-    
+
     @Override
     public void exitNote_element(Note_elementContext ctx) {
-        if(ctx.NOTE() != null) {
+        /*  if(ctx.NOTE() != null) {
             //Split the string into a note and a note_duration part
             String noteString = ctx.NOTE().getText();
             String[] splitNote = noteString.split("(?=[\\d+/])",2);
@@ -297,10 +273,10 @@ public class MakeMusic implements AbcListener {
                     duration = new RationalNum(num, den);
                 }
             }
-            
+
             int octave = 0; 
             Pitch thePitch = null;
-            
+
             //split the pitch into accidental, basenote, octave
             String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
 
@@ -321,7 +297,7 @@ public class MakeMusic implements AbcListener {
             } else if(basenoteString.toLowerCase().equals("g")) {
                 baseNote = NoteEnum.G;
             }            
-            
+
             //Apply key signature
             accidental = setKeySigAccidental(baseNote);         
 
@@ -369,40 +345,12 @@ public class MakeMusic implements AbcListener {
                     bars.get(bars.size()-1).add(new Note(baseNote, accidental, octave, duration));
                 }
             }
-        }
-
+        }*/
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-    
-    
-
-    @Override
-    public void exitAbcline(AbclineContext ctx) {
-        List<List<Music>> bars = barsForVoice.get(voiceName);
-        int lineLength = bars.size();
-        currentBarForVoiceName.put(voiceName, lineLength);
-    }
-
-
-    /********************************************
-    //These NEED TO BE implemented: TODO
-     ********************************************/
 
     @Override
     public void exitBody(BodyContext ctx) {
-        for(String name : this.barsForVoice.keySet()){
+        for(String name : barsForVoice.keySet()){
             List<List<Music>> voiceBars = barsForVoice.get(name);
             List<Integer[]> repeats = repeatsForVoiceName.get(name);
             Integer[] lastRepeat = repeats.get(repeats.size()-1);
@@ -421,13 +369,9 @@ public class MakeMusic implements AbcListener {
             for(List<Music> bar : voiceBars) {
                 concatenatedBars.addAll(bar);
             }
-            voices.add(new Voice(name, concatenatedBars));
+            voices.add(name);
         }
     }
-
-
-    
-
 
     //These aren't used:
     @Override public void enterEveryRule(ParserRuleContext arg0) {}
@@ -451,5 +395,45 @@ public class MakeMusic implements AbcListener {
     @Override public void enterOpen_bracket(Open_bracketContext ctx) {}
     @Override public void enterClose_bracket(Close_bracketContext ctx) {}
     @Override public void exitMultinote(MultinoteContext ctx) {}
+    @Override public void exitAbcline(AbclineContext ctx) {}
+
+    //Getters
+
+    public int getIndex(){
+        return this.index;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public String getComposer(){
+        return this.composer;
+    }
+
+    public Key getKey(){
+        return this.key;
+    }
+
+    public RationalNum getDefaultLength(){
+        return this.defaultLength;
+    }
+
+    public RationalNum getMeter(){
+        return this.meter;
+    }
+
+    public RationalNum getTempoBeat(){
+        return this.tempoBeat;
+    }
+
+    public int getBPM(){
+        return this.bpm;
+    }
+
+    public HashMap<String,List<List<Music>>> getMusic(){
+        return this.barsForVoice;
+    }
+
 }
 

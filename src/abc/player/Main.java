@@ -31,17 +31,17 @@ public class Main {
     public static void play(String file) throws IOException, MidiUnavailableException, InvalidMidiDataException {
         File musicFile = new File(file);
         MusicAndBeat musicAndBeat = Music.parse(musicFile);
-        Music music = musicAndBeat.getMusic();
-        int beat = musicAndBeat.getBeatsPerMinute();
-        SequencePlayer player = new SequencePlayer(beat, 1);
-        music.play(player, 0);
-        player.play();
+        //Music music = musicAndBeat.getMusic();
+        //int beat = musicAndBeat.getBeatsPerMinute();
+        //SequencePlayer player = new SequencePlayer(beat, 1);
+        //music.play(player, 0);
+        //player.play();
     }
 
     public static void main(String[] args) {
         try {
             //String file = args[0];
-            play("sample_abc/fur_elise.abc");
+            play("sample_abc/sample1.abc");
         } catch (IOException ioe) {
             System.err.println("Invalid File");
         } catch (MidiUnavailableException | InvalidMidiDataException e) {

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
 
 import org.antlr.v4.gui.Trees;
@@ -56,9 +57,11 @@ public interface Music {
 
             //after tree is made, now walk tree and return the Music
             MakeMusic musicMaker = new MakeMusic();
-            new ParseTreeWalker().walk(musicMaker, tree);
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.walk(musicMaker, tree);
+            System.out.println(musicMaker.getBPM() + " " + musicMaker.getComposer() + musicMaker.getComposer());
             int beatsPerMinute = musicMaker.getBPM();
-            Music music = musicMaker.getMusic(); 
+            HashMap<String,List<List<Music>>> music = musicMaker.getMusic(); 
             return new MusicAndBeat(music, beatsPerMinute);
         } 
         catch (RuntimeException e) {
@@ -102,15 +105,15 @@ class MusicAndBeat {
      //Music is an immutable type, so returning a ref to music field is safe, int is also immutable
      //all fields are private and final
     
-    private final Music music;
+    private final HashMap<String,List<List<Music>>> music;
     private final int beatsPerMinute;
     
-    public MusicAndBeat(Music music, int beatsPerMinute) {
-        this.music = music;
+    public MusicAndBeat(HashMap<String,List<List<Music>>> music, int beatsPerMinute) {
+        this.music = music ;
         this.beatsPerMinute = beatsPerMinute;
     }
     
-    public Music getMusic() {
+    public HashMap<String,List<List<Music>>> getMusic() {
         return music;
     }
     
