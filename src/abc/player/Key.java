@@ -1,12 +1,8 @@
 package abc.player;
 
-import java.util.Map;
-
 public class Key {
     
     private int[] accidentals = new int[7];
-    private Map<String, int[]> keyMap;
-    private final String theKey;
       
     /**
      * Initializes a new KeySignature object.
@@ -14,7 +10,6 @@ public class Key {
      * @throws IllegalArgumentException if the input is not a valid key signature
      */
     public Key(String key) {
-        this.theKey = key;
         if (key.equals("C")) this.accidentals = new int[] {0,0,0,0,0,0,0};
         else if (key.equals("Ebm")) this.accidentals = new int[] {-1,-1,-1,-1,-1,0,-1};
         else if (key.equals("Cb")) this.accidentals = new int[] {-1,-1,-1,-1,-1,-1,-1};
