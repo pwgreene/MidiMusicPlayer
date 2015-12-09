@@ -69,7 +69,6 @@ public interface Music {
             
             int beatsPerMinute = musicMaker.getBPM();
             int speed = musicMaker.getDefaultLength().getDenom();
-            SequencePlayer player = new SequencePlayer(beatsPerMinute, 1);
             HashMap<String, List<List<Music>>> music = musicMaker.getMusic(); 
             Set<String> voices = music.keySet();
             //iterate and find the desired speed, based on the denominators of all the durations
@@ -80,6 +79,7 @@ public interface Music {
                     }
                 }
             }
+            SequencePlayer player = new SequencePlayer(beatsPerMinute*speed, 1);
             //now play each note at the correct speed
             for (String voice : voices) {
                 for (List<Music> measure : music.get(voice)) {

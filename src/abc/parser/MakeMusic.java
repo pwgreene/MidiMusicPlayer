@@ -272,8 +272,83 @@ public class MakeMusic implements AbcListener {
 
             String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
             System.out.println(splitPitch[0] + " " + splitPitch[1]);
-
-            //split the pitch into accidental, basenote, octave
+            
+            int changeInPitch = 0;
+            boolean hasAccidental = false;
+            int octave = 0;
+            String baseNoteString;
+            if (splitPitch.length == 1) {
+                baseNoteString = splitPitch[0];
+            } else if (splitPitch.length == 2) {
+                String accidental = splitPitch[1];
+                hasAccidental = true;
+                if (accidental.equals("_")) {
+                    changeInPitch = -1;
+                }
+                else if (accidental.equals("__")) {
+                    changeInPitch = -2;
+                }
+                else if (accidental.equals("^")) {
+                    changeInPitch = 1;
+                }
+                else if (accidental.equals("^^")) {
+                    changeInPitch = 2;
+                }
+                baseNoteString = splitPitch[1];
+            } else {
+                String accidental = splitPitch[1];
+                String octaveMarker = splitPitch[2];
+                baseNoteString = splitPitch[1];
+                hasAccidental = true;
+                //check what accidental is
+                if (accidental.equals("_")) {
+                    changeInPitch = -1;
+                }
+                else if (accidental.equals("__")) {
+                    changeInPitch = -2;
+                }
+                else if (accidental.equals("^")) {
+                    changeInPitch = 1;
+                }
+                else if (accidental.equals("^^")) {
+                    changeInPitch = 2;
+                }
+                //check what octave the note is
+                if (octaveMarker.charAt(0) == ',') {
+                    octave -= octaveMarker.length();
+                } else if (octaveMarker.charAt(0) == '\'') {
+                    octave += octaveMarker.length();
+                }
+                
+            }
+            //change pitch based on octave
+            if (baseNoteString.toLowerCase().equals(baseNoteString)) {
+                octave++;
+            }
+            Pitch pitch; //create pitch and change for accidental
+            char noteChar = baseNoteString.charAt(0);
+            if (hasAccidental) {
+                pitch = new Pitch(noteChar).transpose(changeInPitch);
+            } else { //no accidental, use key signature
+                pitch = new Pitch(noteChar);
+                if (baseNoteString.toUpperCase().equals("A")) {
+                    pitch.transpose(key.getAccidentals()[0]);
+                } else if (baseNoteString.toUpperCase().equals("B")) {
+                    pitch.transpose(key.getAccidentals()[1]);
+                } else if (baseNoteString.toUpperCase().equals("C")) {
+                    pitch.transpose(key.getAccidentals()[2]);
+                } else if (baseNoteString.toUpperCase().equals("D")) {
+                    pitch.transpose(key.getAccidentals()[3]);
+                } else if (baseNoteString.toUpperCase().equals("E")) {
+                    pitch.transpose(key.getAccidentals()[4]);
+                } else if (baseNoteString.toUpperCase().equals("F")) {
+                    pitch.transpose(key.getAccidentals()[5]);
+                } else if (baseNoteString.toUpperCase().equals("G")) {
+                    pitch.transpose(key.getAccidentals()[6]);
+                }
+            }
+            //transpose pitch by the octave
+            pitch = pitch.transpose(octave*Pitch.OCTAVE);
             //            
             //
             //            //parse for basenote
