@@ -23,6 +23,7 @@ public class PlayTest {
     //Rest.play():
     //duration = 1, >1
     //atTick = 0, >0
+    //atSpeed = 1, > 1
     @Test //tests duration = 1, atTick = 0
     public void testPlayDurationOne() throws MidiUnavailableException, InvalidMidiDataException {
         Music rest = new Rest(new RationalNum(1, 1));
@@ -42,6 +43,13 @@ public class PlayTest {
         Music rest = new Rest(new RationalNum(4, 1));
         SequencePlayer player = new SequencePlayer(10, 5);
         rest.play(player, 5, 1);
+        assertEquals("Meta event: END_OF_TRACK Tick: 0\n", player.toString());
+    }
+    @Test //tests atTick >0, atSpeed > 0
+    public void testPlayAtSpeedNonZero() throws MidiUnavailableException, InvalidMidiDataException {
+        Music rest = new Rest(new RationalNum(4, 1));
+        SequencePlayer player = new SequencePlayer(10, 5);
+        rest.play(player, 5, 2);
         assertEquals("Meta event: END_OF_TRACK Tick: 0\n", player.toString());
     }
     
@@ -154,8 +162,9 @@ public class PlayTest {
     //sharp/natural/flat
     //play atTick = 0, >0
     //accidental = sharp, natural, flat
+    //atSpeed = 1, >1
     
-    @Test //note of duration 1 at tick 0, middle octave, natural
+    @Test //note of duration 1 at tick 0, middle octave, natural, atSpeed = 1
     public void testSingleNotePlayDurationOne() throws MidiUnavailableException, InvalidMidiDataException {
         Music noteA = new SingleNote(new RationalNum(1, 1), new Pitch('A'));
         SequencePlayer player = new SequencePlayer(100, 5);
@@ -164,14 +173,14 @@ public class PlayTest {
                     + "Event: NOTE_OFF Pitch: 69  Tick: 1\n"
                     + "Meta event: END_OF_TRACK Tick: 1\n", player.toString());
     }
-    @Test //note of duration >1, plays atTick >0
+    @Test //note of duration >1, plays atTick >0, atSpeed > 1
     public void testSingleNotePlayDurationGreaterThanOne() throws MidiUnavailableException, InvalidMidiDataException {
         Music noteA = new SingleNote(new RationalNum(10, 1), new Pitch('A'));
-        SequencePlayer player = new SequencePlayer(100, 5);
-        noteA.play(player, 5, 1);
+        SequencePlayer player = new SequencePlayer(100, 1);
+        noteA.play(player, 5, 2);
         assertEquals("Event: NOTE_ON  Pitch: 69  Tick: 5\n" 
-                    + "Event: NOTE_OFF Pitch: 69  Tick: 15\n"
-                    + "Meta event: END_OF_TRACK Tick: 15\n", player.toString());
+                    + "Event: NOTE_OFF Pitch: 69  Tick: 25\n"
+                    + "Meta event: END_OF_TRACK Tick: 25\n", player.toString());
     }
     @Test //note is lower octave, natural (A,)
     public void testSingleNotePlayLowerOctave() throws MidiUnavailableException, InvalidMidiDataException {
@@ -218,45 +227,84 @@ public class PlayTest {
      //play atTick = 0, >0
      //notes.size = 2, 3, 4
     
-    @Test //notes.size() = 2, all lower octave
+    @Test //notes.size() = 2, all lower octave, play atSpeed = 1, atTick = 1
     public void testTupletLowerOctave() throws MidiUnavailableException, InvalidMidiDataException {
         Music noteC = new SingleNote(new RationalNum(1, 1), new Pitch('C').transpose(-12));
         List<Music> notes = Arrays.asList(noteC, noteC);
         Music tuplet = new Tuplet(notes);
         SequencePlayer player = new SequencePlayer(100, 1);
-        assertEquals("(2C,1C,1", tuplet.toString());
+        tuplet.play(player, 0, 1);
+        assertEquals("Event: NOTE_ON  Pitch: 48  Tick: 0\n" 
+                   + "Event: NOTE_OFF Pitch: 48  Tick: 1\n"
+                   + "Event: NOTE_ON  Pitch: 48  Tick: 1\n" 
+                   + "Event: NOTE_OFF Pitch: 48  Tick: 2\n"
+                   + "Meta event: END_OF_TRACK Tick: 2\n", player.toString());
     }
-    @Test //notes.size() = 3, all middle octave
-    public void testTupletMiddleOctave() {
+    @Test //notes.size() = 3, all middle octave, play atSpeed = 1
+    public void testTupletMiddleOctave() throws MidiUnavailableException, InvalidMidiDataException {
         Music noteD = new SingleNote(new RationalNum(1, 1), new Pitch('D'));
         List<Music> notes = Arrays.asList(noteD, noteD, noteD);
         Music tuplet = new Tuplet(notes);
-        assertEquals("(3D1D1D1", tuplet.toString());
+        SequencePlayer player = new SequencePlayer(140, 1);
+        tuplet.play(player, 0, 1);
+        assertEquals("Event: NOTE_ON  Pitch: 62  Tick: 0\n" 
+                + "Event: NOTE_OFF Pitch: 62  Tick: 1\n"
+                + "Event: NOTE_ON  Pitch: 62  Tick: 1\n" 
+                + "Event: NOTE_OFF Pitch: 62  Tick: 2\n"
+                + "Event: NOTE_ON  Pitch: 62  Tick: 2\n" 
+                + "Event: NOTE_OFF Pitch: 62  Tick: 3\n"
+                + "Meta event: END_OF_TRACK Tick: 3\n", player.toString());
     }
-    @Test //notes.size() = 3, all middle octave, all different
-    public void testTuplettDifferentNotes() {
+    @Test //notes.size() = 3, all middle octave, all different, play atSpeed = 1
+    public void testTuplettDifferentNotes() throws MidiUnavailableException, InvalidMidiDataException {
         Music noteD = new SingleNote(new RationalNum(1, 1), new Pitch('D'));
         Music noteE = new SingleNote(new RationalNum(1, 1), new Pitch('E'));
         Music noteF = new SingleNote(new RationalNum(1, 1), new Pitch('F'));
         List<Music> notes = Arrays.asList(noteD, noteE, noteF);
         Music tuplet = new Tuplet(notes);
-        assertEquals("(3D1E1F1", tuplet.toString());
+        SequencePlayer player = new SequencePlayer(140, 1);
+        tuplet.play(player, 0, 1);
+        assertEquals("Event: NOTE_ON  Pitch: 62  Tick: 0\n" 
+                + "Event: NOTE_OFF Pitch: 62  Tick: 1\n"
+                + "Event: NOTE_ON  Pitch: 64  Tick: 1\n" 
+                + "Event: NOTE_OFF Pitch: 64  Tick: 2\n"
+                + "Event: NOTE_ON  Pitch: 65  Tick: 2\n" 
+                + "Event: NOTE_OFF Pitch: 65  Tick: 3\n"
+                + "Meta event: END_OF_TRACK Tick: 3\n", player.toString());
     }
-    @Test //notes.size() = 4, all higher octave
-    public void testTupletHigherOctave() {
+    @Test //notes.size() = 4, all higher octave, play atSpeed > 1
+    public void testTupletHigherOctave() throws MidiUnavailableException, InvalidMidiDataException {
         Music noteC = new SingleNote(new RationalNum(1, 1), new Pitch('C').transpose(13));
         List<Music> notes = Arrays.asList(noteC, noteC, noteC, noteC);
         Music tuplet = new Tuplet(notes);
-        assertEquals("(4^C'1^C'1^C'1^C'1", tuplet.toString());
+        SequencePlayer player = new SequencePlayer(140, 1);
+        tuplet.play(player, 0, 3);
+        assertEquals("Event: NOTE_ON  Pitch: 73  Tick: 0\n" 
+                + "Event: NOTE_OFF Pitch: 73  Tick: 3\n"
+                + "Event: NOTE_ON  Pitch: 73  Tick: 3\n" 
+                + "Event: NOTE_OFF Pitch: 73  Tick: 6\n"
+                + "Event: NOTE_ON  Pitch: 73  Tick: 6\n" 
+                + "Event: NOTE_OFF Pitch: 73  Tick: 9\n"
+                + "Event: NOTE_ON  Pitch: 73  Tick: 9\n" 
+                + "Event: NOTE_OFF Pitch: 73  Tick: 12\n"
+                + "Meta event: END_OF_TRACK Tick: 12\n", player.toString());
     }
-    @Test //notes.size() = 3, all different octaves, some flat
-    public void testTupletPlayDifferentOctaves() {
+    @Test //notes.size() = 3, all different octaves, some flat, play atTick > 0
+    public void testTupletPlayDifferentOctaves() throws MidiUnavailableException, InvalidMidiDataException {
         Music lowA = new SingleNote(new RationalNum(1, 1), new Pitch('A').transpose(-13));
         Music midA = new SingleNote(new RationalNum(1, 1), new Pitch('A').transpose(-2));
         Music highB = new SingleNote(new RationalNum(1, 1), new Pitch('B'));
         List<Music> notes = Arrays.asList(lowA, midA, highB);
         Music tuplet = new Tuplet(notes);
-        assertEquals("(3^G,1G1B1", tuplet.toString());
+        SequencePlayer player = new SequencePlayer(140, 1);
+        tuplet.play(player, 2, 1);
+        assertEquals("Event: NOTE_ON  Pitch: 56  Tick: 2\n" 
+                + "Event: NOTE_OFF Pitch: 56  Tick: 3\n"
+                + "Event: NOTE_ON  Pitch: 67  Tick: 3\n" 
+                + "Event: NOTE_OFF Pitch: 67  Tick: 4\n"
+                + "Event: NOTE_ON  Pitch: 71  Tick: 4\n" 
+                + "Event: NOTE_OFF Pitch: 71  Tick: 5\n"
+                + "Meta event: END_OF_TRACK Tick: 5\n", player.toString());
     }
     
 }

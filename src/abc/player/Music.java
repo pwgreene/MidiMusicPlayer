@@ -38,7 +38,7 @@ public interface Music {
     /**
      * Parse an abc file. The file must be in abc format as specified by the project handout.
      * @param musicFile an abc music file
-     * @return the file parsed into a Music object that can then be played.
+     * @return a new SequencePlayer object with the correct music added to it
      * @throws IOException 
      * @throws InvalidMidiDataException 
      * @throws MidiUnavailableException 
@@ -103,6 +103,7 @@ public interface Music {
      * Play this piece of music
      * @param atTick the beat at which to begin playing the music
      * @param seqPlayer the sequence player that will actually play the music
+     * @param atSpeed makes the song that many times slower. Must be positive.
      */
     public void play(SequencePlayer seqPlayer, int atTick, int atSpeed);
     

@@ -28,6 +28,7 @@ public class TupletTest {
     //has sharp, natural, flat
     
     //getDuration():
+    //Tuplet is a duplet/triplet/quadruplet
     //duration is 1, >1
     
     //toString():
@@ -72,5 +73,28 @@ public class TupletTest {
         List<Music> notes = Arrays.asList(lowA, midA, highB);
         Music tuplet = new Tuplet(notes);
         assertEquals("(3^G,1G1B1", tuplet.toString());
+    }
+    @Test //get duration on a duplet
+    public void getDurationDuplet() {
+        Music noteC = new SingleNote(new RationalNum(1,1), new Pitch('C'));
+        List<Music> notes = Arrays.asList(noteC, noteC);
+        Music tuplet = new Tuplet(notes);
+        assertEquals(3.0, tuplet.getDuration().getRationalNumber(), .0001);
+    }
+    @Test //get duration on a triplet
+    public void getDurationTriplet() {
+        Music lowA = new SingleNote(new RationalNum(1, 1), new Pitch('A').transpose(-13));
+        Music midA = new SingleNote(new RationalNum(1, 1), new Pitch('A').transpose(-2));
+        Music highB = new SingleNote(new RationalNum(1, 1), new Pitch('B'));
+        List<Music> notes = Arrays.asList(lowA, midA, highB);
+        Music tuplet = new Tuplet(notes);
+        assertEquals(2.0, tuplet.getDuration().getRationalNumber(), .0001);
+    }
+    @Test //get duration on a quadruplet
+    public void getDurationQuadruplet() {
+        Music noteG = new SingleNote(new RationalNum(1,1), new Pitch('G'));
+        List<Music> notes = Arrays.asList(noteG, noteG, noteG, noteG);
+        Music tuplet = new Tuplet(notes);
+        assertEquals(3.0, tuplet.getDuration().getRationalNumber(), .0001);
     }
 }
