@@ -223,7 +223,6 @@ public class PlayTest {
         Music noteC = new SingleNote(new RationalNum(1, 1), new Pitch('C').transpose(-12));
         List<Music> notes = Arrays.asList(noteC, noteC);
         Music tuplet = new Tuplet(notes);
-        SequencePlayer player = new SequencePlayer(100, 1);
         assertEquals("(2C,1C,1", tuplet.toString());
     }
     @Test //notes.size() = 3, all middle octave

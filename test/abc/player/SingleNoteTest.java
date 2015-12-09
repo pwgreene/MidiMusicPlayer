@@ -26,7 +26,6 @@ public class SingleNoteTest {
     //toString():
     //duration is 1, >1
     //Pitch = lower octave, middle octave, high octave
-    //TODO tests depend on toString() specification
     
     @Test //duration = 1
     public void testToStringDurationOne() {

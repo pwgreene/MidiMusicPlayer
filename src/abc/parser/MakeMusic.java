@@ -33,12 +33,13 @@ public class MakeMusic implements AbcListener {
     private int bpm = 100;
 
 
-    //The bars (List<List<Music>>) for a given voice name (Each bar is a List<Music>)
-    private HashMap<String, List<List<Music>>> barsForVoice = new HashMap<String, List<List<Music>>>();  
+    //The list of bars or measures (List<List<Music>>) for a given voice name (a bar is a list of musics)
+    private HashMap<String, List<List<Music>>> songsForVoice = new HashMap<String, List<List<Music>>>();  
     //True if currently processing a tuplet or chord
     private boolean inChord = false;
+    //0 if not processing a tuple, 2, 3, or 4 if processing a tuple
     private int inTuple = 0;
-    //The current voice name being processed
+    //The currently processed voice name 
     private String voiceName;
 
     /**
@@ -53,16 +54,18 @@ public class MakeMusic implements AbcListener {
      */
     private HashMap<String, List<Integer[]>> repeatsForVoiceName = new HashMap<String, List<Integer[]>>();
 
+    
+    //A map of Integer BaseNotes (A-G) mapped to their current accidental
+    //in other words if 75 is mapped to 76. That means the note that is usually
+    //played at pitch 75 is supposed to be sharp becuase of a previous accidental in the
+    //measure
     private HashMap<Integer,Integer> carryOverAccidental = new HashMap<Integer,Integer>();
 
-    /**
-     * Container for things in voice
-     */
+    //Holds the tuples, chords, and chords of a tuple before they are added to the songsForVoice
     private List<Music> tupleNotes = new ArrayList<Music>();
     private List<SingleNote> chordNotes = new ArrayList<SingleNote>();  
     private List<SingleNote> tupleOfChords = new ArrayList<SingleNote>();
 
-    //These have been implemented:
     @Override
     //Get Index Number
     public void exitField_number(Field_numberContext ctx) {
@@ -82,6 +85,7 @@ public class MakeMusic implements AbcListener {
     }
 
     @Override
+    //Get other header info
     public void exitOther_fields(Other_fieldsContext ctx) {
         if(ctx.FIELD_COMPOSER() != null) {
             composer = ctx.FIELD_COMPOSER().getText().replace("C:", "").trim();
@@ -106,10 +110,10 @@ public class MakeMusic implements AbcListener {
         }
         if(ctx.FIELD_VOICE() != null) {
             voiceName = ctx.FIELD_VOICE().getText().replace("V:", "").trim();
-            if(!barsForVoice.containsKey(voiceName)) {
+            if(!songsForVoice.containsKey(voiceName)) {
                 List<List<Music>> newVoice = new ArrayList<List<Music>>();
                 newVoice.add(new ArrayList<Music>());
-                barsForVoice.put(voiceName, newVoice);
+                songsForVoice.put(voiceName, newVoice);
                 Integer[] startRepeat = new Integer[]{0,0,0};
                 List<Integer[]> reps = new ArrayList<Integer[]>();
                 reps.add(startRepeat);
@@ -130,7 +134,7 @@ public class MakeMusic implements AbcListener {
                  //Reset list
                  tupleOfChords =  new ArrayList<SingleNote>();
             }else{           
-                List<List<Music>> bars = barsForVoice.get(voiceName);
+                List<List<Music>> bars = songsForVoice.get(voiceName);
                 bars.get(bars.size()-1).add(new Chord(notes));  
             }
             this.inChord = false;
@@ -171,7 +175,7 @@ public class MakeMusic implements AbcListener {
             voiceName = "THE_DEFAULT_VOICE";
             List<List<Music>> newVoice = new ArrayList<List<Music>>();
             newVoice.add(new ArrayList<Music>());
-            barsForVoice.put(this.voiceName, newVoice);
+            songsForVoice.put(this.voiceName, newVoice);
             Integer[] startRepeat = new Integer[]{0,0,0};
             List<Integer[]> reps = new ArrayList<Integer[]>();
             reps.add(startRepeat);
@@ -182,10 +186,10 @@ public class MakeMusic implements AbcListener {
     @Override
     public void exitField_voice(Field_voiceContext ctx) {
         voiceName = ctx.getText().replace("V:", "").trim();
-        if(!this.barsForVoice.containsKey(voiceName)) {
+        if(!this.songsForVoice.containsKey(voiceName)) {
             List<List<Music>> newVoice = new ArrayList<List<Music>>();
             newVoice.add(new ArrayList<Music>());
-            this.barsForVoice.put(voiceName, newVoice);
+            this.songsForVoice.put(voiceName, newVoice);
             Integer[] startRepeat = new Integer[]{0,0,0};
             List<Integer[]> reps = new ArrayList<Integer[]>();
             reps.add(startRepeat);
@@ -196,7 +200,7 @@ public class MakeMusic implements AbcListener {
     @Override
     public void exitTuplet_element(Tuplet_elementContext ctx) {
         this.inTuple = 0;
-        List<List<Music>> bars = barsForVoice.get(voiceName);
+        List<List<Music>> bars = songsForVoice.get(voiceName);
         bars.get(bars.size()-1).add(new Tuplet(tupleNotes));
         //Clear notes from tuple
         tupleNotes = new ArrayList<Music>();
@@ -211,7 +215,7 @@ public class MakeMusic implements AbcListener {
         else if(ctx.NTH_REPEAT() != null)
             barlineString = ctx.NTH_REPEAT().getText();
 
-        List<List<Music>> bars = barsForVoice.get(voiceName);
+        List<List<Music>> bars = songsForVoice.get(voiceName);
         boolean addNewBar = true;
 
         List<Integer[]> repeats = repeatsForVoiceName.get(voiceName);
@@ -239,10 +243,45 @@ public class MakeMusic implements AbcListener {
         repeats.set(repeats.size()-1, currentRepeat);
         if(addNewBar){
             bars.add(new ArrayList<Music>());
-            //reset accidentals
+            //reset accidentals for a new measure
             carryOverAccidental = new HashMap<Integer,Integer>();
         }
     }
+    
+    @Override
+    public void exitBody(BodyContext ctx) {
+        for(String name : songsForVoice.keySet()){
+            List<List<Music>> voiceBars = songsForVoice.get(name);
+            List<Integer[]> repeats = repeatsForVoiceName.get(name);
+            for(int i = 0; i<repeats.size(); i++){
+                for(int j = 0; j<3; j++){
+                    //  System.out.println(repeats.get(i)[j]);
+                }
+
+            }
+            Integer[] lastRepeat = repeats.get(repeats.size()-1);
+            if(lastRepeat[0] == null || lastRepeat[1] == null || lastRepeat[2] == null)
+                repeats.remove(repeats.size()-1);
+            int indexShift = 0;
+            for(int i = 0; i < repeats.size(); i++){
+                List<List<Music>> barsToRepeat = new ArrayList<List<Music>>();
+                for(int j = repeats.get(i)[0]; j < repeats.get(i)[1]; j++) {
+                    barsToRepeat.add(voiceBars.get(j));
+                }
+                voiceBars.addAll(repeats.get(i)[2] + indexShift, barsToRepeat);
+                indexShift += barsToRepeat.size();
+            }
+            List<Music> concatenatedBars = new ArrayList<Music>();
+            for(List<Music> bar : voiceBars) {
+                concatenatedBars.addAll(bar);
+            }
+            List<List<Music>> listSizeOne = new ArrayList<List<Music>>();
+            listSizeOne.add(concatenatedBars);
+            songsForVoice.put(name, listSizeOne);
+        }
+    }
+    
+    
 
     @Override
     public void exitNote_element(Note_elementContext ctx) {
@@ -290,7 +329,7 @@ public class MakeMusic implements AbcListener {
 
             //add a rest or a note
             if(splitPitch[0].equals("z")) {
-                List<List<Music>> bars = this.barsForVoice.get(voiceName);
+                List<List<Music>> bars = this.songsForVoice.get(voiceName);
                 bars.get(bars.size()-1).add(new Rest(duration));
             } else{
 
@@ -424,45 +463,14 @@ public class MakeMusic implements AbcListener {
                         tupleNotes.add(new SingleNote(new RationalNum(3*duration.getNum(),inTuple*duration.getDenom()), pitch));
                     }
                 }else{
-                    List<List<Music>> bars = this.barsForVoice.get(voiceName);
+                    List<List<Music>> bars = this.songsForVoice.get(voiceName);
                     bars.get(bars.size()-1).add(new SingleNote(duration, pitch));
                 }             
             }
         }
     }
 
-    @Override
-    public void exitBody(BodyContext ctx) {
-        for(String name : barsForVoice.keySet()){
-            List<List<Music>> voiceBars = barsForVoice.get(name);
-            List<Integer[]> repeats = repeatsForVoiceName.get(name);
-            for(int i = 0; i<repeats.size(); i++){
-                for(int j = 0; j<3; j++){
-                    //  System.out.println(repeats.get(i)[j]);
-                }
-
-            }
-            Integer[] lastRepeat = repeats.get(repeats.size()-1);
-            if(lastRepeat[0] == null || lastRepeat[1] == null || lastRepeat[2] == null)
-                repeats.remove(repeats.size()-1);
-            int indexShift = 0;
-            for(int i = 0; i < repeats.size(); i++){
-                List<List<Music>> barsToRepeat = new ArrayList<List<Music>>();
-                for(int j = repeats.get(i)[0]; j < repeats.get(i)[1]; j++) {
-                    barsToRepeat.add(voiceBars.get(j));
-                }
-                voiceBars.addAll(repeats.get(i)[2] + indexShift, barsToRepeat);
-                indexShift += barsToRepeat.size();
-            }
-            List<Music> concatenatedBars = new ArrayList<Music>();
-            for(List<Music> bar : voiceBars) {
-                concatenatedBars.addAll(bar);
-            }
-            List<List<Music>> listSizeOne = new ArrayList<List<Music>>();
-            listSizeOne.add(concatenatedBars);
-            barsForVoice.put(name, listSizeOne);
-        }
-    }
+   
 
     //These aren't used:
     @Override public void enterEveryRule(ParserRuleContext arg0) {}
@@ -489,41 +497,68 @@ public class MakeMusic implements AbcListener {
     @Override public void exitAbcline(AbclineContext ctx) {}
 
     //Getters
-
+    
+    /**
+     * @return X field from the header
+     */
     public int getIndex(){
         return this.index;
     }
 
+    /**
+     * @return title field from the header 
+     */
     public String getTitle(){
         return this.title;
     }
 
+    /**
+     * @return composer field from the header
+     */
     public String getComposer(){
         return this.composer;
     }
 
+    /**
+     * @return the key from the header 
+     */
     public Key getKey(){
         return this.key;
     }
 
+    /**
+     * @return L (default note length) field from the header 
+     */
     public RationalNum getDefaultLength(){
         return this.defaultLength;
     }
 
+    /**
+     * @return meter field from the header 
+     */
     public RationalNum getMeter(){
         return this.meter;
     }
 
+    /**
+     * @return the RaionalNum from Q field in the header
+     */
     public RationalNum getTempoBeat(){
         return this.tempoBeat;
     }
 
+    /**
+     * @return beats per minute from the Q field in the header
+     */
     public int getBPM(){
         return this.bpm;
     }
 
+    /**
+     * @return the map which holds all of the music for each voice
+     */
     public HashMap<String,List<List<Music>>> getMusic(){
-        return this.barsForVoice;
+        return this.songsForVoice;
     }
 
 }
