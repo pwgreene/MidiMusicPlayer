@@ -19,6 +19,7 @@ public class SingleNote implements Music{
     
     private final int duration;
     private final Pitch pitch;
+    private int accidental = 0;
     
     /**
      * Create a new instance of a SingleNote
@@ -27,9 +28,10 @@ public class SingleNote implements Music{
      * Must be sharp: '^', flat: '_', or natural: '='
      */
 
-    public SingleNote(int duration, Pitch pitch) {
+    public SingleNote(int duration, Pitch pitch, int accidental) {
         this.duration = duration;
         this.pitch = pitch;
+        this.accidental = accidental;
     }
     
     

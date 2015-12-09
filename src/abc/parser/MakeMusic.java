@@ -34,6 +34,7 @@ import abc.player.Music;
 import abc.player.RationalNum;
 import abc.player.SingleNote;
 import abc.player.Tuplet;
+import abc.sound.Pitch;
 
 public class MakeMusic implements AbcListener {
 
@@ -73,14 +74,8 @@ public class MakeMusic implements AbcListener {
      * Container for things in voice
      */
     private List<Music> tupleNotes = new ArrayList<Music>();
-    private List<SingleNote> chordNotes = new ArrayList<SingleNote>();
-    /**
-     * Notes are always put in this container. this will be assigned to the appropriate
-     * container from above (see below) when necessary
-     */
-    //private List<Music> chordParentContainer = new ArrayList<Music>();
-    //private List<Music> tupletParentContainer = new ArrayList<Music>();
-    //private List<Music> noteContainer = new ArrayList<Music>();
+    private List<SingleNote> chordNotes = new ArrayList<SingleNote>();  
+    private List<Music> tupleContainer = new ArrayList<Music>();
 
     //Invariant: TODO
 
@@ -208,7 +203,7 @@ public class MakeMusic implements AbcListener {
             this.repeatsForVoiceName.put(voiceName, reps);
         }
     }
-    
+
     @Override
     public void exitTuplet_element(Tuplet_elementContext ctx) {
         int type = 3;
@@ -223,13 +218,6 @@ public class MakeMusic implements AbcListener {
         bars.get(bars.size()-1).add(new Tuplet(type, tupleNotes));
     }
 
-
-
-    
-    
-    
-    
-
     @Override
     public void enterBarline(BarlineContext ctx) {
         //parse notes into bars and keep track of repeats
@@ -240,16 +228,16 @@ public class MakeMusic implements AbcListener {
             barlineString = ctx.NTH_REPEAT().getText();
 
         List<List<Music>> bars = barsForVoice.get(voiceName);
-        //does not support nested repeats/multiple end repeats to same start repeat
         boolean addNewBar = true;
 
         List<Integer[]> repeats = repeatsForVoiceName.get(voiceName);
         Integer[] currentRepeat  = null;
-        if(repeats.size() > 0)
+        if(repeats.size() > 0){
             currentRepeat = repeats.get(repeats.size()-1);
-        else
+        }
+        else{
             currentRepeat = new Integer[3];
-
+        }
         if(barlineString.equals("|:")) {
             currentRepeat[0] = new Integer(bars.size());
         } else if(barlineString.equals(":|")) {
@@ -265,66 +253,24 @@ public class MakeMusic implements AbcListener {
             if(currentRepeat[0] == null)
                 currentRepeat[0] = new Integer(bars.size());
         }
-        if(repeats.size() > 0)
+        if(repeats.size() > 0){
             repeats.set(repeats.size()-1, currentRepeat);
-        else
+        }
+        else{
             repeats.add(currentRepeat);
-        if(addNewBar)
+        }
+        if(addNewBar){
             bars.add(new ArrayList<Music>());
-    }
-
-
-    @Override
-    public void exitAbcline(AbclineContext ctx) {
-        List<List<Music>> bars = barsForVoice.get(voiceName);
-        int lineLength = bars.size();
-        currentBarForVoiceName.put(voiceName, lineLength);
-    }
-
-
-
-
-
-
-    /********************************************
-    //These NEED TO BE implemented: TODO
-     ********************************************/
-
-    @Override
-    public void exitBody(BodyContext ctx) {
-        for(String name : this.barsForVoice.keySet()){
-            List<List<Music>> voiceBars = barsForVoice.get(name);
-            List<Integer[]> repeats = repeatsForVoiceName.get(name);
-            Integer[] lastRepeat = repeats.get(repeats.size()-1);
-            if(lastRepeat[0] == null || lastRepeat[1] == null || lastRepeat[2] == null)
-                repeats.remove(repeats.size()-1);
-            int indexShift = 0;
-            for(int i = 0; i < repeats.size(); i++){
-                List<List<Music>> barsToRepeat = new ArrayList<List<Music>>();
-                for(int j = repeats.get(i)[0]; j < repeats.get(i)[1]; j++) {
-                    barsToRepeat.add(voiceBars.get(j));
-                }
-                voiceBars.addAll(repeats.get(i)[2] + indexShift, barsToRepeat);
-                indexShift += barsToRepeat.size();
-            }
-            List<Music> concatenatedBars = new ArrayList<Music>();
-            for(List<Music> bar : voiceBars) {
-                concatenatedBars.addAll(bar);
-            }
-            voices.add(new Voice(name, concatenatedBars));
         }
     }
-
-
+    
     @Override
     public void exitNote_element(Note_elementContext ctx) {
-        // if this is a base note element, not a multinote (chord)
         if(ctx.NOTE() != null) {
             //Split the string into a note and a note_duration part
             String noteString = ctx.NOTE().getText();
             String[] splitNote = noteString.split("(?=[\\d+/])",2);
             String pitchString = splitNote[0];
-            //Parse the not duration
             RationalNum duration = new RationalNum(1,1);
             if(splitNote.length == 2) {
                 String durationString = splitNote[1];
@@ -351,11 +297,10 @@ public class MakeMusic implements AbcListener {
                     duration = new RationalNum(num, den);
                 }
             }
-            //Set arbitrary default values
-            NoteEnum baseNote = NoteEnum.C;
-            AccidentalEnum accidental = AccidentalEnum.NONE;
+            
             int octave = 0; 
-
+            Pitch thePitch = null;
+            
             //split the pitch into accidental, basenote, octave
             String[] splitPitch = pitchString.split("(?=[A-Ga-gz])|(?<=[A-Ga-gz])");
 
@@ -375,8 +320,8 @@ public class MakeMusic implements AbcListener {
                 baseNote = NoteEnum.F;
             } else if(basenoteString.toLowerCase().equals("g")) {
                 baseNote = NoteEnum.G;
-            }
-
+            }            
+            
             //Apply key signature
             accidental = setKeySigAccidental(baseNote);         
 
@@ -427,6 +372,61 @@ public class MakeMusic implements AbcListener {
         }
 
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+    @Override
+    public void exitAbcline(AbclineContext ctx) {
+        List<List<Music>> bars = barsForVoice.get(voiceName);
+        int lineLength = bars.size();
+        currentBarForVoiceName.put(voiceName, lineLength);
+    }
+
+
+    /********************************************
+    //These NEED TO BE implemented: TODO
+     ********************************************/
+
+    @Override
+    public void exitBody(BodyContext ctx) {
+        for(String name : this.barsForVoice.keySet()){
+            List<List<Music>> voiceBars = barsForVoice.get(name);
+            List<Integer[]> repeats = repeatsForVoiceName.get(name);
+            Integer[] lastRepeat = repeats.get(repeats.size()-1);
+            if(lastRepeat[0] == null || lastRepeat[1] == null || lastRepeat[2] == null)
+                repeats.remove(repeats.size()-1);
+            int indexShift = 0;
+            for(int i = 0; i < repeats.size(); i++){
+                List<List<Music>> barsToRepeat = new ArrayList<List<Music>>();
+                for(int j = repeats.get(i)[0]; j < repeats.get(i)[1]; j++) {
+                    barsToRepeat.add(voiceBars.get(j));
+                }
+                voiceBars.addAll(repeats.get(i)[2] + indexShift, barsToRepeat);
+                indexShift += barsToRepeat.size();
+            }
+            List<Music> concatenatedBars = new ArrayList<Music>();
+            for(List<Music> bar : voiceBars) {
+                concatenatedBars.addAll(bar);
+            }
+            voices.add(new Voice(name, concatenatedBars));
+        }
+    }
+
+
+    
 
 
     //These aren't used:
